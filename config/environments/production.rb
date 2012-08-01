@@ -69,6 +69,10 @@ Trankhq::Application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
 
+  # edit the ~/.bashrc file and add:
+  # export GMAIL_USERNAME="myname@gmail.com"
+  # export GMAIL_PASSWORD="secret*"
+
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,

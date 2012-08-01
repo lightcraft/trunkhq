@@ -2,5 +2,23 @@
 $iconSpritePath: asset-url('glyphicons-halflings.png', image);
 $iconWhiteSpritePath: asset-url('glyphicons-halflings-white.png', image);
 @import "bootstrap";
-body { padding-top: 60px; }
+body {
+  padding-top: 60px;
+}
+
 @import "bootstrap-responsive";
+
+//formatted tooltip for twitter bor strap
+.tooltip-inner {
+  text-align: left;
+}
+
+// added left forder for first element
+.pagination span:first-child a {
+  //border: 1px solid #DDD;
+  border-left-width: 1px;
+}
+
+.pagination .current a {
+  color: $red;
+}

@@ -1,4 +1,28 @@
 %h2 Users
-- @users.each do |user|
-  %br/
-  #{link_to user.email, user} signed up #{user.created_at.to_date}
+
+%header
+%table.table.table-bordered
+  %tr
+    %th #
+    %th &nbsp; Name
+    %th Current Sign
+    %th Last Sign
+    %th Sign in count
+
+  - @users.each do |user|
+    %tr
+      %td #{user.id}
+      %td
+        %b{rel: 'tooltip', title: "email: #{user.email} <br/> created: #{user.created_at.to_date} "} #{link_to user.name, user}
+
+      - if user.sign_in_count > 0
+        %td #{[user.current_sign_in_at.to_s(:db), user.current_sign_in_ip].join('/')}
+        %td #{[user.last_sign_in_at, user.last_sign_in_ip].join('/')}
+        %td #{user.sign_in_count}
+      - else
+        %td never logged in
+        %td
+        %td
+
+%footer
+  = paginate @users
