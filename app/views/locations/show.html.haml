@@ -1,0 +1,9 @@
+%em= Time.now
+
+- if @location # .trunks.blank?
+  = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger')
+- else
+  %p
+    %b Name:
+    = @location.name
+

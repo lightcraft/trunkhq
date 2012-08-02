@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	rolify
+  rolify
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -8,5 +8,12 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
-  
+
+  has_many :locations
+
+  after_create :create_user_home
+
+  def create_user_home
+    self.locations << Location.new(name: 'Home')
+  end
 end

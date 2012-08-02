@@ -1,0 +1,24 @@
+.tabbable
+  %ul#locations.nav.nav-tabs
+    - @locations.each do |location|
+      %li= link_to location.name, '#'+dom_id(location), :'data-toggle' => 'tab'
+
+.tab-content
+  - @locations.each do |location|
+    = div_for(location, :class => 'tab-pane') do
+      = location.name
+
+-#%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+
+    -#%tr
+      %td= location.name
+      %td= location.order
+      %td= link_to 'Show', user_location_path(location)
+      %td= link_to 'Edit', edit_user_location_path(location)
+      %td= link_to 'Destroy', location, :confirm => 'Are you sure?', :method => :delete

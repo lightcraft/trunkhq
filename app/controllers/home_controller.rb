@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   def index
-    @users = User.all
+    if current_user
+      # move user to places list
+      redirect_to user_locations_path(current_user)
+    end
   end
 end

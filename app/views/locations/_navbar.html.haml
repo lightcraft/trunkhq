@@ -1,0 +1,8 @@
+.navbar
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li= link_to content_tag(:i, '', :class => 'icon-volume-up icon-white') + ' Add trunk', '#new_trunk', :'data-toggle' => 'modal'
+        %li= link_to content_tag(:i, '', :class => 'icon-map-marker icon-white') + ' Add location', '#new_location', :'data-toggle' => 'modal'
+-#= render 'trunk_form'
+= render 'locations/form'

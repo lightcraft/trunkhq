@@ -21,6 +21,8 @@
         .content
           .row
             .span12
+              - if controller_name.eql?('locations')
+                = render 'locations/navbar'
               = render 'layouts/messages'
               = yield
           %footer

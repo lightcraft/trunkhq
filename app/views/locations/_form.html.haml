@@ -1,0 +1,10 @@
+= simple_form_for([current_user, @location || Location.new], :html => {:class => 'modal hide'} ) do |f|
+  .modal-header
+    %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
+    %h3 New Location
+  .modal-body
+    = f.error_notification
+    = f.input :name
+  .modal-footer
+    = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
+    = f.button :submit, :class => 'btn btn-primary'

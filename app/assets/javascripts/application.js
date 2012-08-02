@@ -15,6 +15,6 @@
 //= require bootstrap
 //= require_tree .
 
-$(function() {
+$(function () {
   $('[rel="tooltip"]').tooltip();
 });
