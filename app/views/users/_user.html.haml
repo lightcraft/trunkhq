@@ -1,0 +1,28 @@
+= content_tag_for(:tr, user) do
+  - _admin = user.roles.map(&:name).include?('admin')
+  %td #{user.id}
+  %td
+    %b{rel: 'tooltip', class: "#{_admin ? 'admin' : ''}", title: "email: #{user.email} <br/> created: #{user.created_at.to_date} "} #{link_to user.name, user}
+  - if user.sign_in_count > 0
+    %td #{[user.current_sign_in_at.to_s(:db), user.current_sign_in_ip].join('/')}
+    %td #{[user.last_sign_in_at, user.last_sign_in_ip].join('/')}
+    %td #{user.sign_in_count}
+  - else
+    %td never logged in
+    %td
+    %td
+  - if current_user.eql?(@first_admin)
+    %td
+      .btn-group
+        %button.btn.btn-mini.btn-danger.dropdown-toggle{:'data-toggle' => 'dropdown'} Manage
+        %ul.dropdown-menu
+          %li
+            - if _admin
+              - if user.eql?(current_user)
+                = link_to '#' do
+                  %i.icon-certificate
+                  OWNER
+              - else
+                = grant_link(user, 'icon-minus-sign')
+            - else
+              = grant_link(user, 'icon-plus-sign')

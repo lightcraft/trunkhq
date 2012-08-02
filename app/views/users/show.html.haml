@@ -1,5 +1,11 @@
-%p
+%h2
   User: #{@user.name}
+%h4
+  Email: #{mail_to(@user.email) if @user.email}
 %p
-  Email: #{@user.email if @user.email}
-%code #{debug(@user)}
+  - @user.attributes.each do |column, val|
+    .row
+      .span2
+        %label= column.humanize
+      .span2
+        = val

@@ -1,24 +1,57 @@
 // Set the correct sprite paths
 $iconSpritePath: asset-url('glyphicons-halflings.png', image);
 $iconWhiteSpritePath: asset-url('glyphicons-halflings-white.png', image);
+
+$bodyBackground: #474747;
+$textColor: #fff;
 @import "bootstrap";
+
 body {
-  padding-top: 60px;
+  padding-top: 40px;
+  a {
+    color: $orange;
+  }
+  a:hover {
+    color: $yellow;
+  }
+  .admin a {
+    color: $red;
+  }
+
+  .table tbody tr:hover th,
+  .table tbody tr:hover td,
+  {
+    color: $grayDark;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  form i {
+    font-size: 10px;
+
+  }
 }
 
 @import "bootstrap-responsive";
 
+//.content {
+//  //background-color: #747474;
+//  @include gradient-vertical($navbarBackgroundHighlight, $navbarBackground);
+//  padding: 20px;
+//  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+//  -webkit-border-radius: 0 0 6px 6px;
+//  -moz-border-radius: 0 0 6px 6px;
+//  border-radius: 0 0 6px 6px;
+//  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+//  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+//  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+//}
+
+
+
 //formatted tooltip for twitter bor strap
 .tooltip-inner {
   text-align: left;
-}
-
-// added left forder for first element
-.pagination span:first-child a {
-  //border: 1px solid #DDD;
-  border-left-width: 1px;
-}
-
-.pagination .current a {
-  color: $red;
 }
