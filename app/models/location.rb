@@ -1,6 +1,8 @@
 class Location < ActiveRecord::Base
   attr_accessible :name, :order
   belongs_to :user
-  validates :user, :presence => true
+  has_many :trunks
+
+  validates :user, :name, :presence => true
 
 end

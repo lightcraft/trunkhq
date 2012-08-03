@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html, :xml, :json
+  respond_to :html, :json
 
   def index
     authorize! :index, @user, :message => 'Not authorized as an administrator.'

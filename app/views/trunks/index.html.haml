@@ -1,0 +1,33 @@
+%h1 Listing trunks
+
+%table
+  %tr
+    %th Phone number
+    %th Password
+    %th Location
+    %th Group
+    %th Start date
+    %th Stop date
+    %th Start time
+    %th Stop time
+    %th
+    %th
+    %th
+
+  - @trunks.each do |trunk|
+    %tr
+      %td= trunk.phone_number
+      %td= trunk.password
+      %td= trunk.location_id
+      %td= trunk.group_id
+      %td= trunk.start_date
+      %td= trunk.stop_date
+      %td= trunk.start_time
+      %td= trunk.stop_time
+      %td= link_to 'Show', trunk
+      %td= link_to 'Edit', edit_trunk_path(trunk)
+      %td= link_to 'Destroy', trunk, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Trunk', new_trunk_path

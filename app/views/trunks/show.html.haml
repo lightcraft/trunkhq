@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Phone number:
+  = @trunk.phone_number
+%p
+  %b Password:
+  = @trunk.password
+%p
+  %b Location:
+  = @trunk.location_id
+%p
+  %b Group:
+  = @trunk.group_id
+%p
+  %b Start date:
+  = @trunk.start_date
+%p
+  %b Stop date:
+  = @trunk.stop_date
+%p
+  %b Start time:
+  = @trunk.start_time
+%p
+  %b Stop time:
+  = @trunk.stop_time
+
+= link_to 'Edit', edit_trunk_path(@trunk)
+\|
+= link_to 'Back', trunks_path

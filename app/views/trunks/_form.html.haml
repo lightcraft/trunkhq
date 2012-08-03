@@ -1,0 +1,20 @@
+= simple_form_for([current_user.locations.first, @trunk || Trunk.new], :html => {:class => 'modal hide'} ) do |f|
+  .modal-header
+    %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
+    %h3 New Trunk
+  .modal-body
+    = f.error_notification
+    .row
+      .span2= text_field :trunk, :phone_number, :placeholder => 'Phone number'
+      .span2= text_field :trunk, :password, :placeholder => 'Password'
+      .span2= text_field :trunk, :group_id, :placeholder => 'Group ID'
+    .row
+      .span2= text_field :trunk, :start_date, :placeholder => 'Start date'
+      .span2= text_field :trunk, :stop_date, :placeholder => 'Stop date'
+      .span2= f.select :location_id, current_user.locations.all.map { |l| [l.name, l.id] }
+    .row
+      .span2= f.input :start_time
+      .span2= f.input :stop_time
+  .modal-footer
+    = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
+    = f.button :submit, :class => 'btn btn-primary'

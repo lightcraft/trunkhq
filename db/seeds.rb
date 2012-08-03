@@ -14,7 +14,6 @@ user2 = User.create! :name => 'Second User', :email => 'user@example.com', :pass
 puts 'New user created: ' << user2.name
 
 11.times do
-  sleep(1)
   user = User.create! :name => Faker::Name.name, :email => Faker::Internet.email, :password => 'please', :password_confirmation => 'please', :confirmed_at => Time.now.utc
   puts 'New user created: ' << user.name
 end

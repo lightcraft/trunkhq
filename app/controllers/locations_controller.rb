@@ -1,5 +1,7 @@
-
 class LocationsController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :html, :json
+
   # GET /locations
   # GET /locations.json
   def index

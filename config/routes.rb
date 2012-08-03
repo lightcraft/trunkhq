@@ -1,17 +1,20 @@
-Trankhq::Application.routes.draw do
-
-
+Trunkhq::Application.routes.draw do
+  root :to => 'home#index'
   authenticated :user do
     root :to => 'home#index'
   end
-
-  root :to => "home#index"
   devise_for :users
+
+  match 'location/:id' => 'locations#show'
+  resources :locations do
+    resources :trunks
+  end
+
   resources :users, :only => [:show, :index]  do
     resources :locations
     member do
       post 'grant'
     end
   end
-  match 'location/:id' => 'locations#show'
+
 end

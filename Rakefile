@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Trankhq::Application.load_tasks
+Trunkhq::Application.load_tasks
