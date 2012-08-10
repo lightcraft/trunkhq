@@ -13,7 +13,7 @@ $(function () {
     });
   }
 
-  $('a[data-toggle="tab"]').on('shown', function (e) {
+  $('#locations a[data-toggle="tab"]').on('shown', function (e) {
     tab_updater(e);
   });
 

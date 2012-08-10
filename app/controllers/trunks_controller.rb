@@ -48,10 +48,10 @@ class TrunksController < ApplicationController
 
     respond_to do |format|
       if @trunk.save
-        format.html { redirect_to @trunk, notice: 'Trunk was successfully created.' }
+        format.html { redirect_to user_locations_path(current_user), notice: 'Trunk was successfully created.' }
         format.json { render json: @trunk, status: :created, location: @trunk }
       else
-        format.html { render action: "new" }
+        format.html { render user_locations_path(current_user) }
         format.json { render json: @trunk.errors, status: :unprocessable_entity }
       end
     end
