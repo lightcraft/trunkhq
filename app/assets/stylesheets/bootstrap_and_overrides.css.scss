@@ -52,7 +52,11 @@ body {
       padding: 5px 0;
       border-top: 1px dotted #555;
     }
+    .trunk.row:hover {
+      background: #333;
+    }
   }
+
   #edit {
     .modal {
       width: auto;

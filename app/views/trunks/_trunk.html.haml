@@ -1,5 +1,7 @@
 = div_for(trunk, :class => 'row') do
-  .span1= trunk.id
+  .span1
+    &nbsp;
+    = trunk.id
   .span2= number_to_phone(trunk.phone_number)
   .span1 Operator
   .span1 State
