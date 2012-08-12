@@ -43,6 +43,24 @@ body {
       }
     }
   }
+  .head {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .location {
+    .trunk {
+      padding: 5px 0;
+      border-top: 1px dotted #555;
+    }
+  }
+  #edit {
+    .modal {
+      width: auto;
+    }
+  }
+  input[type=text].datepicker {
+    width: 6em;
+  }
 }
 
 @import "bootstrap-responsive";

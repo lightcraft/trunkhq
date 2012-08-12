@@ -1,5 +1,7 @@
 Trunkhq::Application.routes.draw do
   root :to => 'home#index'
+  match 'report' => 'home#report'
+
   authenticated :user do
     root :to => 'home#index'
   end
@@ -7,7 +9,12 @@ Trunkhq::Application.routes.draw do
 
   match 'location/:id' => 'locations#show'
   resources :locations do
-    resources :trunks
+    resources :trunks do
+      member do
+        get 'power'
+        get 'sys_info'
+      end
+    end
   end
 
   resources :users, :only => [:show, :index]  do

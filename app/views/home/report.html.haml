@@ -1,0 +1,30 @@
+.row
+  .span2
+    %label From
+    = text_field_tag :from_date, Time.now.to_s(:date),
+      :placeholder => 'from date',
+      :size => 10,
+      :class => 'datepicker'
+  .span2
+    %label To
+    = text_field_tag :to_date, Time.now.to_s(:date),
+      :placeholder => 'to date',
+      :size => 10,
+      :class => 'datepicker'
+
+.row.head
+  .span1 Operator
+  .span1 min
+  .span1 price(cent)
+  .span1 Payment
+TODO select minutes per operator
+.row
+  .span1.offset2 Total:
+  .span1 999
+
+:javascript
+  $('.datepicker').datepicker({ format:'dd-mm-yyyy'})
+    .on('changeDate', function(ev){
+      console.log(ev);
+      console.log(ev.date);
+    });

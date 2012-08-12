@@ -2,6 +2,8 @@
 %ul.nav
   - if user_signed_in?
     %li
+      = link_to( content_tag(:i, '', :class => 'icon-gift icon-white') + ' Report', report_path)
+    %li
       = link_to( content_tag(:i, '', :class => 'icon-user icon-white') + ' Profile', edit_user_registration_path)
     - if current_user.has_role? :admin
       %li

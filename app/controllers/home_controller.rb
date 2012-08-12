@@ -5,4 +5,8 @@ class HomeController < ApplicationController
       redirect_to user_locations_path(current_user)
     end
   end
+
+  def report
+
+  end
 end

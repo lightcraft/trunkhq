@@ -1,18 +1,16 @@
-%em= Time.now
+%em= Time.now.to_s(:short)
 
 - if @location.trunks.blank?
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger')
 - else
-  .row
-    .span1 #
+  .row.head
     .span1 Chanel
+    .span2 Phone
     .span1 Operator
     .span1 State
     .span1 Reg status
     .span2 Duration today
+    .span2 Live time
+    .span3
   - @location.trunks.each do |trunk|
-    = div_for(trunk, :class => 'row') do
-      .span1= trunk.id
-      .span1= trunk.phone_number
-
-      = trunk.inspect
+    = render :partial => 'trunks/trunk', :locals => {:trunk => trunk, :location => @location}

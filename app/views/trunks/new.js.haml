@@ -1,0 +1,4 @@
+$('#edit').html('#{j(render( :partial => 'form'))}');
+$('##{new_dom_id(@trunk)}').modal('show');
+$('##{new_dom_id(@trunk)} .operators li:eq(0) a').first().click();
+$('.datepicker').datepicker({ format:'dd-mm-yyyy'});

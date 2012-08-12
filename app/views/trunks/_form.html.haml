@@ -1,8 +1,10 @@
-= simple_form_for([current_user.locations.first, @trunk || Trunk.new], :html => {:class => 'modal hide'} ) do |f|
+= simple_form_for([@location, @trunk], :html => {:class => 'modal hide'} ) do |f|
   .modal-header
     %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
     %h3.row
-      .span2 New Trunk
+      .span2
+        = "#{ f.object.new_record? ? 'New' : 'Edit'}"
+        Trunk
       .span1= f.select :location_id, current_user.locations.all.map { |l| [l.name, l.id] }
   .modal-body
     = f.error_notification
@@ -11,8 +13,18 @@
       .span2= text_field :trunk, :password, :placeholder => 'Password'
       .span2= text_field :trunk, :group_id, :placeholder => 'Group ID'
     .row
-      .span2= text_field :trunk, :start_date, :placeholder => 'Start date'
-      .span2= text_field :trunk, :stop_date, :placeholder => 'Stop date'
+      .span2{'data-date' => @trunk.start_date_str}
+        = text_field :trunk, :start_date,
+          :value => @trunk.start_date_str,
+          :placeholder => 'Start date',
+          :title => 'Start date',
+          :class => 'datepicker'
+      .span2
+        = text_field :trunk, :stop_date,
+          :value => @trunk.stop_date_str,
+          :placeholder => 'Stop date',
+          :title => 'Stop date',
+          :class => 'datepicker'
 
     .row
       .span2= f.input :start_time
@@ -53,3 +65,5 @@
   .modal-footer
     = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
     = f.button :submit, :class => 'btn btn-primary'
+    - if f.object.persisted?
+      = link_to('Desttroy', [@trunk.location, @trunk], :class => 'btn btn-danger', :confirm => 'Are You sure? to destroy this trunk?', :method => :delete)
