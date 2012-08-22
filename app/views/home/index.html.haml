@@ -1,2 +1,15 @@
-%h3 Yankee, go home!
+.hero-unit
+  %h1 Welcome
+  %p
+    .row
+      Currently we are works only by invitation system.
+      we give a profit in the form of <span class='badge badge-success'>5%</span> percent of all the money earned invited users.
+  %h4 What we offer
+  %ol
+    %li SIP Gateway  to mobiles phone
+    %li And etc..
+  .row
+    = link_to('Enter to system', new_user_session_path, :class => 'btn btn-success')
+    or
+    = mail_to('admin@email.com', 'Email to us', :class => 'btn btn-info', :encode => "hex")
 

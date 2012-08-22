@@ -30,8 +30,11 @@ body {
 
   form i {
     font-size: 10px;
-
   }
+  .hero-unit {
+    background-color: $grayDark;
+  }
+
   .modal {
     color: $grayDark;
     .modal-body {

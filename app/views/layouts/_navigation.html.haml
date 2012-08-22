@@ -15,7 +15,8 @@
   - if user_signed_in?
     %li
       = link_to( content_tag(:i, '', :class => 'icon-off icon-white') + ' Logout', destroy_user_session_path, :method=>'delete')
+    %li= link_to content_tag(:i, '', :class => 'icon-circle-arrow-left icon-white') + ' Back',  :back
   - else
     %li
       = link_to(content_tag(:i, '', :class => 'icon-off icon-white') + ' Login', new_user_session_path)
-  %li= link_to content_tag(:i, '', :class => 'icon-circle-arrow-left icon-white') + ' Back',  :back
+

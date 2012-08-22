@@ -1,0 +1,8 @@
+.hero-unit
+  %h1 Increase Your feedback
+  %p
+    .row
+      You can #{link_to('invite frends',  new_user_invitation_path)}, If want make large money.
+      In the future we will pay <span class='badge badge-success'>5%</span> from every invited user earns.
+    .row
+      Now you have only <span class='badge badge-warning'>#{current_user.invitation_limit}</span> free invitations.
