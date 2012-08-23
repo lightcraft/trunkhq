@@ -18,10 +18,10 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe TrunksController do
+describe ChannelsController do
 
   # This should return the minimal set of attributes required to create a valid
-  # Trunk. As you add validations to Trunk, be sure to
+  # Chanel. As you add validations to Chanel, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
     {}
@@ -29,74 +29,74 @@ describe TrunksController do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # TrunksController. Be sure to keep this updated too.
+  # ChannelsController. Be sure to keep this updated too.
   def valid_session
     {}
   end
 
   describe "GET index" do
-    it "assigns all trunks as @trunks" do
-      trunk = Trunk.create! valid_attributes
+    it "assigns all channels as @channels" do
+      trunk = Chanel.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:trunks).should eq([trunk])
+      assigns(:channels).should eq([trunk])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested trunk as @trunk" do
-      trunk = Trunk.create! valid_attributes
+    it "assigns the requested chanel as @chanel" do
+      trunk = Chanel.create! valid_attributes
       get :show, {:id => trunk.to_param}, valid_session
-      assigns(:trunk).should eq(trunk)
+      assigns(:chanel).should eq(trunk)
     end
   end
 
   describe "GET new" do
-    it "assigns a new trunk as @trunk" do
+    it "assigns a new chanel as @chanel" do
       get :new, {}, valid_session
-      assigns(:trunk).should be_a_new(Trunk)
+      assigns(:chanel).should be_a_new(Chanel)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested trunk as @trunk" do
-      trunk = Trunk.create! valid_attributes
+    it "assigns the requested chanel as @chanel" do
+      trunk = Chanel.create! valid_attributes
       get :edit, {:id => trunk.to_param}, valid_session
-      assigns(:trunk).should eq(trunk)
+      assigns(:chanel).should eq(trunk)
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Trunk" do
+      it "creates a new Chanel" do
         expect {
-          post :create, {:trunk => valid_attributes}, valid_session
-        }.to change(Trunk, :count).by(1)
+          post :create, {:chanel => valid_attributes}, valid_session
+        }.to change(Chanel, :count).by(1)
       end
 
-      it "assigns a newly created trunk as @trunk" do
-        post :create, {:trunk => valid_attributes}, valid_session
-        assigns(:trunk).should be_a(Trunk)
-        assigns(:trunk).should be_persisted
+      it "assigns a newly created chanel as @chanel" do
+        post :create, {:chanel => valid_attributes}, valid_session
+        assigns(:chanel).should be_a(Chanel)
+        assigns(:chanel).should be_persisted
       end
 
-      it "redirects to the created trunk" do
-        post :create, {:trunk => valid_attributes}, valid_session
-        response.should redirect_to(Trunk.last)
+      it "redirects to the created chanel" do
+        post :create, {:chanel => valid_attributes}, valid_session
+        response.should redirect_to(Chanel.last)
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved trunk as @trunk" do
+      it "assigns a newly created but unsaved chanel as @chanel" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Trunk.any_instance.stub(:save).and_return(false)
-        post :create, {:trunk => {}}, valid_session
-        assigns(:trunk).should be_a_new(Trunk)
+        Chanel.any_instance.stub(:save).and_return(false)
+        post :create, {:chanel => {}}, valid_session
+        assigns(:chanel).should be_a_new(Chanel)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Trunk.any_instance.stub(:save).and_return(false)
-        post :create, {:trunk => {}}, valid_session
+        Chanel.any_instance.stub(:save).and_return(false)
+        post :create, {:chanel => {}}, valid_session
         response.should render_template("new")
       end
     end
@@ -104,58 +104,58 @@ describe TrunksController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested trunk" do
-        trunk = Trunk.create! valid_attributes
-        # Assuming there are no other trunks in the database, this
-        # specifies that the Trunk created on the previous line
+      it "updates the requested chanel" do
+        trunk = Chanel.create! valid_attributes
+        # Assuming there are no other channels in the database, this
+        # specifies that the Chanel created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Trunk.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => trunk.to_param, :trunk => {'these' => 'params'}}, valid_session
+        Chanel.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, {:id => trunk.to_param, :chanel => {'these' => 'params'}}, valid_session
       end
 
-      it "assigns the requested trunk as @trunk" do
-        trunk = Trunk.create! valid_attributes
-        put :update, {:id => trunk.to_param, :trunk => valid_attributes}, valid_session
-        assigns(:trunk).should eq(trunk)
+      it "assigns the requested chanel as @chanel" do
+        trunk = Chanel.create! valid_attributes
+        put :update, {:id => trunk.to_param, :chanel => valid_attributes}, valid_session
+        assigns(:chanel).should eq(trunk)
       end
 
-      it "redirects to the trunk" do
-        trunk = Trunk.create! valid_attributes
-        put :update, {:id => trunk.to_param, :trunk => valid_attributes}, valid_session
+      it "redirects to the chanel" do
+        trunk = Chanel.create! valid_attributes
+        put :update, {:id => trunk.to_param, :chanel => valid_attributes}, valid_session
         response.should redirect_to(trunk)
       end
     end
 
     describe "with invalid params" do
-      it "assigns the trunk as @trunk" do
-        trunk = Trunk.create! valid_attributes
+      it "assigns the chanel as @chanel" do
+        trunk = Chanel.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Trunk.any_instance.stub(:save).and_return(false)
-        put :update, {:id => trunk.to_param, :trunk => {}}, valid_session
-        assigns(:trunk).should eq(trunk)
+        Chanel.any_instance.stub(:save).and_return(false)
+        put :update, {:id => trunk.to_param, :chanel => {}}, valid_session
+        assigns(:chanel).should eq(trunk)
       end
 
       it "re-renders the 'edit' template" do
-        trunk = Trunk.create! valid_attributes
+        trunk = Chanel.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Trunk.any_instance.stub(:save).and_return(false)
-        put :update, {:id => trunk.to_param, :trunk => {}}, valid_session
+        Chanel.any_instance.stub(:save).and_return(false)
+        put :update, {:id => trunk.to_param, :chanel => {}}, valid_session
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested trunk" do
-      trunk = Trunk.create! valid_attributes
+    it "destroys the requested chanel" do
+      trunk = Chanel.create! valid_attributes
       expect {
         delete :destroy, {:id => trunk.to_param}, valid_session
-      }.to change(Trunk, :count).by(-1)
+      }.to change(Chanel, :count).by(-1)
     end
 
-    it "redirects to the trunks list" do
-      trunk = Trunk.create! valid_attributes
+    it "redirects to the channels list" do
+      trunk = Chanel.create! valid_attributes
       delete :destroy, {:id => trunk.to_param}, valid_session
       response.should redirect_to(trunks_url)
     end

@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Phone number:
+  = @channel.phone_number
+%p
+  %b Password:
+  = @channel.password
+%p
+  %b Location:
+  = @channel.location_id
+%p
+  %b Group:
+  = @channel.group_id
+%p
+  %b Start date:
+  = @channel.start_date
+%p
+  %b Stop date:
+  = @channel.stop_date
+%p
+  %b Start time:
+  = @channel.start_time
+%p
+  %b Stop time:
+  = @channel.stop_time
+
+= link_to 'Edit', edit_channel_path(@channel)
+\|
+= link_to 'Back', channels_path

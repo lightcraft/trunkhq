@@ -1,0 +1,20 @@
+= div_for(channel, :class => 'row') do
+  .span1
+    &nbsp;
+    = channel.id
+  .span2= number_to_phone(channel.phone_number)
+  .span1 Operator
+  .span1 State
+  .span1 Reg status
+  .span2 -
+  .span2
+  .span3.btn-group
+    = link_to power_location_channel_path(location, channel), :remote => true, :class => 'btn power btn-success' do
+      %i.icon-off
+      Power
+    = link_to edit_location_channel_path(location, channel), :remote => true, :class => 'btn' do
+      %i.icon-cog
+      Settings
+    = link_to sys_info_location_channel_path(location, channel), :remote => true, :class => 'btn' do
+      %i.icon-info-sign
+      Sys Info

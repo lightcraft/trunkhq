@@ -9,7 +9,7 @@ Trunkhq::Application.routes.draw do
 
   match 'location/:id' => 'locations#show'
   resources :locations do
-    resources :trunks do
+    resources :channels do
       member do
         get 'power'
         get 'sys_info'

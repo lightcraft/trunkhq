@@ -2,7 +2,7 @@ require 'rbconfig'
 HOST_OS = RbConfig::CONFIG['host_os']
 source 'https://rubygems.org'
 gem 'rails', '3.2.4'
-gem 'sqlite3'
+gem 'mysql2'
 gem 'kaminari'
 
 group :assets do

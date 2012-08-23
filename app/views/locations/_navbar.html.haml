@@ -2,7 +2,7 @@
   .navbar-inner
     .container
       %ul.nav.pull-right
-        %li= link_to content_tag(:i, '', :class => 'icon-volume-up icon-white') + ' Add chanel', new_location_trunk_path(current_user.locations.first), :remote => true
+        %li= link_to content_tag(:i, '', :class => 'icon-volume-up icon-white') + ' Add channel', new_location_channel_path(current_user.locations.first), :remote => true
         %li= link_to content_tag(:i, '', :class => 'icon-map-marker icon-white') + ' Add location', '#new_location', :'data-toggle' => 'modal'
--#= render 'trunks/form'
+-#= render 'channels/form'
 = render 'locations/form'

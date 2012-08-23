@@ -1,0 +1,5 @@
+$('#edit').html('#{j(render( :partial => 'form'))}');
+$('##{edit_dom_id(@channel)}').modal('show');
+-#$('##{edit_dom_id(@channel)} .operators li:eq(0)').tab('show');
+$('##{edit_dom_id(@channel)} .operators li:eq(0) a').first().click();
+$('.datepicker').datepicker({ format:'dd-mm-yyyy'});

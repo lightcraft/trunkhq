@@ -1,12 +1,12 @@
 .modal-header
   %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
   %h3
-    = @trunk.location.name
-    = number_to_phone(@trunk.phone_number)
-    = "##{@trunk.id}"
+    = @channel.location.name
+    = number_to_phone(@channel.phone_number)
+    = "##{@channel.id}"
 
 .modal-body
   .row
-    .span6= @trunk.inspect
+    .span6= @channel.inspect
 .modal-footer
   = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')

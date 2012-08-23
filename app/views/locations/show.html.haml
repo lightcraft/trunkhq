@@ -1,10 +1,10 @@
 %em= Time.now.to_s(:short)
 
-- if @location.trunks.blank?
+- if @location.channels.blank?
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger')
 - else
   .row.head
-    .span1 Chanel
+    .span1 Channel
     .span2 Phone
     .span1 Operator
     .span1 State
@@ -12,5 +12,5 @@
     .span2 Duration today
     .span2 Live time
     .span3
-  - @location.trunks.each do |trunk|
-    = render :partial => 'trunks/trunk', :locals => {:trunk => trunk, :location => @location}
+  - @location.channels.each do |channel|
+    = render :partial => 'channels/channel', :locals => {:channel => channel, :location => @location}

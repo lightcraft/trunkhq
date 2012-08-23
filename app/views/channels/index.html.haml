@@ -1,0 +1,33 @@
+%h1 Listing channels
+
+%table
+  %tr
+    %th Phone number
+    %th Password
+    %th Location
+    %th Group
+    %th Start date
+    %th Stop date
+    %th Start time
+    %th Stop time
+    %th
+    %th
+    %th
+
+  - @channels.each do |channel|
+    %tr
+      %td= channel.phone_number
+      %td= channel.password
+      %td= channel.location_id
+      %td= channel.group_id
+      %td= channel.start_date
+      %td= channel.stop_date
+      %td= channel.start_time
+      %td= channel.stop_time
+      %td= link_to 'Show', channel
+      %td= link_to 'Edit', edit_channel_path(channel)
+      %td= link_to 'Destroy', channel, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Channel', new_channel_path

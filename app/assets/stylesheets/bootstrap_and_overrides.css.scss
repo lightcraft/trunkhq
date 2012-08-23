@@ -51,11 +51,11 @@ body {
     font-weight: bold;
   }
   .location {
-    .trunk {
+    .channel {
       padding: 5px 0;
       border-top: 1px dotted #555;
     }
-    .trunk.row:hover {
+    .channel.row:hover {
       background: #333;
     }
   }
@@ -77,6 +77,6 @@ body {
   text-align: left;
 }
 
-#new_trunk {
+#new_channel {
   width: 700px;
 }
