@@ -1,13 +1,13 @@
 class ChangePrefixGroup < ActiveRecord::Migration
   def up
-    rename_column :chan_prefix_groups, :interval_mins, :def_interval_mins
-    rename_column :chan_prefix_groups, :calls_per_interval, :def_calls_per_interval
-    rename_column :chan_prefix_groups, :call_min_interval, :def_call_min_interval
+    rename_column :prefix_groups, :rate, :def_rate
+    rename_column :prefix_groups, :init_charge, :def_init_charge
+    rename_column :prefix_groups, :minutes_per_day, :def_minutes_per_day
   end
 
   def down
-    rename_column :chan_prefix_groups, :def_interval_mins, :interval_mins
-    rename_column :chan_prefix_groups, :def_calls_per_interval, :calls_per_interval
-    rename_column :chan_prefix_groups, :def_call_min_interval, :call_min_interval
+    rename_column :prefix_groups, :def_rate, :rate
+    rename_column :prefix_groups, :def_init_charge, :init_charge
+    rename_column :prefix_groups, :def_minutes_per_day, :minutes_per_day
   end
 end

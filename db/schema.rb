@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120823121302) do
+ActiveRecord::Schema.define(:version => 20120823193002) do
 
   create_table "chan_groups", :force => true do |t|
     t.string  "chan_group_name",     :limit => 50
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(:version => 20120823121302) do
     t.integer "channel_id"
     t.integer "prefix_group_id"
     t.integer "max_minutes_per_day"
-    t.integer "def_interval_mins"
-    t.integer "def_calls_per_interval"
-    t.integer "def_call_min_interval"
+    t.integer "interval_mins"
+    t.integer "calls_per_interval"
+    t.integer "call_min_interval"
   end
 
   create_table "channels", :force => true do |t|
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(:version => 20120823121302) do
 
   create_table "prefix_groups", :force => true do |t|
     t.string  "group_name"
-    t.decimal "rate",            :precision => 10, :scale => 4
-    t.decimal "init_charge",     :precision => 10, :scale => 4
-    t.integer "minutes_per_day"
+    t.decimal "def_rate",            :precision => 10, :scale => 4
+    t.decimal "def_init_charge",     :precision => 10, :scale => 4
+    t.integer "def_minutes_per_day"
   end
 
   create_table "prefixes", :force => true do |t|
@@ -150,12 +150,8 @@ ActiveRecord::Schema.define(:version => 20120823121302) do
     t.integer "prefix_group_id"
     t.integer "allowed_minites"
     t.date    "init_date"
-  end
-
-  create_table "user_rates", :force => true do |t|
-    t.integer "prefix_group_id"
-    t.decimal "rate",                :precision => 10, :scale => 2
-    t.integer "sample_interval_sec"
+    t.string  "rate"
+    t.integer "init_charge"
   end
 
   create_table "users", :force => true do |t|
