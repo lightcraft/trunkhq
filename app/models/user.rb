@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  # login/password  - Unused
   rolify
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

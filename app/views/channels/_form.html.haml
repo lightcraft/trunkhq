@@ -9,9 +9,9 @@
   .modal-body
     = f.error_notification
     .row
-      .span2= text_field :channel, :phone_number, :placeholder => 'Phone number'
-      .span2= text_field :channel, :password, :placeholder => 'Password'
-      .span2= text_field :channel, :group_id, :placeholder => 'Group ID'
+      .span2= text_field :channel, :name, :placeholder => 'Phone number'
+      .span2= text_field :channel, :secret, :placeholder => 'Password'
+      .span2= f.select :chan_group_id, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID'
     .row
       .span2{'data-date' => @channel.start_date_str}
         = text_field :channel, :start_date,

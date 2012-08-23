@@ -28,7 +28,7 @@ class ChannelsController < ApplicationController
   ## GET /channels/new
   ## GET /channels/new.json
   def new
-    @channel = Channel.new()
+    @channel = Channel.new(:sip => Sip.new)
 
     respond_to do |format|
       format.html # new.html.erb

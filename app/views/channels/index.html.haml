@@ -16,10 +16,10 @@
 
   - @channels.each do |channel|
     %tr
-      %td= channel.phone_number
-      %td= channel.password
+      %td= channel.name
+      %td= channel.secret
       %td= channel.location_id
-      %td= channel.group_id
+      %td= channel.chan_group_id
       %td= channel.start_date
       %td= channel.stop_date
       %td= channel.start_time

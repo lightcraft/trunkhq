@@ -2,7 +2,7 @@
   %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
   %h3
     = @channel.location.name
-    = number_to_phone(@channel.phone_number)
+    = number_to_phone(@channel.name)
     = "##{@channel.id}"
 
 .modal-body
