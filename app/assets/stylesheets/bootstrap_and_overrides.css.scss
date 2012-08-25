@@ -63,6 +63,7 @@ body {
   #edit {
     .modal {
       width: auto;
+      min-width: 400px
     }
   }
   input[type=text].datepicker {
