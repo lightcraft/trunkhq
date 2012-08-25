@@ -16,10 +16,11 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = current_user.locations.find(params[:id]);
+    @location = current_user.locations.find(params[:id])
+    @location_for_destroy = @location.channels.blank? || (@location ? @location.channels.on.blank? : false)
 
     respond_to do |format|
-      format.html { render  :layout => !request.xhr?  }
+      format.html { render :layout => !request.xhr? }
       format.json { render json: @location }
     end
   end

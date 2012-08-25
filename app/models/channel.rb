@@ -1,4 +1,6 @@
 class Channel < ActiveRecord::Base
+  self.table_name = 'channels'
+
   belongs_to :location
   belongs_to :sip
   belongs_to :chan_group
@@ -8,12 +10,15 @@ class Channel < ActiveRecord::Base
 
   STATUS = {1 => 'ON', 2 =>'OFF', 3 => 'Paused', 4 => 'Alarm'}
 
-  self.table_name = 'channels'
-
   attr_accessible :group_id, :location_id, :start_date, :start_time, :stop_date, :stop_time, :sip
   delegate :name, :secret, :to => :sip
   #alias_method :phone_number, :name
   #alias_method :password, :secret
+
+  scope :on, where(status: 1)
+  scope :off, where(status: 2)
+  scope :paused, where(status: 3)
+  scope :alarm, where(status: 4)
 
   def start_date_str
     (self.start_date || Time.now).to_s(:date)
