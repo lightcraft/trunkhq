@@ -81,6 +81,7 @@ class ChanGroupsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to chan_groups_url }
+      format.js { render :text => "$('##{dom_id(@chan_group)}').remove();" }
       format.json { head :no_content }
     end
   end
