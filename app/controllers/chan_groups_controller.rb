@@ -38,6 +38,10 @@ class ChanGroupsController < ApplicationController
 
   # GET /chan_groups/1/edit
   def edit
+    respond_to do |format|
+      format.html #
+      format.js { render layout: false }
+    end
   end
 
   # POST /chan_groups
@@ -66,9 +70,11 @@ class ChanGroupsController < ApplicationController
       if @chan_group.update_attributes(params[:chan_group])
         format.html { redirect_to @chan_group, notice: 'Chan group was successfully updated.' }
         format.json { head :no_content }
+        format.js { render :text => "window.location = '#{chan_groups_path}'", notice: 'Channels group was successfully updated.' }
       else
         format.html { render action: "edit" }
         format.json { render json: @chan_group.errors, status: :unprocessable_entity }
+        format.js { render action: "edit", layout: false }
       end
     end
   end

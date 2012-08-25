@@ -4,6 +4,7 @@
 
 %table.table.table-bordered
   %tr
+    %th #
     %th Chan group name
     %th Max Channels count
     %th Max Channels online
@@ -11,6 +12,7 @@
 
   - @chan_groups.each do |chan_group|
     = content_tag_for(:tr, chan_group) do
+      %td= chan_group.id
       %td= chan_group.chan_group_name
       %td= chan_group.max_channels_cnt
       %td= chan_group.max_channels_online
