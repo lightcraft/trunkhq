@@ -11,4 +11,14 @@ $(function () {
   }).bind("ajaxSend", function () {
         $('body').attr('style', 'cursor:progress');
       });
+
+
+  window.isActive = true;
+  $(window).focus(function () {
+    this.isActive = true;
+  });
+  $(window).blur(function () {
+    this.isActive = false;
+  });
+
 });

@@ -5,12 +5,18 @@ $(function () {
     var tab = el;
     var id = $(tab.target).attr('href');
     var path = id.replace(/[\_#]/gi, '/');
-    $(id).load(path, function () {
-      if (location_updater != null) {
-        clearTimeout(location_updater);
-      }
-      location_updater = setTimeout(function () { tab_updater(el); }, 20000);   // 20 secund
-    });
+    if (window.isActive != false) { //check if window is active and update channel states
+      $(id).load(path, function () {
+        if (location_updater != null) {
+          clearTimeout(location_updater);
+        }
+        location_updater = setTimeout(function () {
+          tab_updater(tab);
+        }, 5000);   // 20 secund
+      });
+    }else{
+      $(id).html('Monitoring stopped!');
+    }
   }
 
   $('#locations a[data-toggle="tab"]').on('shown', function (e) {
