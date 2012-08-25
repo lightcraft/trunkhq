@@ -16,6 +16,8 @@ gem "haml-rails", ">= 0.3.4", :group => :development
 gem "rspec-rails", ">= 2.11.0", :group => [:development, :test]
 gem "email_spec", ">= 1.2.1", :group => :test
 gem "guard", ">= 0.6.2", :group => :development
+gem "simplecov", :group => :test
+
 case HOST_OS
   when /darwin/i
     gem 'rb-fsevent', :group => :development
