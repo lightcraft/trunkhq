@@ -1,0 +1,28 @@
+%h1 Channel groups
+
+= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Channels Group', new_chan_group_path, :remote => true, :class => 'btn btn-success')
+
+%table.table.table-bordered
+  %tr
+    %th Chan group name
+    %th Max Channels count
+    %th Max Channels online
+    %th
+
+  - @chan_groups.each do |chan_group|
+    %tr
+      %td= chan_group.chan_group_name
+      %td= chan_group.max_channels_cnt
+      %td= chan_group.max_channels_online
+      %td
+        .btn-group
+          = link_to  edit_chan_group_path(chan_group), :remote => true, :class => 'btn btn-success' do
+            %i.icon-white.icon-wrench
+            Edit
+          = link_to chan_group, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-danger' do
+            %i.icon-white.icon-remove-sign
+            Destroy
+%footer
+  = paginate @chan_groups
+
+#edit

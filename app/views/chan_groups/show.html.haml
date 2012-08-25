@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Chan group name:
+  = @chan_group.chan_group_name
+
+= link_to 'Edit', edit_chan_group_path(@chan_group)
+\|
+= link_to 'Back', chan_groups_path

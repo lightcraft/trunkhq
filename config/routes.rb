@@ -1,4 +1,6 @@
 Trunkhq::Application.routes.draw do
+  resources :chan_groups
+
   root :to => 'home#index'
   match 'report' => 'home#report'
 
