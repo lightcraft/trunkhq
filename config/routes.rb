@@ -1,4 +1,6 @@
 Trunkhq::Application.routes.draw do
+  resources :prefix_groups
+
   resources :chan_groups
 
   root :to => 'home#index'

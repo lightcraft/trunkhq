@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(:version => 20120824072435) do
     t.integer "channel_id"
     t.integer "prefix_group_id"
     t.integer "max_minutes_per_day"
-    t.integer "def_interval_mins"
-    t.integer "def_calls_per_interval"
-    t.integer "def_call_min_interval"
+    t.integer "interval_mins"
+    t.integer "calls_per_interval"
+    t.integer "call_min_interval"
   end
 
   create_table "channels", :force => true do |t|
@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(:version => 20120824072435) do
 
   create_table "prefix_groups", :force => true do |t|
     t.string  "group_name"
-    t.decimal "rate",            :precision => 10, :scale => 4
-    t.decimal "init_charge",     :precision => 10, :scale => 4
-    t.integer "minutes_per_day"
+    t.decimal "def_rate",            :precision => 10, :scale => 4
+    t.decimal "def_init_charge",     :precision => 10, :scale => 4
+    t.integer "def_minutes_per_day"
   end
 
   create_table "prefixes", :force => true do |t|

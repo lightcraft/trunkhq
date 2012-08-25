@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Group name:
+  = @prefix_group.group_name
+%p
+  %b Init change:
+  = @prefix_group.init_change
+%p
+  %b Rate:
+  = @prefix_group.rate
+%p
+  %b Minutes per day:
+  = @prefix_group.minutes_per_day
+
+= link_to 'Edit', edit_prefix_group_path(@prefix_group)
+\|
+= link_to 'Back', prefix_groups_path
