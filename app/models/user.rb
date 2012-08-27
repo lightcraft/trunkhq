@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :locations
   has_many :invitations, :class_name => 'User', :as => :invited_by
+  has_many :user_prefix_groups
 
   after_create :create_user_home
   after_invitation_accepted :email_invited_by

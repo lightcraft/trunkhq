@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(:version => 20120824072435) do
   create_table "user_prefix_groups", :force => true do |t|
     t.integer "user_id"
     t.integer "prefix_group_id"
-    t.integer "allowed_minites"
+    t.integer "allowed_minutes"
     t.date    "init_date"
     t.string  "rate"
     t.integer "init_charge"
