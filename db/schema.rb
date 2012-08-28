@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20120828124559) do
     t.time     "stop_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name",          :limit => 100
   end
 
   create_table "codecs", :force => true do |t|
