@@ -2,14 +2,20 @@
   .span1
     &nbsp;
     = channel.id
-  .span2= number_to_phone(channel.name)
-  .span1 Operator
-  .span1 State
-  .span1 Reg status
-  .span2 -
+  .span2
+    &nbsp;
+    = number_to_phone(channel.sip.name)
+  .span1
+    &nbsp;
+    = channel.operator_groups
+  .span1= channel.state
+  .span1
+    &nbsp;
+    = channel.subscribecontext
+  .span2 TODO
   .span2
   .span3.btn-group
-    = link_to power_location_channel_path(location, channel), :remote => true, :class => 'btn power btn-success' do
+    = link_to power_location_channel_path(location, channel), :remote => true, :class => "btn power #{channel.status.eql?(1) ? 'btn-success' : 'btn-danger'}" do
       %i.icon-off
       Power
     = link_to edit_location_channel_path(location, channel), :remote => true, :class => 'btn' do

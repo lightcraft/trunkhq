@@ -44,6 +44,14 @@ body {
       select.time {
         width: 50px;
       }
+      .control-group.time.optional {
+        .control-label {
+          text-align: left;
+        }
+        .controls {
+          clear: left;
+        }
+      }
     }
   }
   .head {
@@ -66,6 +74,10 @@ body {
       min-width: 400px
     }
   }
+  #new_channel {
+    width: 700px;
+  }
+
   input[type=text].datepicker {
     width: 6em;
   }
@@ -78,6 +90,3 @@ body {
   text-align: left;
 }
 
-#new_channel {
-  width: 700px;
-}

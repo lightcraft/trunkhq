@@ -2,6 +2,7 @@ class ChannelsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_location
   before_filter :find_channel, :only => [:show, :edit, :update, :destroy, :power, :sys_info]
+  before_filter :init_prefix_groups, :only => [:new, :create, :update, :edit]
   respond_to :html, :json
 
   # GET /channels
@@ -28,7 +29,20 @@ class ChannelsController < ApplicationController
   ## GET /channels/new
   ## GET /channels/new.json
   def new
-    @channel = Channel.new(:sip => Sip.new)
+    @channel = Channel.new()
+    @channel.sip = Sip.new
+    @prefix_groups = PrefixGroup.order(:group_name).all
+    groups = @prefix_groups.collect { |group| {
+        name: group.group_name,
+        call_min_interval: 60,
+        calls_per_interval: 2,
+        interval_mins: 60,
+        prefix_group_id: group.id,
+        max_minutes_per_day: group.def_minutes_per_day,
+    } }
+    @channel.chan_prefix_groups.build(groups)
+    logger.debug("ChanPrefixGroups for channel")
+    logger.debug(@channel.chan_prefix_groups)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,47 +51,55 @@ class ChannelsController < ApplicationController
     end
   end
 
-  # GET /channels/1/edit
+# GET /channels/1/edit
   def edit
     respond_to do |format|
       format.js { render :layout => false }
     end
   end
 
-  # POST /channels
-  # POST /channels.json
+# POST /channels
+# POST /channels.json
   def create
+    puts params[:channel].to_yaml
     @channel = Channel.new(params[:channel])
+    @channel.sip.user = current_user
+    @channel.valid?
+    logger.debug('ERRORS')
+    logger.debug(@channel.errors.full_messages)
 
     respond_to do |format|
       if @channel.save
         format.html { redirect_to user_locations_path(current_user), notice: 'Channel was successfully created.' }
         format.json { render json: @channel, status: :created, location: @channel }
+        format.js { render :text => "window.location = '#{user_locations_path(current_user)}'", notice: 'Channel was successfully created.' }
       else
         format.html { render user_locations_path(current_user) }
         format.json { render json: @channel.errors, status: :unprocessable_entity }
+        format.js { render action: "new", layout: false }
       end
     end
   end
 
-  # PUT /channels/1
-  # PUT /channels/1.json
+# PUT /channels/1
+# PUT /channels/1.json
   def update
     respond_to do |format|
       if @channel.update_attributes(params[:channel])
         format.html { redirect_to user_locations_path(current_user), notice: 'Channel was successfully updated.' }
         format.json { head :no_content }
-        format.js {}
+        format.js { render :text => "window.location = '#{user_locations_path(current_user)}'", notice: 'Channel was successfully updates.' }
       else
+        logger.debug(@channel.errors.full_messages)
         format.html { render action: "edit" }
         format.json { render json: @channel.errors, status: :unprocessable_entity }
-        format.js { render :partial => 'edit', :layout => false }
+        format.js { render action: 'edit', layout: false }
       end
     end
   end
 
   def power
-    #TODO toggle column state for enabled/disabled channel
+    @channel.state_on
     respond_with(@channel) do |format|
       format.html {}
       format.js {}
@@ -91,8 +113,8 @@ class ChannelsController < ApplicationController
     end
   end
 
-  # DELETE /channels/1
-  # DELETE /channels/1.json
+# DELETE /channels/1
+# DELETE /channels/1.json
   def destroy
     @channel.destroy
 
@@ -111,4 +133,9 @@ class ChannelsController < ApplicationController
   def find_channel
     @channel = @location.channels.find(params[:id])
   end
+
+  def init_prefix_groups
+    @prefix_groups = PrefixGroup.order(:group_name).all
+  end
+
 end

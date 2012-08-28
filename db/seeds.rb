@@ -17,3 +17,19 @@ puts 'New user created: ' << user2.name
   user = User.create! :name => Faker::Name.name, :email => Faker::Internet.email, :password => 'please', :password_confirmation => 'please', :confirmed_at => Time.now.utc
   puts 'New user created: ' << user.name
 end
+
+puts "Crete prefix groups"
+['MTS', 'UMC', 'Life'].each do |oper|
+  PrefixGroup.create!(group_name: oper,  def_rate: 3, def_minutes_per_day: 1000, def_init_charge: 35)
+end
+
+puts "Create Prefixed for each group"
+PrefixGroup.all.each do |group|
+  Prefix.create!(prefix: rand(1000), prefix_group: group)
+end
+
+cnt = 1000
+10.times do |time|
+  cnt = cnt + 1
+  ChanGroup.create!(chan_group_name: cnt, max_channels_cnt: cnt, max_channels_online: cnt)
+end

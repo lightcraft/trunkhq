@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824072435) do
+ActiveRecord::Schema.define(:version => 20120828124559) do
 
   create_table "chan_groups", :force => true do |t|
     t.string  "chan_group_name",     :limit => 50
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20120824072435) do
     t.integer "interval_mins"
     t.integer "calls_per_interval"
     t.integer "call_min_interval"
+    t.boolean "strict"
+    t.boolean "enabled"
   end
 
   create_table "channels", :force => true do |t|

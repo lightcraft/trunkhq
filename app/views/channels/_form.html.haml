@@ -1,4 +1,4 @@
-= simple_form_for([@location, @channel], :html => {:class => 'modal hide'} ) do |f|
+= simple_form_for([@location, @channel], :html => {:class => 'modal hide', :remote => true} ) do |f|
   .modal-header
     %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
     %h3.row
@@ -8,59 +8,65 @@
       .span1= f.select :location_id, current_user.locations.all.map { |l| [l.name, l.id] }
   .modal-body
     = f.error_notification
+    -#= @channel.errors.full_messages.join('<br/>').html_safe
+    = f.fields_for :sip do |sip_form|
+      .row
+        .span2= sip_form.input :name, :type => "number", :placeholder => 'Phone number'
+        .span2= sip_form.input :secret, :placeholder => 'Password'
+        .span2= f.select :chan_group_id, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID'
     .row
-      .span2= text_field :channel, :name, :placeholder => 'Phone number'
-      .span2= text_field :channel, :secret, :placeholder => 'Password'
-      .span2= f.select :chan_group_id, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID'
-    .row
-      .span2{'data-date' => @channel.start_date_str}
-        = text_field :channel, :start_date,
-          :value => @channel.start_date_str,
+      .span2
+        = f.text_field :start_date,
           :placeholder => 'Start date',
           :title => 'Start date',
-          :class => 'datepicker'
+          :class => 'datepicker',
+          :value => @channel.start_date_str
+
       .span2
-        = text_field :channel, :stop_date,
-          :value => @channel.stop_date_str,
+        = f.text_field :stop_date,
           :placeholder => 'Stop date',
           :title => 'Stop date',
-          :class => 'datepicker'
+          :class => 'datepicker',
+          :value => @channel.stop_date_str
 
     .row
       .span2= f.input :start_time
       .span2= f.input :stop_time
-    - operators = ['KS', 'MTS', 'Life', '3mob', 'fix']
+    - prefix_group_ids = @channel.chan_prefix_groups.map(&:prefix_group_id)
     .tabbable.tabs-below
       .tab-content
-        .row
-          %label.span1 Enable
-          %label.span1 Time interval
-          %label.span1 Count calls
-          %label.span1 Interval
-          %label.span1 min/day
-        - operators.each do |operator|
-          .tab-pane{id: "#{operator}", :class => "#{'active' if operators.index(operator).eql?(0)}"}
+        .row.head
+          .span1 Enable
+          .span1 Time interval
+          .span1 Count calls
+          .span1 Interval
+          .span1 min/day
+        -#- @channel.chan_prefix_groups.each do |operator|
+        = f.fields_for :chan_prefix_groups do |chan_form|
+          - operator_enabled = prefix_group_ids.include?(chan_form.object.prefix_group_id)
+          .tab-pane{id: dom_id(chan_form.object)+"#{chan_form.object.prefix_group_id}", :class => "#{'active' if @channel.chan_prefix_groups.index(chan_form.object).eql?(0)}"}
+            = chan_form.hidden_field :prefix_group_id
             .row
               .span1
-                = check_box_tag("channel[operator][#{operator}][enabled]", true)
+                = chan_form.check_box(:enabled)
                 ON
               .span1
-                %input{:type => "number", :pattern => "[0-9]+", :value => 100, :size => "5", :maxlength => "4", :class => 'input-mini'}
+                = chan_form.text_field(:call_min_interval, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
               .span1
-                %input{:type => "number", :pattern => "[0-9]+", :value => 100, :size => "5", :maxlength => "4", :class => 'input-mini'}
+                = chan_form.text_field(:calls_per_interval, :type => "number", :pattern => "[0-9]+", :size => "5", :maxlength => "4", :class => 'input-mini')
               .span1
-                %input{:type => "number", :pattern => "[0-9]+", :value => 100, :size => "5", :maxlength => "4", :class => 'input-mini'}
+                = chan_form.text_field(:interval_mins, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
               .span1
-                %input{:type => "number", :pattern => "[0-9]+", :value => 100, :size => "5", :maxlength => "4", :class => 'input-mini'}
+                = chan_form.text_field(:max_minutes_per_day, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
               .span1
-                = check_box_tag("channel[operator][#{operator}][strict]", '1')
+                = chan_form.check_box(:strict)
                 strict
 
       %ul.nav.nav-tabs.operators
-        - operators.each do |operator|
+        - @channel.chan_prefix_groups.each do |operator|
           %li
-            = link_to "##{operator}", 'data-toggle' => 'tab' do
-              = operator
+            = link_to "##{dom_id(operator)}#{operator.prefix_group_id}", 'data-toggle' => 'tab' do
+              = operator.name
 
   .modal-footer
     = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')

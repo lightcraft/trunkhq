@@ -18,6 +18,7 @@ class LocationsController < ApplicationController
   def show
     @location = current_user.locations.find(params[:id])
     @location_for_destroy = @location.channels.blank? || (@location ? @location.channels.on.blank? : false)
+    @channels = @location.channels.includes(:chan_prefix_groups).joins(:sip)
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }

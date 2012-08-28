@@ -2,15 +2,15 @@
 
 - if @location_for_destroy
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger')
-- else
-  .row.head
-    .span1 Channel
-    .span2 Phone
-    .span1 Operator
-    .span1 State
-    .span1 Reg status
-    .span2 Duration today
-    .span2 Live time
-    .span3
-  - @location.channels.each do |channel|
-    = render :partial => 'channels/channel', :locals => {:channel => channel, :location => @location}
+
+.row.head
+  .span1 Channel
+  .span2 Phone
+  .span1 Operator
+  .span1 State
+  .span1 Reg status
+  .span2 Duration today
+  .span2 Live time
+  .span3
+- @channels.each do |channel|
+  = render :partial => 'channels/channel', :locals => {:channel => channel, :location => @location}
