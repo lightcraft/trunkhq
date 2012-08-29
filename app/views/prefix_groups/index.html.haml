@@ -12,7 +12,7 @@
   - @prefix_groups.each do |prefix_group|
     = content_tag_for(:tr, prefix_group) do
       %td= prefix_group.id
-      %td= prefix_group.group_name
+      %td{:title => prefix_group.prefixes_list.join(',')}= prefix_group.group_name
       %td= prefix_group.def_init_charge
       %td= prefix_group.def_rate
       %td= prefix_group.def_minutes_per_day

@@ -6,7 +6,7 @@ class PrefixGroupsController < ApplicationController
   # GET /prefix_groups
   # GET /prefix_groups.json
   def index
-    @prefix_groups = PrefixGroup.order(:group_name).page(params[:page]).per(10)
+    @prefix_groups = PrefixGroup.order(:group_name).includes(:prefixes).page(params[:page]).per(10)
 
     respond_to do |format|
       format.html # index.html.erb
