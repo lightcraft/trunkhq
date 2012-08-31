@@ -1,16 +1,15 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource :user
   before_filter :authenticate_user!
   respond_to :html, :json
 
   def index
-    authorize! :index, @user, :message => 'Not authorized as an administrator.'
-    @users = User.includes(:roles).page(params[:page]).per(10)
+    @users = User.includes(:roles).where('roles.name IN (?)', ['user', 'admin']).page(params[:page]).per(10)
     @first_admin = Role.first_admin
   end
 
   def show
     @user = User.find(params[:id])
-    authorize! :read, @user
   end
 
   def grant

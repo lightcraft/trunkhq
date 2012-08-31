@@ -1,0 +1,28 @@
+%h1 Providers
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Operators
+      %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Provider', new_provider_path, :remote => true, :class => 'btn btn-success')
+
+  %tbody
+    - @providers.each do |provider|
+      %tr
+        %td= link_to provider.name, provider_path(provider)
+        %td= provider.email
+        %td{:title => '(min/rate)'}= provider.operator_limits
+        %td.btn-group
+          = link_to  edit_provider_path(provider), :remote => true, :class => 'btn btn-success' do
+            %i.icon-white.icon-wrench
+            Edit
+          = link_to provider_path(provider), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-danger' do
+            %i.icon-white.icon-trash
+            Destroy
+
+%footer
+  = paginate @providers
+
+#edit

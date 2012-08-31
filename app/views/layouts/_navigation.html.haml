@@ -1,6 +1,7 @@
 = link_to "channelhq", root_path, :class => 'brand'
-%ul.nav
-  - if user_signed_in?
+
+- if user_signed_in?
+  %ul.nav
     %li
       = link_to( content_tag(:i, '', :class => 'icon-gift icon-white') + ' Report', report_path)
     %li
@@ -12,18 +13,14 @@
           %li= link_to(content_tag(:i, '', :class => 'icon-signal') + ' Users', users_path)
           %li= link_to(content_tag(:i, '', :class => 'icon-th') + ' Channel Groups', chan_groups_path)
           %li= link_to(content_tag(:i, '', :class => 'icon-list') + ' Prefix Groups', prefix_groups_path)
-          %li= link_to(content_tag(:i, '', :class => 'icon-briefcase') + ' Traffic Provider', users_path)
-
-
-  - else
-    %li
-      = link_to(content_tag(:i, '', :class => 'icon-fire icon-white') + ' Sign up', new_user_registration_path)
-
-  - if user_signed_in?
-    %li
-      = link_to( content_tag(:i, '', :class => 'icon-off icon-white') + ' Logout', destroy_user_session_path, :method=>'delete')
+          %li= link_to(content_tag(:i, '', :class => 'icon-briefcase') + ' Traffic Providers', providers_path)
     %li= link_to content_tag(:i, '', :class => 'icon-circle-arrow-left icon-white') + ' Back',  :back
-  - else
-    %li
-      = link_to(content_tag(:i, '', :class => 'icon-off icon-white') + ' Login', new_user_session_path)
+
+  %ul.nav.pull-right
+    %li= link_to( content_tag(:i, '', :class => 'icon-off icon-white') + ' Logout', destroy_user_session_path, :method=>'delete')
+
+- else
+  %ul.nav.pull-right
+    %li= link_to(content_tag(:i, '', :class => 'icon-fire icon-white') + ' Sign up', new_user_registration_path)
+    %li= link_to(content_tag(:i, '', :class => 'icon-off icon-white') + ' Login', new_user_session_path)
 

@@ -1,6 +1,7 @@
 class LocationsController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html, :json
+  before_filter :find_user_location, :only => [:show, :edit, :update, :destroy]
 
   # GET /locations
   # GET /locations.json
@@ -16,7 +17,6 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = current_user.locations.find(params[:id])
     @location_for_destroy = @location.channels.blank? || (@location ? @location.channels.on.blank? : false)
     @channels = @location.channels.includes(:sip).includes(:chan_prefix_groups => :prefix_group)
 
@@ -39,7 +39,6 @@ class LocationsController < ApplicationController
 
   # GET /locations/1/edit
   def edit
-    @location = Location.find(params[:id])
   end
 
   # POST /locations
@@ -61,8 +60,6 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   # PUT /locations/1.json
   def update
-    @location = Location.find(params[:id])
-
     respond_to do |format|
       if @location.update_attributes(params[:location])
         format.html { redirect_to @location, notice: 'Location was successfully updated.' }
@@ -77,12 +74,16 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    @location = current_user.locations.find(params[:id])
     @location.destroy
 
     respond_to do |format|
       format.html { redirect_to :back }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def find_user_location
+    @location = current_user.locations.find(params[:id])
   end
 end

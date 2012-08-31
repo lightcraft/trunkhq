@@ -3,11 +3,26 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
+    Rails.logger.debug("USER CANCAN #{user.inspect}")
     if user.has_role? :admin
       can :manage, :all
-    else
+    end
+
+    if user.has_role? :user
       can :read, User, :id => user.id
-      #can :read, Channel, :active => true, :user_id => user.id
+      can [:read, :update, :destroy], Location, :user_id => user.id
+
+      can :update, :all, :user_id => user.id
+      can :read, Sip, :user_id => user.id
+      can :read, PrefixGroup
+      #can :create, Channel
+      #
+      #can [:update, :destroy, :power, :sys_info], Channel do |channel|
+      #  Rails.logger.debug("CHECKROLE CHANNEL")
+      #  Rails.logger.debug(channel.inspect)
+      #  channel.location.user_id == user.id
+      #end
+
     end
     # Define abilities for the passed in user here. For example:
     #

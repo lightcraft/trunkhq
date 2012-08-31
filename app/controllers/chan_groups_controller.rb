@@ -1,4 +1,6 @@
 class ChanGroupsController < ApplicationController
+  load_and_authorize_resource :chan_group
+
   before_filter :authenticate_user!
   before_filter :find_group, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json, :js

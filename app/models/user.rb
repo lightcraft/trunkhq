@@ -12,14 +12,21 @@ class User < ActiveRecord::Base
 
   has_many :locations
   has_many :invitations, :class_name => 'User', :as => :invited_by
-  has_many :user_prefix_groups
 
-  after_create :create_user_home
+  has_many :user_prefix_groups, :foreign_key => :user_id, dependent: :destroy
+  has_many :prefix_groups, through: :user_prefix_groups
+  accepts_nested_attributes_for :user_prefix_groups
+  attr_accessible :user_prefix_groups_attributes
+
+  after_create :build_user_env
   after_invitation_accepted :email_invited_by
 
-
-  def create_user_home
-    self.locations << Location.new(name: 'Home')
+  def build_user_env
+    logger.debug("NEWUSER class_name -> #{class_name}")
+    if self.class_name.eql?(User)
+      self.locations << Location.new(name: 'Home')
+      self.add_role :user
+    end
   end
 
   def email_invited_by
@@ -28,5 +35,9 @@ class User < ActiveRecord::Base
 
   def can_create_invitation?
     self.invitation_limit.to_i > 0
+  end
+
+  def class_name
+    self.class.name
   end
 end

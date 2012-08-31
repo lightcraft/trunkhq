@@ -1,0 +1,47 @@
+= simple_form_for @provider, :html =>{:class => "modal #{'hide' if request.xhr?}", :remote => true}  do |f|
+  .modal-header
+    %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
+    %h3.row
+      .span2
+        = "#{ f.object.new_record? ? 'New' : 'Edit'}"
+        Provider
+  .modal-body
+    = f.error_notification
+    - unless f.object.errors.blank?
+      = f.object.errors.full_messages
+    .row
+      .span2= f.text_field :name, :title =>'Name', :placeholder => 'Name', :class => 'input-mini'
+      .span3= f.text_field :email, :title => 'Email', :placeholder => 'user@email.com', :class => 'input-mini'
+    - prefix_group_ids = @provider.user_prefix_groups.map(&:prefix_group_id)
+    .tabbable.tabs-below
+      .tab-content
+        .row.head
+          .span2 Allowed Minutes
+          .span2 Init Charge
+          .span2 Init Date
+          .span2 Rate cent/min
+        - logger.debug(@provider.user_prefix_groups)
+        = f.fields_for :user_prefix_groups do |user_form|
+          .tab-pane{id: dom_id(user_form.object)+"#{user_form.object.prefix_group_id}", :class => "#{'active' if @provider.user_prefix_groups.index(user_form.object).eql?(0)}"}
+            .row
+              = user_form.hidden_field :prefix_group_id
+              .span2
+                = user_form.text_field(:allowed_minutes, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-small')
+              .span2
+                = user_form.text_field(:init_charge, :type => "number", :pattern => "[0-9]+", :size => "5", :maxlength => "4", :class => 'input-mini')
+              .span2
+                = user_form.text_field :init_date,
+                  :title => 'Init date',
+                  :class => 'datepicker input-mini'
+              .span2
+                = user_form.text_field(:rate, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
+
+      %ul.nav.nav-tabs.operators
+        - @provider.user_prefix_groups.each do |operator|
+          %li
+            = link_to "##{dom_id(operator)}#{operator.prefix_group_id}", 'data-toggle' => 'tab' do
+              = operator.name
+  .modal-footer
+    .row
+      = f.button :submit, :class => 'btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), providers_path, :class => 'btn'

@@ -1,6 +1,5 @@
-%h2 Users
-
 %header
+  %h2 Users
 %table.table.table-bordered
   %tr
     %th #
@@ -8,7 +7,7 @@
     %th Current Sign
     %th Last Sign
     %th Sign in count
-    %th
+    %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' Send Invite',  new_user_invitation_path, :class => 'btn btn-success')
 
   - @users.each do |user|
     = render user

@@ -41,8 +41,6 @@ class ChannelsController < ApplicationController
         max_minutes_per_day: group.def_minutes_per_day,
     } }
     @channel.chan_prefix_groups.build(groups)
-    logger.debug("ChanPrefixGroups for channel")
-    logger.debug(@channel.chan_prefix_groups)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,12 +59,9 @@ class ChannelsController < ApplicationController
 # POST /channels
 # POST /channels.json
   def create
-    puts params[:channel].to_yaml
     @channel = Channel.new(params[:channel])
     @channel.sip.user = current_user
     @channel.valid?
-    logger.debug('ERRORS')
-    logger.debug(@channel.errors.full_messages)
 
     respond_to do |format|
       if @channel.save
@@ -90,7 +85,6 @@ class ChannelsController < ApplicationController
         format.json { head :no_content }
         format.js { render :text => "window.location = '#{user_locations_path(current_user)}'", notice: 'Channel was successfully updates.' }
       else
-        logger.debug(@channel.errors.full_messages)
         format.html { render action: "edit" }
         format.json { render json: @channel.errors, status: :unprocessable_entity }
         format.js { render action: 'edit', layout: false }
@@ -127,7 +121,7 @@ class ChannelsController < ApplicationController
 
   private
   def find_location
-    @location = Location.find(params[:location_id])
+    @location = Location.where(user_id: current_user).find(params[:location_id])
   end
 
   def find_channel

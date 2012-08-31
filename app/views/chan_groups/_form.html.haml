@@ -4,13 +4,13 @@
     %h3.row
       .span2
         = "#{ f.object.new_record? ? 'New' : 'Edit'}"
-        Channels group
+        Channels Group
   .modal-body
     = f.error_notification
     .form-inputs
-      = f.input :chan_group_name
-      = f.input :max_channels_cnt
-      = f.input :max_channels_online
+      = f.input :chan_group_name, :label => 'Group Name'
+      = f.input :max_channels_cnt, :label => 'Channels count'
+      = f.input :max_channels_online, :label => 'Max in Online'
   .modal-footer
     = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
     = f.button :submit, :class => 'btn btn-primary'

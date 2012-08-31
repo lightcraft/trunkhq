@@ -23,10 +23,12 @@ class Channel < ActiveRecord::Base
   scope :alarm, where(status: 4)
 
   after_destroy { |record| Sip.destroy_all "sip.id = #{record.sip_id}" }
+  delegate :name, :to => :sip
+  delegate :secret, :to => :sip
 
   before_save { |record|
     self.init_date = Date.today if record.start_date_changed?
-    self.state = 1 if record.new_record?
+    self.status = 1 if record.new_record?
   }
 
   def start_date_str

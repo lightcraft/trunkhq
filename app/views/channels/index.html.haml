@@ -24,10 +24,10 @@
       %td= channel.stop_date
       %td= channel.start_time
       %td= channel.stop_time
-      %td= link_to 'Show', channel
-      %td= link_to 'Edit', edit_channel_path(channel)
-      %td= link_to 'Destroy', channel, :confirm => 'Are you sure?', :method => :delete
+      -#%td= link_to 'Show', channel
+        %td= link_to 'Edit', edit_channel_path(channel)
+        %td= link_to 'Destroy', channel, :confirm => 'Are you sure?', :method => :delete
 
 %br
 
-= link_to 'New Channel', new_channel_path
+-#= link_to 'New Channel', new_channel_path
