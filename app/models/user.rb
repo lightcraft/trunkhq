@@ -22,8 +22,7 @@ class User < ActiveRecord::Base
   after_invitation_accepted :email_invited_by
 
   def build_user_env
-    logger.debug("NEWUSER class_name -> #{class_name}")
-    if self.class_name.eql?(User)
+    if self.class_name.eql?('User')
       self.locations << Location.new(name: 'Home')
       self.add_role :user
     end
