@@ -15,7 +15,10 @@
       .row
         .span2= sip_form.input :name, :type => "number", :placeholder => 'Phone number', :label => 'Phone number'
         .span2= sip_form.input :secret, :placeholder => 'Password', :label => 'Password'
-        .span2= f.association :chan_group, :include_blank => false #, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID', :label => 'Group ID'
+        -#.span2= f.association :chan_group, :include_blank => false #, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID', :label => 'Group ID'
+        .span2
+          %label Group ID
+          = f.text_field(:chan_group_id, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
     .row
       .span2
         %label Date From

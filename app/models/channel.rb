@@ -45,8 +45,8 @@ class Channel < ActiveRecord::Base
 
   def online_status
     self.sip.lastms.to_i > 0 ?
-        'Offline' :
-        'Online'
+        'Online' :
+        'Offline'
   end
 
   def operator_groups
