@@ -2,12 +2,11 @@ class LocationsController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html, :json
   before_filter :find_user_location, :only => [:show, :edit, :update, :destroy]
+  before_filter :get_locations, :only => [:index]
 
   # GET /locations
   # GET /locations.json
   def index
-    @locations = current_user.has_admin? ? Location.all : current_user.locations
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @locations }
@@ -45,9 +44,9 @@ class LocationsController < ApplicationController
   # POST /locations.json
   def create
     @location = current_user.locations.build(params[:location])
-    @locations = current_user.locations
     respond_to do |format|
       if @location.save
+        get_locations
         # format.html { redirect_to user_locations_path(current_user) + "##{dom_id(@location)}", notice: 'Location was successfully created.' }
         format.html { render :index, notice: 'Location was successfully created.' }
         format.json { render json: @location, status: :created, location: @location }
@@ -91,5 +90,9 @@ class LocationsController < ApplicationController
       current_user.locations.find(params[:id])
     end
 
+  end
+
+  def get_locations
+    current_user.has_admin? ? Location.order(:id).all : current_user.locations.order(:id)
   end
 end
