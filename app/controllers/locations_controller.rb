@@ -93,6 +93,6 @@ class LocationsController < ApplicationController
   end
 
   def get_locations
-    current_user.has_admin? ? Location.order(:id).all : current_user.locations.order(:id)
+    @locations = current_user.has_admin? ? Location.order(:id).all : current_user.locations.order(:id)
   end
 end
