@@ -8,6 +8,7 @@ $textColor: #fff;
 
 body {
   padding-top: 40px;
+  font-size: 12px;
   a {
     color: $orange;
   }
@@ -38,20 +39,25 @@ body {
   .modal {
     color: $grayDark;
     .modal-body {
+      padding: 5px 10px;
       input[type=text], select {
-        width: 140px;
+        max-width: 140px;
       }
       select.time {
         width: 50px;
+      }
+      .controls {
+        clear: left;
       }
       .control-group.time.optional {
         .control-label {
           text-align: left;
         }
-        .controls {
-          clear: left;
-        }
+
       }
+    }
+    .modal-footer {
+      padding: 10px;
     }
   }
   .head {

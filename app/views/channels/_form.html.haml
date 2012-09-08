@@ -13,8 +13,8 @@
     = f.error_notification
     = f.fields_for :sip do |sip_form|
       .row
-        .span2= sip_form.input :name, :type => "number", :placeholder => 'Phone number', :label => 'Phone number'
-        .span2= sip_form.input :secret, :placeholder => 'Password', :label => 'Password'
+        .span2= sip_form.input :name, :type => "number", :placeholder => 'Phone number', :label => 'Phone number', :input_html => {  :class => 'input-small'}
+        .span2= sip_form.input :secret, :placeholder => 'Password', :label => 'Password',  :input_html => {  :class => 'input-small'}
         -#.span2= f.association :chan_group, :include_blank => false #, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID', :label => 'Group ID'
         .span2
           %label Group ID
@@ -25,7 +25,7 @@
         = f.text_field :start_date,
           :placeholder => 'Start date',
           :title => 'Start date',
-          :class => 'datepicker',
+          :class => 'datepicker input-small',
           :value => @channel.start_date_str
 
       .span2
@@ -33,9 +33,9 @@
         = f.text_field :stop_date,
           :placeholder => 'Stop date',
           :title => 'Stop date',
-          :class => 'datepicker',
+          :class => 'datepicker input-small',
           :value => @channel.stop_date_str
-      .span2= f.input :imei, :type => "number", :placeholder => 'Imei', :label => 'Imei'
+      .span2= f.input :imei, :type => "number", :placeholder => 'Imei', :label => 'Imei', :input_html => {  :class => 'input-small'}
     .row
       .span2= f.input :start_time
       .span2= f.input :stop_time
