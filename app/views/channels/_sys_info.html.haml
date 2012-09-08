@@ -1,15 +1,14 @@
 .modal-header
   %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
-  %h3= @channel.location.name
-
+  %h3
+    Channel
+    = "№ #{@channel.id}"
 .modal-body
-  %h4
-    Channel:
-    = "##{@channel.id}"
-  %h4
-    Phone:
-    = number_to_phone(@channel.sip.name)
   %dl.dl-horizontal
+    %dt Location
+    %dd= @channel.location.name
+    %dt Phone:
+    %dd= number_to_phone(@channel.sip.name)
     %dt Start Date:
     %dd= @channel.start_date_str
     %dt Stop Date:

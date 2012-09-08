@@ -1,4 +1,4 @@
-= div_for(channel, :class => 'row') do
+= div_for(channel, :class => "row", :style => "background-color: #{channel_row_class(channel)}") do
   .span1
     &nbsp;
     %b{rel: 'tooltip', title: "Phone: #{channel.sip.name} <br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.id, '#')

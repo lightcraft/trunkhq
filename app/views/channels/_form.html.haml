@@ -5,10 +5,12 @@
       .span2
         = "#{ f.object.new_record? ? 'New' : 'Edit'}"
         channel
-      .span1= f.association :location, :collection => current_user.locations.all.map { |l| [l.name, l.id] }, :label =>false, :include_blank => false
+
+      .span1
+        = @channel.id ? "№ #{@channel.id}" : ''
+        .hidden= f.association :location, :collection => current_user.locations.all.map { |l| [l.name, l.id] }, :label =>false, :include_blank => false
   .modal-body
     = f.error_notification
-    -#= @channel.errors.full_messages.join('<br/>').html_safe
     = f.fields_for :sip do |sip_form|
       .row
         .span2= sip_form.input :name, :type => "number", :placeholder => 'Phone number', :label => 'Phone number'
