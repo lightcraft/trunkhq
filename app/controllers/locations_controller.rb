@@ -6,7 +6,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = current_user.locations
+    @locations = current_user.has_admin? ? Location.all : current_user.locations
 
     respond_to do |format|
       format.html # index.html.erb
@@ -48,7 +48,7 @@ class LocationsController < ApplicationController
     @locations = current_user.locations
     respond_to do |format|
       if @location.save
-       # format.html { redirect_to user_locations_path(current_user) + "##{dom_id(@location)}", notice: 'Location was successfully created.' }
+        # format.html { redirect_to user_locations_path(current_user) + "##{dom_id(@location)}", notice: 'Location was successfully created.' }
         format.html { render :index, notice: 'Location was successfully created.' }
         format.json { render json: @location, status: :created, location: @location }
       else
@@ -85,6 +85,11 @@ class LocationsController < ApplicationController
 
   private
   def find_user_location
-    @location = current_user.locations.find(params[:id])
+    @location = if current_user.has_admin?
+      Location.find(params[:id])
+    else
+      current_user.locations.find(params[:id])
+    end
+
   end
 end

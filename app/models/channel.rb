@@ -43,8 +43,10 @@ class Channel < ActiveRecord::Base
     Channel::STATUS[self.status]
   end
 
-  def subscribecontext
-    self.sip.subscribecontext
+  def online_status
+    self.sip.lastms.to_i > 0 ?
+        'Offline' :
+        'Online'
   end
 
   def operator_groups
@@ -59,11 +61,26 @@ class Channel < ActiveRecord::Base
     {useragent: self.sip.useragent, regseconds: self.sip.regseconds, fullcontact: self.sip.fullcontact}
   end
 
+  def system_status
+    #allow: ulaw;alaw;gsm;
+    #fullcontact: sip:204018@213.231.6.254:7074
+    #ipaddr: 213.231.6.254
+    #port: 7074
+    #regserver: ''
+    #regseconds: 1347120641
+    #lastms: 44
+
+    ["ttl: #{sip.lastms}",
+     self.sip.fullcontact,
+     self.sip.useragent,
+     "IP: #{sip.ipaddr}"]
+  end
+
   def build_prefix_groups
     ids = self.prefix_group_ids
 
     prefix_groups = PrefixGroup.order(:group_name)
-    prefix_groups = prefix_groups.where(['id NOT IN (?)', ids])  unless ids.blank?
+    prefix_groups = prefix_groups.where(['id NOT IN (?)', ids]) unless ids.blank?
 
     groups = prefix_groups.collect { |group| {
         name: group.group_name,

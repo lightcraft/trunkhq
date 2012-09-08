@@ -11,9 +11,9 @@
   .span1= channel.state
   .span1
     &nbsp;
-    = channel.subscribecontext
-  .span2 TODO
-  .span2
+    = channel.online_status
+  .span2= channel.system_status.join(' ').html_safe
+  .span2= Cdr.channel_stats(channel)
   .span3.btn-group
     = link_to power_location_channel_path(location, channel), :remote => true, :class => "btn btn-mini power #{channel.status.eql?(1) ? 'btn-success' : 'btn-danger'}" do
       %i.icon-off

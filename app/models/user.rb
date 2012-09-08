@@ -39,4 +39,8 @@ class User < ActiveRecord::Base
   def class_name
     self.class.name
   end
+
+  def has_admin?
+    self.has_role?(:admin)
+  end
 end

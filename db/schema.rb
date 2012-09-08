@@ -13,6 +13,46 @@
 
 ActiveRecord::Schema.define(:version => 20120908052347) do
 
+  create_table "cdr", :id => false, :force => true do |t|
+    t.datetime "calldate",                                                                 :null => false
+    t.string   "clid",        :limit => 80,                                :default => "", :null => false
+    t.string   "src",         :limit => 80,                                :default => "", :null => false
+    t.string   "dst",         :limit => 80,                                :default => "", :null => false
+    t.string   "dcontext",    :limit => 80,                                :default => "", :null => false
+    t.string   "channel",     :limit => 80,                                :default => "", :null => false
+    t.string   "dstchannel",  :limit => 80,                                :default => "", :null => false
+    t.string   "lastapp",     :limit => 80,                                :default => "", :null => false
+    t.string   "lastdata",    :limit => 80,                                :default => "", :null => false
+    t.integer  "duration",                                                 :default => 0,  :null => false
+    t.integer  "billsec",                                                  :default => 0,  :null => false
+    t.string   "disposition", :limit => 45,                                :default => "", :null => false
+    t.integer  "amaflags",                                                 :default => 0,  :null => false
+    t.string   "accountcode", :limit => 20,                                :default => "", :null => false
+    t.string   "userfield",                                                :default => "", :null => false
+    t.string   "hangupcause", :limit => 50,                                                :null => false
+    t.string   "peerip",      :limit => 50,                                                :null => false
+    t.string   "recvip",      :limit => 50,                                                :null => false
+    t.string   "fromuri",     :limit => 50,                                                :null => false
+    t.string   "uri",         :limit => 50,                                                :null => false
+    t.string   "useragent",   :limit => 50,                                                :null => false
+    t.string   "codec1",      :limit => 50,                                                :null => false
+    t.string   "codec2",      :limit => 50,                                                :null => false
+    t.string   "llp",         :limit => 50,                                                :null => false
+    t.string   "rlp",         :limit => 50,                                                :null => false
+    t.string   "ljitt",       :limit => 50,                                                :null => false
+    t.string   "rjitt",       :limit => 50,                                                :null => false
+    t.string   "uniqueid",    :limit => 32,                                :default => "", :null => false
+    t.decimal  "txjitter",                  :precision => 10, :scale => 5
+    t.decimal  "rxjitter",                  :precision => 10, :scale => 5
+    t.decimal  "rxploss",                   :precision => 10, :scale => 5
+    t.decimal  "txploss",                   :precision => 10, :scale => 5
+    t.integer  "channel_id"
+  end
+
+  add_index "cdr", ["accountcode"], :name => "accountcode"
+  add_index "cdr", ["calldate"], :name => "calldate"
+  add_index "cdr", ["dst"], :name => "dst"
+
   create_table "chan_groups", :force => true do |t|
     t.string  "chan_group_name",     :limit => 50
     t.integer "max_channels_cnt"
@@ -44,7 +84,8 @@ ActiveRecord::Schema.define(:version => 20120908052347) do
     t.time     "stop_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "imei",          :limit => 20, :default => "", :null => false
+    t.string   "name",          :limit => 100
+    t.string   "imei",          :limit => 20,  :default => "", :null => false
   end
 
   create_table "codecs", :force => true do |t|
