@@ -5,18 +5,23 @@ $(function () {
     var tab = el;
     var id = $(tab.target).attr('href');
     var path = id.replace(/[\_#]/gi, '/');
-    if (window.isActive != false) { //check if window is active and update channel states
-      $(id).load(path, function () {
-        if (location_updater != null) {
-          clearTimeout(location_updater);
-        }
-        location_updater = setTimeout(function () {
-          tab_updater(tab);
-        }, 5000);   // 20 secund
-      });
-    }else{
-      $(id).html('Monitoring stopped!');
-    }
+    //  if (window.isActive != false) { //check if window is active and update channel states
+    $(id).load(path, function () {
+      // clean mouse over old tolltips
+      $('.tooltip').hide();
+
+      if (location_updater != null) {
+        clearTimeout(location_updater);
+      }
+      location_updater = setTimeout(function () {
+        tab_updater(tab);
+      }, 5000);   // 20 second
+
+      $('[rel="tooltip"]').tooltip();
+    });
+    //   }else{
+    //     $(id).html('Monitoring stopped!');
+    //   }
   }
 
   $('#locations a[data-toggle="tab"]').on('shown', function (e) {
@@ -24,5 +29,10 @@ $(function () {
   });
 
   //autoload first tab after open this page
-  $('#locations li:eq(0) a').tab('show');
+  if ($('#locations li.active a').get(0) == undefined) {
+    $('#locations li:eq(0) a').tab('show');
+  } else {
+    $('#locations li.active a').tab('show');
+  }
+
 });

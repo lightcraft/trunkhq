@@ -32,15 +32,15 @@ class ChannelsController < ApplicationController
     @channel = Channel.new()
     @channel.sip = Sip.new
     @prefix_groups = PrefixGroup.order(:group_name).all
-    groups = @prefix_groups.collect { |group| {
-        name: group.group_name,
-        call_min_interval: 60,
-        calls_per_interval: 2,
-        interval_mins: 60,
-        prefix_group_id: group.id,
-        max_minutes_per_day: group.def_minutes_per_day,
-    } }
-    @channel.chan_prefix_groups.build(groups)
+    #groups = @prefix_groups.collect { |group| {
+    #    name: group.group_name,
+    #    call_min_interval: 60,
+    #    calls_per_interval: 2,
+    #    interval_mins: 60,
+    #    prefix_group_id: group.id,
+    #    max_minutes_per_day: group.def_minutes_per_day,
+    #} }
+    @channel.build_prefix_groups
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,6 +51,9 @@ class ChannelsController < ApplicationController
 
 # GET /channels/1/edit
   def edit
+
+    @channel.build_prefix_groups
+
     respond_to do |format|
       format.js { render :layout => false }
     end

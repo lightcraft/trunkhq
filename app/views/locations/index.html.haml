@@ -1,7 +1,8 @@
 .tabbable
   %ul#locations.nav.nav-tabs
     - @locations.each do |location|
-      %li= link_to location.name, '#'+dom_id(location), :'data-toggle' => 'tab'
+      - ident = dom_id(location)
+      %li{:class => "#{ 'active' if !@location.nil? && @location.eql?(location)}"}= link_to location.name, '#'+ident, {:anchor => ident, :'data-toggle' => 'tab'}
 
 .tab-content
   - @locations.each do |location|

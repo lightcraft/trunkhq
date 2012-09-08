@@ -6,4 +6,7 @@ class ChanGroup < ActiveRecord::Base
   validates :chan_group_name, :allow_blank => false, :uniqueness => true
   validates :max_channels_cnt, :max_channels_online, :numericality => true, :allow_nil => false
 
+  def name
+    self.chan_group_name
+  end
 end

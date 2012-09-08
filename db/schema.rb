@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120828124559) do
+ActiveRecord::Schema.define(:version => 20120908052347) do
 
   create_table "chan_groups", :force => true do |t|
     t.string  "chan_group_name",     :limit => 50
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120828124559) do
     t.time     "stop_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",          :limit => 100
+    t.string   "imei",          :limit => 20, :default => "", :null => false
   end
 
   create_table "codecs", :force => true do |t|

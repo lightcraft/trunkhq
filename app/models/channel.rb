@@ -11,7 +11,7 @@ class Channel < ActiveRecord::Base
   validates :chan_group_id, presence: true
   validates :location_id, presence: true
 
-  attr_accessible :chan_group_id, :location_id, :start_date, :start_time, :stop_date, :stop_time
+  attr_accessible :chan_group_id, :location_id, :start_date, :start_time, :stop_date, :stop_time, :imei
   accepts_nested_attributes_for :chan_prefix_groups
   accepts_nested_attributes_for :sip
   attr_accessible :sip_attributes
@@ -57,5 +57,22 @@ class Channel < ActiveRecord::Base
 
   def sys_info
     {useragent: self.sip.useragent, regseconds: self.sip.regseconds, fullcontact: self.sip.fullcontact}
+  end
+
+  def build_prefix_groups
+    ids = self.prefix_group_ids
+
+    prefix_groups = PrefixGroup.order(:group_name)
+    prefix_groups = prefix_groups.where(['id NOT IN (?)', ids])  unless ids.blank?
+
+    groups = prefix_groups.collect { |group| {
+        name: group.group_name,
+        call_min_interval: 60,
+        calls_per_interval: 2,
+        interval_mins: 60,
+        prefix_group_id: group.id,
+        max_minutes_per_day: group.def_minutes_per_day,
+    } }
+    self.chan_prefix_groups.build(groups)
   end
 end
