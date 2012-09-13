@@ -1,0 +1,17 @@
+%ul#sys_log_tabs.nav.nav-tabs
+  %li= link_to('Short Log', "#short_log", 'data-toggle' => "tab")
+  %li= link_to('Long Log', "#full_log", 'data-toggle' => "tab")
+  %li= link_to('Show Channels', "#show_channels", 'data-toggle' => "tab")
+  %li= link_to('Show Peers', "#show_peers", 'data-toggle' => "tab")
+
+.tab-content
+  #short_log.tab-pane.active
+    short_log loading ...
+  #full_log.tab-pane
+    full_log loading ...
+  #show_channels.tab-pane
+    show_channels loading ...
+  #show_peers.tab-pane
+    show_peer loading ...
+
+= button_tag('Stop', :id =>'stop_monitors', :class => 'btn btn-success btn-mini')

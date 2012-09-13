@@ -9,4 +9,10 @@ class HomeController < ApplicationController
   def report
 
   end
+
+  def sys_log
+    unless current_user.has_admin?
+      redirect_to(root_path, :alert => '403 Permission denied!')
+    end
+  end
 end
