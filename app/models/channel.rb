@@ -49,8 +49,10 @@ class Channel < ActiveRecord::Base
         'Offline'
   end
 
+  # returned
+  # [{prefix_group_id => prefix_group_name}]
   def operator_groups
-    self.chan_prefix_groups.includes(:prefix_group).where(enabled: true).map(&:name).join(', ')
+    self.prefix_groups.includes(:chan_prefix_groups).where('chan_prefix_groups.enabled = ?', true)
   end
 
   def state_on
@@ -70,8 +72,7 @@ class Channel < ActiveRecord::Base
     #regseconds: 1347120641
     #lastms: 44
 
-    ["ttl: #{sip.lastms}",
-     self.sip.fullcontact,
+    [self.sip.fullcontact,
      self.sip.useragent,
      "IP: #{sip.ipaddr}"]
   end

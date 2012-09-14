@@ -1,13 +1,11 @@
 = div_for(channel, :class => "row", :style => "background-color: #{channel_row_class(channel)}") do
   .span1
     &nbsp;
-    %b{rel: 'tooltip', title: "Phone: #{channel.sip.name} <br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.id, '#')
-  -#.span2
-    &nbsp;
-    = number_to_phone(channel.sip.name)
+    %b{rel: 'tooltip', title: "Phone: #{channel.sip.name} <br/> Imei: #{channel.imei}<br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.id, '#')
   .span1
-    &nbsp;
-    = channel.operator_groups
+    - channel.operator_groups.each do |prefix_group|
+      = div_for(prefix_group, :style => "color: #{prefix_group.color}") do
+        = prefix_group.group_name
   .span1= channel.state
   .span1
     &nbsp;
