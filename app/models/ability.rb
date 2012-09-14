@@ -9,6 +9,8 @@ class Ability
     end
 
     if user.has_role? :user
+      can :switch, User
+
       can :read, User, :id => user.id
       can [:read, :update, :destroy], Location, :user_id => user.id
 

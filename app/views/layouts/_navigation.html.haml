@@ -19,6 +19,7 @@
     %li= link_to content_tag(:i, '', :class => 'icon-circle-arrow-left icon-white') + ' Back',  :back
 
   %ul.nav.pull-right
+    %li= link_to_original_user
     %li= link_to( content_tag(:i, '', :class => 'icon-off icon-white') + ' Logout', destroy_user_session_path, :method=>'delete')
 
 - else

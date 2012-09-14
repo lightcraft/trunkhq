@@ -32,6 +32,7 @@ Trunkhq::Application.routes.draw do
     resources :locations
     member do
       post 'grant'
+      post 'switch'
     end
   end
 
