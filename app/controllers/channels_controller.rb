@@ -32,14 +32,6 @@ class ChannelsController < ApplicationController
     @channel = Channel.new()
     @channel.sip = Sip.new
     @prefix_groups = PrefixGroup.order(:group_name).all
-    #groups = @prefix_groups.collect { |group| {
-    #    name: group.group_name,
-    #    call_min_interval: 60,
-    #    calls_per_interval: 2,
-    #    interval_mins: 60,
-    #    prefix_group_id: group.id,
-    #    max_minutes_per_day: group.def_minutes_per_day,
-    #} }
     @channel.build_prefix_groups
 
     respond_to do |format|
@@ -70,7 +62,7 @@ class ChannelsController < ApplicationController
       if @channel.save
         format.html { redirect_to user_locations_path(current_user), notice: 'Channel was successfully created.' }
         format.json { render json: @channel, status: :created, location: @channel }
-        format.js { render :text => "window.location = '#{user_locations_path(current_user)}'", notice: 'Channel was successfully created.' }
+        format.js { render :text => "window.location = '#{user_locations_path(current_user, :anchor => dom_id(@channel.location))}'; $('#new_channel').modal('hide');", notice: 'Channel was successfully created.' }
       else
         format.html { render user_locations_path(current_user) }
         format.json { render json: @channel.errors, status: :unprocessable_entity }
@@ -118,7 +110,7 @@ class ChannelsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to user_locations_path(current_user) }
       format.json { head :no_content }
-      # format.js { }
+      format.js { render :text => "$('##{dom_id(@channel, :edit)}').modal('hide');"  }
     end
   end
 

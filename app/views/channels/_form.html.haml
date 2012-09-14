@@ -79,4 +79,8 @@
     = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
     = f.button :submit, :class => 'btn btn-primary'
     - if f.object.persisted?
-      = link_to('Destroy', [@channel.location, @channel], :class => 'btn btn-danger', :confirm => 'Are You sure? to destroy this channel?', :method => :delete)
+      = link_to('Destroy', [@channel.location, @channel],
+        :class => 'btn btn-danger',
+        :confirm => 'Are You sure? to destroy this channel?',
+        :remote => true,
+        :method => :delete)

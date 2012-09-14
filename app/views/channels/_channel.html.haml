@@ -3,6 +3,7 @@
     &nbsp;
     %b{rel: 'tooltip', title: "Phone: #{channel.sip.name} <br/> Imei: #{channel.imei}<br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.id, '#')
   .span1
+    = '&nbsp;-'.html_safe if channel.operator_groups.blank?
     - channel.operator_groups.each do |prefix_group|
       = div_for(prefix_group, :style => "color: #{prefix_group.color}") do
         = prefix_group.group_name
