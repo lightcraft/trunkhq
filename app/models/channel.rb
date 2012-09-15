@@ -7,6 +7,7 @@ class Channel < ActiveRecord::Base
   belongs_to :chan_group
   has_many :chan_prefix_groups, dependent: :destroy
   has_many :prefix_groups, through: :chan_prefix_groups
+  has_many :cdrs
 
   validates :chan_group_id, presence: true
   validates :location_id, presence: true
@@ -92,5 +93,12 @@ class Channel < ActiveRecord::Base
         max_minutes_per_day: group.def_minutes_per_day,
     } }
     self.chan_prefix_groups.build(groups)
+  end
+
+  # {prefix_group_id -> bill_time}
+  #{nil=>0, 1=>0, 2=>307}
+  #
+  def today_bill_time
+    self.cdrs.group(:prefix_group_id).today.sum('billsec/60')
   end
 end

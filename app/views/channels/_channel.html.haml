@@ -4,9 +4,11 @@
     %b{rel: 'tooltip', title: "Phone: #{channel.sip.name} <br/> Imei: #{channel.imei}<br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.id, '#')
   .span1
     = '&nbsp;-'.html_safe if channel.operator_groups.blank?
+    - bill_time = channel.today_bill_time
     - channel.operator_groups.each do |prefix_group|
-      = div_for(prefix_group, :style => "color: #{prefix_group.color}") do
-        = prefix_group.group_name
+      = div_for(prefix_group) do
+        %span.head{:style => "color: #{prefix_group.color}"}= prefix_group.group_name
+        %span.pull-right= bill_time[prefix_group.id] || 0
   .span1= channel.state
   .span1
     &nbsp;
@@ -14,7 +16,7 @@
   .span2= channel.system_status.join(' ').html_safe
   .span2= Cdr.channel_stats(channel)
   .span3.btn-group
-    = link_to power_location_channel_path(location, channel), :remote => true, :class => "btn btn-mini power #{channel.status.eql?(1) ? 'btn-success' : 'btn-danger'}" do
+    = link_to power_location_channel_path(location, channel), :remote => true, :class => "btn btn-mini power #{channel.online_status.eql?('online') ? 'btn-success' : 'btn-danger'}" do
       %i.icon-off
       Power
     = link_to edit_location_channel_path(location, channel), :remote => true, :class => 'btn btn-mini' do

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :locations
   has_many :invitations, :class_name => 'User', :as => :invited_by
+  has_many :cdrs
 
   has_many :user_prefix_groups, :foreign_key => :user_id, dependent: :destroy
   has_many :prefix_groups, through: :user_prefix_groups

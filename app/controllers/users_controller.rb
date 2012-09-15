@@ -32,7 +32,6 @@ class UsersController < ApplicationController
       env['warden'].set_user(@user)
       session[:user_id_was] = nil if @user.has_admin?
 
-
       redirect_to root_path, :alert => (@user.has_admin? ? 'Welcome GOD!' : 'Switch to User' )
     end
   end

@@ -2,6 +2,10 @@ class Cdr < ActiveRecord::Base
   self.table_name = 'cdr'
   default_scope order(:calldate)
   belongs_to :channel
+  belongs_to :user
+  belongs_to :prefix_group
+
+  scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days ) }
 
   def self.channel_stats(channel)
     #TODO add conditions
