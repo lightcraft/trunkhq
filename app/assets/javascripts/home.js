@@ -16,9 +16,18 @@ $(function () {
 
 
   $('#sys_log_tabs a:first').tab('show');
-  $('#stop_monitors').live('click', function(){
+  $('#stop_monitors').live('click', function () {
     if (location_updater != null) {
       clearTimeout(location_updater);
     }
+  });
+
+  //calculate price in $/min
+  $('.calculate').live('click', function () {
+    var sum = _.reduce($('.price'), function (memo, price) {
+      return memo + $(price).val() * $(price).data('minutes')
+    }, 0);
+
+    $('.total').text((sum / 100).toFixed(2));
   });
 });

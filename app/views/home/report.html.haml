@@ -1,30 +1,36 @@
-.row
-  .span2
-    %label From
-    = text_field_tag :from_date, Time.now.to_s(:date),
-      :placeholder => 'from date',
-      :size => 10,
-      :class => 'datepicker'
-  .span2
-    %label To
-    = text_field_tag :to_date, Time.now.to_s(:date),
-      :placeholder => 'to date',
-      :size => 10,
-      :class => 'datepicker'
+= form_for Cdr.new, :url => '/report' do |f|
+  .row
+    .span1
+      %label From
+      = text_field_tag :from_date, @from.to_s(:date),
+        :placeholder => 'from date',
+        :size => 10,
+        :class => 'datepicker'
+    .span2
+      %label To
+      = text_field_tag :to_date, @to.to_s(:date),
+        :placeholder => 'to date',
+        :size => 10,
+        :class => 'datepicker'
+  .row
+    .span2
+      = f.button 'Show', :class => 'btn btn-primary'
 
 .row.head
   .span1 Operator
-  .span1 min
-  .span1 price(cent)
+  .span1 Time(min)
+  .span1 Price(cent)
   .span1 Payment
-TODO select minutes per operator
-.row
-  .span1.offset2 Total:
-  .span1 999
 
-:javascript
-  $('.datepicker').datepicker({ format:'yyyy-mm-dd'})
-    .on('changeDate', function(ev){
-      console.log(ev);
-      console.log(ev.date);
-    });
+- @groups_bill.each do |group, min|
+  .row.calculator{:class => "group_#{group}"}
+    .span1= @prefix_groups[group]
+    .minutes.span1= min
+    .span1= text_field_tag 'group', 5, :class => 'price input-mini', :'data-minutes' => min
+    .result.span1
+
+%hr/
+.row
+  .span2
+    %button.calculate.btn.btn-info Total: $
+  .total.offset3 0.0

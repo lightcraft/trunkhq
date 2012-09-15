@@ -87,6 +87,11 @@ body {
   input[type=text].datepicker {
     width: 6em;
   }
+  .total {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
 }
 
 @import "bootstrap-responsive";

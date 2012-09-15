@@ -7,7 +7,12 @@ class HomeController < ApplicationController
   end
 
   def report
+    @from = Date.parse(params[:rom_date]) rescue Date.today.at_beginning_of_month()
+    @to = Date.parse(params[:to_date]) rescue Date.today
 
+    @prefix_groups = {}
+    PrefixGroup.all.collect { |prefix| @prefix_groups.merge!({prefix.id => prefix.group_name}) }
+    @groups_bill = current_user.cdrs.where('calldate > ? AND calldate < ?', @from, @to).group(:prefix_group_id).sum('billsec/60')
   end
 
   def sys_log
