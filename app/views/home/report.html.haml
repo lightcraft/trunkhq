@@ -35,4 +35,4 @@
   .span2
     %button.calculate.btn.btn-info Total: $
   .offset3
-    .total= "%.2f" % (total/100)
+    .total= (total/100).round(2)
