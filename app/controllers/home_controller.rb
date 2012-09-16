@@ -7,7 +7,7 @@ class HomeController < ApplicationController
   end
 
   def report
-    @from = Date.parse(params[:rom_date]) rescue Date.today.at_beginning_of_month()
+    @from = Date.parse(params[:from_date]) rescue Date.today.at_beginning_of_month()
     @to = Date.parse(params[:to_date]) rescue Date.today
 
     @prefix_groups = {}
