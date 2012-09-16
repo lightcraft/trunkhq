@@ -21,16 +21,18 @@
   .span1 Time(min)
   .span1 Price(cent)
   .span1 Payment
-
+- total = 0
 - @groups_bill.each do |group, min|
+  - total = total + min * @prefix_rates[group]
   .row.calculator{:class => "group_#{group}"}
     .span1= @prefix_groups[group]
     .minutes.span1= min
-    .span1= text_field_tag 'group', 5, :class => 'price input-mini', :'data-minutes' => min
+    .span1= text_field_tag 'group', @prefix_rates[group], :class => 'price input-mini', :'data-minutes' => min, :disabled => true
     .result.span1
 
 %hr/
 .row
   .span2
     %button.calculate.btn.btn-info Total: $
-  .total.offset3 0.0
+  .offset3
+    .total= "%.2f" % (total/100)
