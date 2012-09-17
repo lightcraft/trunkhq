@@ -1,0 +1,28 @@
+%h2 Black Lists
+
+%table
+  %tr
+    %th Photne Number
+    %th
+
+  - @black_lists.each do |black_list|
+    %tr
+      %td
+        .span2
+        = black_list.number
+      %td
+        .span3.btn-group
+          = link_to edit_black_list_path(black_list), :class => 'btn btn-mini' do
+            %i.icon-edit
+            Edit
+          = link_to black_list, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini' do
+            %i.icon-remove
+            Destroy
+
+%footer
+  = paginate @black_lists
+%br/
+%p
+  = link_to '<i class="icon-file"></i>Export .csv'.html_safe, black_lists_path(:format => 'csv'), :class => 'btn'
+  = link_to content_tag(:i, '', :class => 'icon-plus-sign') + 'Add new Number'.html_safe, new_black_list_path, :class => 'btn'
+

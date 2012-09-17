@@ -1,4 +1,6 @@
 Trunkhq::Application.routes.draw do
+  resources :black_lists
+
   resources :providers
   resources :prefix_groups
   resources :chan_groups

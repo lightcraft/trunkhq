@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Number:
+  = @black_list.number
+
+= link_to 'Edit', edit_black_list_path(@black_list)
+\|
+= link_to 'Back', black_lists_path

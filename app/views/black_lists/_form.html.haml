@@ -1,0 +1,7 @@
+= simple_form_for(@black_list) do |f|
+  = f.error_notification
+  .row
+    .span3
+      = f.input :number, :input_html => { :maxlength => 11}, :placeholder => '380123456789'
+  .row
+    = f.button :submit, :class => 'btn btn-success'
