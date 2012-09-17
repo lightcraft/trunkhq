@@ -56,6 +56,7 @@ class ChannelsController < ApplicationController
   def create
     @channel = Channel.new(params[:channel])
     @channel.sip.user = current_user
+    @channel.sip.allow = 'gsm;ulaw;alaw'
     @channel.valid?
 
     respond_to do |format|
