@@ -50,6 +50,12 @@ class Channel < ActiveRecord::Base
         'Offline'
   end
 
+  # Play path from public directory
+  def audio_path
+    #TODO change path after Yura send information
+    "/audio/success.wav"
+  end
+
   # returned
   # [{prefix_group_id => prefix_group_name}]
   def operator_groups

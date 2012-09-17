@@ -19,13 +19,18 @@
       %dd
         &nbsp;
         = v
-  %h4{:onclick => "$('#inspect_channel').toggle();"} Channel Inspect
+    %audio{ :controls => '',  :preload => 'auto', :autobuffer => '' }
+      %source{:src => "#{@channel.audio_path}"}
+      Your browser does not supported this file.
+      Please update him to support HTML5
+
+  %h4.hand{:onclick => "$('#inspect_channel').toggle();"} Channel Inspect
   #inspect_channel.row{:style => 'display:none'}
     .span5= debug(@channel)
-  %h4{:onclick => "$('#inspect_sip').toggle();"} Sip Inspect
+  %h4.hand{:onclick => "$('#inspect_sip').toggle();"} Sip Inspect
   #inspect_sip.row{:style => 'display:none'}
     .span5= debug(@channel.sip)
-  %h4{:onclick => "$('#inspect_cdrs').toggle();"} Last CDRs
+  %h4.hand{:onclick => "$('#inspect_cdrs').toggle();"} Last CDRs
   #inspect_cdrs.row{:style => 'display:none'}
     - @channel.cdrs.limit(5).each do |cdr|
       %pre= cdr.to_yaml
