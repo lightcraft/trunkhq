@@ -1,0 +1,17 @@
+= simple_form_for(@ivr, :html => {:multipart => true} ) do |f|
+  = f.error_notification
+  .row
+    .span2= f.input :number
+
+  - if @ivr.audio?
+    .row
+      .span2
+        %audio{ :controls => '',  :preload => 'auto', :autobuffer => '' }
+          %source{:src => "#{@ivr.audio.url}"}
+          Your browser does not supported this file.
+          Please update him to support HTML5
+  .row
+    .span2= f.file_field :audio
+    -#= f.hidden_field :audio_cache
+  .row
+    = f.submit 'Save', :class => 'btn btn-success'

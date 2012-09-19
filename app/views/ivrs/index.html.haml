@@ -1,0 +1,30 @@
+%h2 Audio Files
+.row
+  .span6
+    %table.table.table-bordered
+      %tr
+        %th Number
+        %th Path
+        %th= link_to content_tag(:i, '', :class => 'icon-plus-sign') + 'Add new audio'.html_safe, new_ivr_path, :class => 'btn btn-success'
+
+      - @ivrs.each do |ivr|
+        %tr
+          %td= ivr.number
+          %td
+            = ivr.audio.current_path
+            %audio{ :controls => '',  :preload => 'auto', :autobuffer => '' }
+              %source{:src => "#{ivr.audio.url}"}
+              Your browser does not supported this file.
+              Please update him to support HTML5
+
+          %td
+            .span3.btn-group
+              = link_to edit_ivr_path(ivr), :class => 'btn btn-mini' do
+                %i.icon-edit
+                Edit
+              = link_to ivr, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini' do
+                %i.icon-remove
+                Destroy
+
+%footer
+  = paginate @ivrs

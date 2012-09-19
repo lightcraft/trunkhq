@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917053312) do
+ActiveRecord::Schema.define(:version => 20120919183745) do
 
   create_table "black_lists", :force => true do |t|
     t.string   "number"
@@ -99,6 +99,14 @@ ActiveRecord::Schema.define(:version => 20120917053312) do
   create_table "codecs", :force => true do |t|
     t.string "codec_name",  :limit => 40
     t.string "description", :limit => 100
+  end
+
+  create_table "ivr", :force => true do |t|
+    t.string   "number"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "audio"
+    t.string   "file_name"
   end
 
   create_table "locations", :force => true do |t|

@@ -1,4 +1,6 @@
 Trunkhq::Application.routes.draw do
+  resources :ivrs
+
   resources :black_lists
 
   resources :providers

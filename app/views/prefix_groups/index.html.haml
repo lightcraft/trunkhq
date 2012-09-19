@@ -18,11 +18,11 @@
       %td= prefix_group.def_minutes_per_day
       %td
         .btn-group
-          = link_to  edit_prefix_group_path(prefix_group), :remote => true, :class => 'btn btn-success' do
-            %i.icon-white.icon-wrench
+          = link_to  edit_prefix_group_path(prefix_group), :remote => true, :class => 'btn btn-mini' do
+            %i.icon-wrench
             Edit
-          = link_to prefix_group, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-danger' do
-            %i.icon-white.icon-trash
+          = link_to prefix_group, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini' do
+            %i.icon-trash
             Destroy
 %footer
   = paginate @prefix_groups
