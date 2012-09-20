@@ -14,3 +14,5 @@ License
 /short_log    %x[tail -100 /var/log/asterisk/full | grep VERBOSE]
 /show_channel %x[asterisk -x 'core show channels']
 /show_peers   %x[asterisk -x 'sip show peers']
+
+Added time hook for git
