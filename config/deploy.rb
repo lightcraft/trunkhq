@@ -21,7 +21,7 @@ ssh_options[:forward_agent] = true
 
 after 'deploy:update_code', 'deploy:migrate'
 set :keep_releases, 5
-after "deploy", "deploy:cleanup", "deploy:assets:clean", "deploy:assets:precompile"
+after :deploy, "deploy:cleanup", "deploy:assets:clean", "deploy:assets:precompile"
 #
 #after "deploy:stop",    "delayed_job:stop"
 #after "deploy:start",   "delayed_job:start"
@@ -44,6 +44,16 @@ namespace :deploy do
   task :symlink_config, roles: :app do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -s #{shared_path}/uploads #{release_path}/public"
+  end
+
+  namespace :assets do
+    task :precompile, :roles => :web do
+      run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
+    end
+
+    task :clean, :roles => :web do
+      run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:clean"
+    end
   end
 
   after "deploy:finalize_update", "deploy:symlink_config"
