@@ -1,12 +1,12 @@
 require "bundler/capistrano"
-require "delayed/recipes"
+#require "delayed/recipes"
 require 'capistrano/ext/multistage'
 
 set :stages, %w(staging production)
 set :default_stage, "staging"
 
 server "85.114.141.80", :web, :app, :db, primary: true
-
+set :port, 22180
 set :application, "trunkhq"
 
 set :user, "web"
