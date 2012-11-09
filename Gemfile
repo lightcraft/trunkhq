@@ -44,3 +44,7 @@ gem "bootstrap-sass", ">= 2.0.4.0"
 gem "simple_form"
 gem "rails-footnotes", ">= 3.7", :group => :development
 gem "therubyracer", :group => :assets, :platform => :ruby
+
+# Deploy with Capistrano
+gem 'capistrano'
+gem 'capistrano-ext'

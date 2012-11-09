@@ -1,6 +1,12 @@
 class Channel < ActiveRecord::Base
   self.table_name = 'channels'
-  STATUS = {1 => 'ON', 2 => 'OFF', 3 => 'Paused', 4 => 'Alarm', nil => 'not registred'}
+  STATUS = {1 => 'ON', 2 => 'OFF', 3 => 'Paused', 4 => 'Alarm', 5 => 'Timeout', nil => 'not registred'}
+
+  # timeout_expired
+  # timeout_reson
+  # ON  - звонок status 1
+  # -> active_calls.channel_id
+  # active_calls.start_time  - current_time  -> длительность звонка
 
   belongs_to :location
   belongs_to :sip
