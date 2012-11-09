@@ -4,6 +4,13 @@ $iconWhiteSpritePath: asset-url('glyphicons-halflings-white.png', image);
 
 $bodyBackground: #474747;
 $textColor: #fff;
+$navbarBackground: #333;
+$navbarBackgroundHighlight: #444;
+$navbarBrandColor: #ccc;
+$navbarLinkColor: #ccc;
+$navbarLinkColorHover: white;
+$navbarText: #ccc;
+
 @import "bootstrap";
 
 body {
