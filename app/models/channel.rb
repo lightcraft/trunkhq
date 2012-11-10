@@ -50,8 +50,11 @@ class Channel < ActiveRecord::Base
     Channel::STATUS[self.status]
   end
 
+  #  #$diff = $row2['sip.regseconds'] - time();
+  #$diff > 0  - ONLINE
+  #$diff < 0  - OFFLINE
   def online_status
-    self.sip.lastms.to_i > 0 ?
+    (self.sip.regseconds - Time.now.to_i) > 0 ?
         'Online' :
         'Offline'
   end

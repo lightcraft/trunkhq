@@ -1,4 +1,4 @@
-= simple_form_for([@location, @channel], :html => {:class => 'modal hide', :remote => true} ) do |f|
+= simple_form_for([@location, @channel], :html => {:class => 'modal hide channel_form', :remote => true} ) do |f|
   .modal-header
     %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
     %h4.row
@@ -39,8 +39,14 @@
     .row
       .span2= f.input :start_time
       .span2= f.input :stop_time
+      .span2
+        %label
+          SipPhone
+        .controls
+          = f.fields_for :sip do |sip_form|
+            = sip_form.check_box :context, {}, 'internal', 'external'
     - prefix_group_ids = @channel.chan_prefix_groups.map(&:prefix_group_id)
-    .tabbable.tabs-below
+    .tabbable.tabs-below.operators
       .tab-content
         .row.head
           .span1 Enable

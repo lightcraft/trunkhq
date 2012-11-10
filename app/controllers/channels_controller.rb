@@ -43,7 +43,6 @@ class ChannelsController < ApplicationController
 
 # GET /channels/1/edit
   def edit
-
     @channel.build_prefix_groups
 
     respond_to do |format|
