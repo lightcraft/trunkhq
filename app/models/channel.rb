@@ -48,7 +48,7 @@ class Channel < ActiveRecord::Base
     # -> active_calls.channel_id
     # active_calls.start_time  - current_time  -> длительность звонка
     addtional = ''
-    if self.status.eql?(1)
+    if self.status.eql?(1) && self.active_call
       sec = (self.active_call.start_time - Time.now).to_i
       addtional = " Incall #{self.active_call.dst}/#{sec} s"
     end
