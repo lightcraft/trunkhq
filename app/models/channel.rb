@@ -2,18 +2,13 @@ class Channel < ActiveRecord::Base
   self.table_name = 'channels'
   STATUS = {1 => 'ON', 2 => 'OFF', 3 => 'Paused', 4 => 'Alarm', 5 => 'Timeout', nil => 'not registred'}
 
-  # timeout_expired
-  # timeout_reson
-  # ON  - звонок status 1
-  # -> active_calls.channel_id
-  # active_calls.start_time  - current_time  -> длительность звонка
-
   belongs_to :location
   belongs_to :sip
   belongs_to :chan_group
   has_many :chan_prefix_groups, dependent: :destroy
   has_many :prefix_groups, through: :chan_prefix_groups
   has_many :cdrs
+  has_one :active_call
 
   validates :chan_group_id, presence: true
   validates :location_id, presence: true
@@ -47,7 +42,17 @@ class Channel < ActiveRecord::Base
   end
 
   def state
-    Channel::STATUS[self.status]
+    # timeout_expired
+    # timeout_reson
+    # ON  - звонок status 1
+    # -> active_calls.channel_id
+    # active_calls.start_time  - current_time  -> длительность звонка
+    addtional = ''
+    if self.status.eql?(1)
+      sec = (self.active_call.start_time - Time.now).to_i
+      addtional = " Incall #{self.active_call.dst}/#{sec} s"
+    end
+    Channel::STATUS[self.status] + addtional
   end
 
   #  #$diff = $row2['sip.regseconds'] - time();
