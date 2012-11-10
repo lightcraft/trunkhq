@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe ActiveCal do
+describe ActiveCall do
   pending "add some examples to (or delete) #{__FILE__}"
 end
