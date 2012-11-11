@@ -12,7 +12,8 @@ Trunkhq::Application.routes.draw do
 
   match '/sys_log' => 'home#sys_log'
 
-  match "/full_log" => proc { |env| [200, {}, code_wrapper('tail -100 /var/log/asterisk/full')] }
+  #match "/full_log" => proc { |env| [200, {}, code_wrapper('tail -100 /var/log/asterisk/full')] }
+  match "/full_log" => proc { |env| [200, {}, code_wrapper("tail -100 /var/log/asterisk/full |awk -F DEBUG '{ print \"DEBUG:\"$2}'")] }
   match "/short_log" => proc { |env| [200, {}, code_wrapper('tail -100 /var/log/asterisk/full | grep VERBOSE')] }
   match "/show_channels" => proc { |env| [200, {}, code_wrapper("asterisk -x 'core show channels'")] }
   match "/show_peers" => proc { |env| [200, {}, code_wrapper("asterisk -x 'sip show peers'")] }

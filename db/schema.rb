@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120919183745) do
+ActiveRecord::Schema.define(:version => 20121111091837) do
+
+  create_table "active_calls", :force => true do |t|
+    t.string   "uniqueid",            :limit => 32
+    t.integer  "channel_id"
+    t.integer  "user_id"
+    t.integer  "sip_id"
+    t.integer  "provider_account_id"
+    t.datetime "start_time"
+    t.string   "src",                 :limit => 25
+    t.string   "dst",                 :limit => 25
+    t.integer  "max_duration"
+    t.integer  "prefix_group_id"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "active_calls", ["channel_id"], :name => "index_active_calls_on_channel_id"
+  add_index "active_calls", ["prefix_group_id"], :name => "index_active_calls_on_prefix_group_id"
+  add_index "active_calls", ["provider_account_id"], :name => "index_active_calls_on_provider_account_id"
+  add_index "active_calls", ["sip_id"], :name => "index_active_calls_on_sip_id"
 
   create_table "black_lists", :force => true do |t|
     t.string   "number"
@@ -20,39 +40,40 @@ ActiveRecord::Schema.define(:version => 20120919183745) do
   end
 
   create_table "cdr", :id => false, :force => true do |t|
-    t.datetime "calldate",                                                                 :null => false
-    t.string   "clid",        :limit => 80,                                :default => "", :null => false
-    t.string   "src",         :limit => 80,                                :default => "", :null => false
-    t.string   "dst",         :limit => 80,                                :default => "", :null => false
-    t.string   "dcontext",    :limit => 80,                                :default => "", :null => false
-    t.string   "channel",     :limit => 80,                                :default => "", :null => false
-    t.string   "dstchannel",  :limit => 80,                                :default => "", :null => false
-    t.string   "lastapp",     :limit => 80,                                :default => "", :null => false
-    t.string   "lastdata",    :limit => 80,                                :default => "", :null => false
-    t.integer  "duration",                                                 :default => 0,  :null => false
-    t.integer  "billsec",                                                  :default => 0,  :null => false
-    t.string   "disposition", :limit => 45,                                :default => "", :null => false
-    t.integer  "amaflags",                                                 :default => 0,  :null => false
-    t.string   "accountcode", :limit => 20,                                :default => "", :null => false
-    t.string   "userfield",                                                :default => "", :null => false
-    t.string   "hangupcause", :limit => 50,                                                :null => false
-    t.string   "peerip",      :limit => 50,                                                :null => false
-    t.string   "recvip",      :limit => 50,                                                :null => false
-    t.string   "fromuri",     :limit => 50,                                                :null => false
-    t.string   "uri",         :limit => 50,                                                :null => false
-    t.string   "useragent",   :limit => 50,                                                :null => false
-    t.string   "codec1",      :limit => 50,                                                :null => false
-    t.string   "codec2",      :limit => 50,                                                :null => false
-    t.string   "llp",         :limit => 50,                                                :null => false
-    t.string   "rlp",         :limit => 50,                                                :null => false
-    t.string   "ljitt",       :limit => 50,                                                :null => false
-    t.string   "rjitt",       :limit => 50,                                                :null => false
-    t.string   "uniqueid",    :limit => 32,                                :default => "", :null => false
-    t.decimal  "txjitter",                  :precision => 10, :scale => 5
-    t.decimal  "rxjitter",                  :precision => 10, :scale => 5
-    t.decimal  "rxploss",                   :precision => 10, :scale => 5
-    t.decimal  "txploss",                   :precision => 10, :scale => 5
+    t.datetime "calldate",                                                                     :null => false
+    t.string   "clid",            :limit => 80,                                :default => "", :null => false
+    t.string   "src",             :limit => 80,                                :default => "", :null => false
+    t.string   "dst",             :limit => 80,                                :default => "", :null => false
+    t.string   "dcontext",        :limit => 80,                                :default => "", :null => false
+    t.string   "channel",         :limit => 80,                                :default => "", :null => false
+    t.string   "dstchannel",      :limit => 80,                                :default => "", :null => false
+    t.string   "lastapp",         :limit => 80,                                :default => "", :null => false
+    t.string   "lastdata",        :limit => 80,                                :default => "", :null => false
+    t.integer  "duration",                                                     :default => 0,  :null => false
+    t.integer  "billsec",                                                      :default => 0,  :null => false
+    t.string   "disposition",     :limit => 45,                                :default => "", :null => false
+    t.integer  "amaflags",                                                     :default => 0,  :null => false
+    t.string   "accountcode",     :limit => 20,                                :default => "", :null => false
+    t.string   "userfield",                                                    :default => "", :null => false
+    t.string   "hangupcause",     :limit => 50,                                                :null => false
+    t.string   "peerip",          :limit => 50,                                                :null => false
+    t.string   "recvip",          :limit => 50,                                                :null => false
+    t.string   "fromuri",         :limit => 50,                                                :null => false
+    t.string   "uri",             :limit => 50,                                                :null => false
+    t.string   "useragent",       :limit => 50,                                                :null => false
+    t.string   "codec1",          :limit => 50,                                                :null => false
+    t.string   "codec2",          :limit => 50,                                                :null => false
+    t.string   "llp",             :limit => 50,                                                :null => false
+    t.string   "rlp",             :limit => 50,                                                :null => false
+    t.string   "ljitt",           :limit => 50,                                                :null => false
+    t.string   "rjitt",           :limit => 50,                                                :null => false
+    t.string   "uniqueid",        :limit => 32,                                :default => "", :null => false
+    t.decimal  "txjitter",                      :precision => 10, :scale => 5
+    t.decimal  "rxjitter",                      :precision => 10, :scale => 5
+    t.decimal  "rxploss",                       :precision => 10, :scale => 5
+    t.decimal  "txploss",                       :precision => 10, :scale => 5
     t.integer  "channel_id"
+    t.integer  "prefix_group_id"
   end
 
   add_index "cdr", ["accountcode"], :name => "accountcode"

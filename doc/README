@@ -1,0 +1,10 @@
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap
+//= require ./bootstrap-datepicker
+//= require ./bootstrap-colorpicker
+//= require ./chanel
+//= require ./home
+//= require ./locations
+//= require ./underscore
+//= require_self

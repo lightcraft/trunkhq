@@ -1,6 +1,6 @@
 class ProvidersController < ApplicationController
   load_and_authorize_resource :provider
-  before_filter :authenticate_user!
+    before_filter :authenticate_user!
   before_filter :find_provider, :only => [:destroy, :show, :edit, :update]
   respond_to :html, :json
 
