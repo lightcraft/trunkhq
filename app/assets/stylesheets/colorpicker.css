@@ -65,6 +65,7 @@
   *zoom: 1;
   top: 0;
   left: 0;
+  z-index: 10000;
   padding: 4px;
   min-width: 120px;
   margin-top: 1px;

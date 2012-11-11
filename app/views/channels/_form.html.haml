@@ -51,29 +51,32 @@
         .row.head
           .span1 Enable
           .span1 Time interval
-          .span1 Count calls
           .span1 Interval
+          .span1 Count calls per interval
           .span1 min/day
+          .span1 Max calls/day
         -#- @channel.chan_prefix_groups.each do |operator|
         = f.fields_for :chan_prefix_groups do |chan_form|
           - operator_enabled = prefix_group_ids.include?(chan_form.object.prefix_group_id)
           .tab-pane{id: dom_id(chan_form.object)+"#{chan_form.object.prefix_group_id}", :class => "#{'active' if @channel.chan_prefix_groups.index(chan_form.object).eql?(0)}"}
             = chan_form.hidden_field :prefix_group_id
             .row
-              .span1
+              .span1{:style => 'margin-top: -7px'}
                 = chan_form.check_box(:enabled)
-                ON
-              .span1
-                = chan_form.text_field(:call_min_interval, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
-              .span1
+                on
+                %div
+                  = chan_form.check_box(:strict)
+                  strict
+              .span1{:title => 'Calls per interval'}
                 = chan_form.text_field(:calls_per_interval, :type => "number", :pattern => "[0-9]+", :size => "5", :maxlength => "4", :class => 'input-mini')
-              .span1
+              .span1{:title => 'Calls min  per interval'}
+                = chan_form.text_field(:call_min_interval, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
+              .span1{:title => 'Interval mins'}
                 = chan_form.text_field(:interval_mins, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
-              .span1
+              .span1{:title => 'Max minutes per day'}
                 = chan_form.text_field(:max_minutes_per_day, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
               .span1
-                = chan_form.check_box(:strict)
-                strict
+                = chan_form.text_field(:max_calls_per_day, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
 
       %ul.nav.nav-tabs.operators
         - @channel.chan_prefix_groups.each do |operator|

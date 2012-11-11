@@ -25,11 +25,11 @@ body {
   .admin a {
     color: $red;
   }
-
+  tr
   .table tbody tr:hover th,
   .table tbody tr:hover td,
     {
-    color: $grayDark;
+    color: #ff4500;
   }
 
   label {
@@ -105,6 +105,14 @@ body {
   pre.prettyprint {
     color: green;
     background: #000;
+  }
+  .operators {
+    [class*="span"]:first-child {
+      margin-left: 30px
+    }
+    [class*="span"] {
+      margin-left: 25px
+    }
   }
 }
 

@@ -52,6 +52,9 @@ class Channel < ActiveRecord::Base
       sec = (self.active_call.start_time - Time.now).to_i
       addtional = " Incall #{self.active_call.dst}/#{sec} s"
     end
+    if self.status.eql?(5)
+      addtional << self.timeout_reason
+    end
     Channel::STATUS[self.status] + addtional
   end
 
@@ -93,7 +96,7 @@ class Channel < ActiveRecord::Base
     #regseconds: 1347120641
     #lastms: 44
 
-    [self.sip.fullcontact,
+    [self.sip.fullcontact.split('^3B').first,
      self.sip.useragent,
      "IP: #{sip.ipaddr}"]
   end

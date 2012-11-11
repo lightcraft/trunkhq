@@ -1,1 +1,4 @@
-! $("##{dom_id(@channel)} .power").html("Power ON").toggleClass('btn-success');
+- if @channel.status.eql?(1)
+  ! $("##{dom_id(@channel)} .power").html("Power On").toggleClass('btn-success');
+- else
+  ! $("##{dom_id(@channel)} .power").html("Power Off").toggleClass('btn-danger');

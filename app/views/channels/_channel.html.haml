@@ -9,14 +9,14 @@
       = div_for(prefix_group) do
         %span.head{:style => "color: #{prefix_group.color}"}= prefix_group.group_name
         %span.pull-right= bill_time[prefix_group.id] || 0
-  .span1= channel.state
+  .span1= word_wrap(channel.state, 15)
   .span1
     &nbsp;
     = channel.online_status
-  .span2= channel.system_status.join(' ').html_safe
+  .span2= channel.system_status.join(' ')
   .span2= Cdr.channel_stats(channel)
   .span3.btn-group
-    = link_to power_location_channel_path(location, channel), :remote => true, :class => "btn btn-mini power #{channel.online_status.eql?('online') ? 'btn-success' : 'btn-danger'}" do
+    = link_to power_location_channel_path(location, channel), :remote => true, :class => "btn btn-mini power #{channel.status.eql?(1) ? 'btn-success' : 'btn-danger'}" do
       %i.icon-off
       Power
     = link_to edit_location_channel_path(location, channel), :remote => true, :class => 'btn btn-mini' do

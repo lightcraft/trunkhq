@@ -10,6 +10,7 @@
   color: #999;
   top: 0;
   left: 0;
+  z-index: 10000;
   padding: 4px;
   margin-top: 1px;
   -webkit-border-radius: 4px;
