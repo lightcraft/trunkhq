@@ -3,6 +3,14 @@
   %td #{user.id}
   %td
     %b{rel: 'tooltip', class: "#{_admin ? 'admin' : ''}", title: "email: #{user.email} <br/> created: #{user.created_at.to_date} "} #{link_to user.name, user}
+  -#%td= user.can_add_friendgroups ? 'true' : 'false'
+  %td
+    - if user.can_add_friendgroups?
+      %span{class: "label label-success"} Enabled
+      =link_to "Disable", user_path(user, enable_can_add_friendgroups: false),  method: :put, class: 'label label-important'
+    - else
+      %span{class: "label label-important"} Disabled
+      =link_to "Enable", user_path(user, enable_can_add_friendgroups: true),  method: :put, class: 'label label-success'
   - if user.sign_in_count > 0
     %td #{[user.current_sign_in_at.to_s(:db), user.current_sign_in_ip].join('/')}
     %td #{[user.last_sign_in_at, user.last_sign_in_ip].join('/')}

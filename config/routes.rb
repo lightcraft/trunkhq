@@ -33,7 +33,7 @@ Trunkhq::Application.routes.draw do
     end
   end
 
-  resources :users, :only => [:show, :index] do
+  resources :users, :only => [:show, :index, :update] do
     resources :locations
     member do
       post 'grant'
