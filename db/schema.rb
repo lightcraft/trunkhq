@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119204538) do
+ActiveRecord::Schema.define(:version => 20121120191505) do
 
   create_table "active_calls", :force => true do |t|
     t.string   "uniqueid",            :limit => 32
@@ -123,6 +123,13 @@ ActiveRecord::Schema.define(:version => 20121119204538) do
   create_table "codecs", :force => true do |t|
     t.string "codec_name",  :limit => 40
     t.string "description", :limit => 100
+  end
+
+  create_table "friend_groups", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "ivr", :force => true do |t|

@@ -1,8 +1,7 @@
 Trunkhq::Application.routes.draw do
+
   resources :ivrs
-
   resources :black_lists
-
   resources :providers
   resources :prefix_groups
   resources :chan_groups
@@ -35,6 +34,7 @@ Trunkhq::Application.routes.draw do
 
   resources :users, :only => [:show, :index, :update] do
     resources :locations
+    resources :friend_groups
     member do
       post 'grant'
       post 'switch'

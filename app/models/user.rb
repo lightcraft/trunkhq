@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :user_prefix_groups, :foreign_key => :user_id, dependent: :destroy
   has_many :prefix_groups, through: :user_prefix_groups
+  has_many :friend_groups
 
   accepts_nested_attributes_for :user_prefix_groups
   attr_accessible :user_prefix_groups_attributes

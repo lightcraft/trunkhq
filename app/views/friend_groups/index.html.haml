@@ -1,0 +1,21 @@
+%h1 Friend Groups
+
+%table.table.table-bordered
+  %tr
+    %th Name
+    %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Friend Group', new_user_friend_group_path, :remote => true, :class => 'btn btn-success')
+  - @friend_groups.each do |friend_group|
+    = content_tag_for(:tr, friend_group) do
+      %td= friend_group.name
+      %td
+        .btn-group
+          = link_to edit_user_friend_group_path(current_user, friend_group), :remote => true, :class => 'btn btn-mini' do
+            %i.icon-wrench
+            Edit
+          = link_to user_friend_group_path(current_user, friend_group), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini' do
+            %i.icon-trash
+            Destroy
+%footer
+  = paginate @friend_groups
+
+#edit
