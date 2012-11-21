@@ -34,7 +34,10 @@ Trunkhq::Application.routes.draw do
 
   resources :users, :only => [:show, :index, :update] do
     resources :locations
-    resources :friend_groups
+    resources :friend_groups do
+      get 'channels_assignment', on: :collection
+      post 'assign_channels', on: :collection
+    end
     member do
       post 'grant'
       post 'switch'

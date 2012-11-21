@@ -7,5 +7,6 @@
         %li= link_to(content_tag(:i, '', :class => 'icon-map-marker icon-white') + ' Add location', '#new_location', :'data-toggle' => 'modal')
         - if current_user.can_add_friendgroups?
           %li= link_to(content_tag(:i, '', :class => 'icon-globe icon-white') + ' Friend Groups', user_friend_groups_path)
+          %li= link_to(content_tag(:i, '', :class => 'icon-tasks icon-white') + ' Channels assignment', channels_assignment_user_friend_groups_path)
 -#= render 'channels/form'
 = render 'locations/form'

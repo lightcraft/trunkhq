@@ -78,6 +78,25 @@ class FriendGroupsController < ApplicationController
     end
   end
 
+  def channels_assignment
+    @channels = current_user.channels
+    @friend_groups = current_user.friend_groups
+  end
+
+  def assign_channels
+    channels = current_user.channels.find_all_by_id(params[:channel_ids])
+
+    if channels.present?
+      friend_group = current_user.friend_groups.find_by_id(params[:friend_group_id])
+
+      if friend_group
+        channels.each { |channel| channel.update_attribute(:friend_group, friend_group) }
+      end
+    end
+
+    redirect_to channels_assignment_user_friend_groups_path
+  end
+
   private
 
   def find_group
