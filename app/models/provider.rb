@@ -15,6 +15,7 @@ class Provider < User
 
   before_validation :stub_attributes, :on => :create
   after_create :auto_subscribe
+  after_update :update_sip_settings
 
   def operator_limits
     self.user_prefix_groups.includes(:prefix_group).collect { |user_prefix_group|
@@ -29,8 +30,22 @@ class Provider < User
     self.password_confirmation = self.password
   end
 
+  # we need add sip gateway when created provider
   def auto_subscribe
     self.add_role :provider
+    Sip.create(name: self.name,
+               host: self.provider_ip_address,
+               accountcode: self.id,
+               type: 'peer',
+               context: 'default')
   end
 
+  #we need update provider setting when admin change it
+  def update_sip_settings
+    provider_sip = Sip.where(accountcode: self.id).first
+    provider_sip.update_attributes(
+        name: self.name,
+        host: self.provider_ip_address
+    )
+  end
 end
