@@ -6,8 +6,15 @@
       Group
   .modal-body
     = f.error_notification
-    .form-inputs
-    = f.input :name
+    .row
+      .span2= f.input(:name, :placeholder => 'calls', :label => 'Group title', :input_html => {  :class => 'input-small'})
+      .span2= f.input(:calls_per_hour, :type => "number", :placeholder => 'calls', :label => 'Calls/hour', :input_html => {  :class => 'input-small'})
+    .row
+      .span2= f.input(:min_duration_sec, :type => "number", :placeholder => 'min sec', :label => 'Min duration sec', :input_html => {  :class => 'input-small'})
+      .span2= f.input(:max_duration_sec, :type => "number", :placeholder => 'max sec', :label => 'Max duration sec', :input_html => {  :class => 'input-small'})
+
+
+
   .modal-footer
     = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
     = f.button :submit, :class => 'btn btn-primary'
