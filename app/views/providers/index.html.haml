@@ -5,6 +5,7 @@
     %tr
       %th Name
       %th Email
+      %th IpAddress
       %th Operators
       %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Provider', new_provider_path, :remote => true, :class => 'btn btn-success')
 
@@ -13,12 +14,13 @@
       %tr
         %td= link_to provider.name, provider_path(provider)
         %td= provider.email
+        %td= provider.provider_ip_address
         %td{:title => '(min/rate)'}= provider.operator_limits
         %td.btn-group
           = link_to  edit_provider_path(provider), :remote => true, :class => 'btn btn-mini' do
             %i.icon-wrench
             Edit
-          = link_to provider_path(provider), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini' do
+          = link_to provider_path(provider), :confirm => 'Are you sure? !!!!', :method => :delete, :remote => true, :class => 'btn btn-mini' do
             %i.icon-trash
             Destroy
 

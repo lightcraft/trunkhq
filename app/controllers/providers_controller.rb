@@ -2,7 +2,7 @@ class ProvidersController < ApplicationController
   load_and_authorize_resource :provider
     before_filter :authenticate_user!
   before_filter :find_provider, :only => [:destroy, :show, :edit, :update]
-  respond_to :html, :json
+  respond_to :html, :json, :js
 
 
   # GET /providers
@@ -82,7 +82,9 @@ class ProvidersController < ApplicationController
       if @provider.update_attributes(params[:provider])
         format.html { redirect_to providers_path, notice: 'Provider was successfully updated.' }
         format.json { head :no_content }
-        format.js { render :text => "window.location = '#{providers_path(current_user)}'", notice: 'Provider was successfully updates.' }
+        format.js {
+          render :text => "window.location = '#{providers_path}'", notice: 'Provider was successfully created.'
+        }
       else
         format.html { render action: "edit" }
         format.json { render json: @provider.errors, status: :unprocessable_entity }
@@ -94,12 +96,12 @@ class ProvidersController < ApplicationController
   # DELETE /providers/1
   # DELETE /providers/1.json
   def destroy
-
     @provider.destroy
-
     respond_to do |format|
       format.html { redirect_to providers_url }
       format.json { head :no_content }
+      format.js { render :text => "window.location = '#{providers_path}'" }
+
     end
   end
 

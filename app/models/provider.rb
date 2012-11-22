@@ -10,7 +10,7 @@ class Provider < User
   #accepts_nested_attributes_for :user_prefix_groups
   #attr_accessible :user_prefix_groups_attributes
   validates_presence_of :name
-  attr_accessible :email, :name
+  attr_accessible :email, :name, :provider_ip_address
   attr_accessor :class_name
 
   before_validation :stub_attributes, :on => :create

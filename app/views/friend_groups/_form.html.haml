@@ -1,10 +1,9 @@
 = simple_form_for([current_user, @friend_group], :html => {:remote => true, :class => "modal #{'hide'  if request.xhr?}"} ) do |f|
   .modal-header
     %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
-    %h3.row
-      .span2
-        = "#{ f.object.new_record? ? 'New' : 'Edit'}"
-        Friend Group
+    %h3
+      = "#{ f.object.new_record? ? 'New' : 'Edit'}"
+      Group
   .modal-body
     = f.error_notification
     .form-inputs

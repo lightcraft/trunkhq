@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121121193553) do
+ActiveRecord::Schema.define(:version => 20121122174214) do
 
   create_table "active_calls", :force => true do |t|
     t.string   "uniqueid",            :limit => 32
@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(:version => 20121121193553) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.boolean  "can_add_friendgroups"
+    t.string   "provider_ip_address"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

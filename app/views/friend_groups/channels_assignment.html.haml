@@ -20,10 +20,10 @@
         %td= channel.location.name
         %td= channel.friend_group.try(:name)
 
-  %div{class: "input-append"}
-    = label_tag "friend_group_id", "Friend group"
-    = select_tag "friend_group_id", options_from_collection_for_select(@friend_groups, "id", "name")
-    = submit_tag "Assign", class: "btn btn-success"
+  .row.input-append
+    .span1= label_tag "friend_group_id", "Friend group"
+    .span2= select_tag "friend_group_id", options_from_collection_for_select(@friend_groups, "id", "name")
+    .span2= submit_tag "Assign", class: "btn btn-success"
 
 %footer
 
