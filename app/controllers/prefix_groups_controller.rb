@@ -18,7 +18,6 @@ class PrefixGroupsController < ApplicationController
   # GET /prefix_groups/1
   # GET /prefix_groups/1.json
   def show
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @prefix_group }
@@ -66,7 +65,6 @@ class PrefixGroupsController < ApplicationController
   # PUT /prefix_groups/1
   # PUT /prefix_groups/1.json
   def update
-
     respond_to do |format|
       if @prefix_group.update_attributes(params[:prefix_group])
         format.html { redirect_to prefix_groups_path, notice: 'Prefix group was successfully updated.' }
@@ -93,6 +91,7 @@ class PrefixGroupsController < ApplicationController
   end
 
   private
+
   def find_group
     @prefix_group = PrefixGroup.find(params[:id])
   end

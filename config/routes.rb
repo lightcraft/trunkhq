@@ -1,8 +1,7 @@
 Trunkhq::Application.routes.draw do
+
   resources :ivrs
-
   resources :black_lists
-
   resources :providers
   resources :prefix_groups
   resources :chan_groups
@@ -33,8 +32,12 @@ Trunkhq::Application.routes.draw do
     end
   end
 
-  resources :users, :only => [:show, :index] do
+  resources :users, :only => [:show, :index, :update] do
     resources :locations
+    resources :friend_groups do
+      get 'channels_assignment', on: :collection
+      post 'assign_channels', on: :collection
+    end
     member do
       post 'grant'
       post 'switch'

@@ -1,0 +1,30 @@
+%h1 Channels assignment
+
+= form_tag assign_channels_user_friend_groups_path do
+  %table.table.table-bordered
+    %tr
+      %th
+      %th ID
+      %th Name
+      %th Operator
+      %th Location
+      %th Friend group
+    - @channels.each do |channel|
+      = content_tag_for(:tr, channel) do
+        %td
+          = check_box_tag "channel_ids[]", channel.id, false
+        %td
+          = channel.id
+        %td= channel.name
+        %td
+        %td= channel.location.name
+        %td= channel.friend_group.try(:name)
+
+  %div{class: "input-append"}
+    = label_tag "friend_group_id", "Friend group"
+    = select_tag "friend_group_id", options_from_collection_for_select(@friend_groups, "id", "name")
+    = submit_tag "Assign", class: "btn btn-success"
+
+%footer
+
+#edit

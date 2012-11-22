@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121111091837) do
+ActiveRecord::Schema.define(:version => 20121121193553) do
 
   create_table "active_calls", :force => true do |t|
     t.string   "uniqueid",            :limit => 32
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20121111091837) do
     t.decimal  "rxploss",                       :precision => 10, :scale => 5
     t.decimal  "txploss",                       :precision => 10, :scale => 5
     t.integer  "channel_id"
+    t.integer  "user_id"
     t.integer  "prefix_group_id"
   end
 
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20121111091837) do
     t.string  "chan_group_name",     :limit => 50
     t.integer "max_channels_cnt"
     t.integer "max_channels_online"
+    t.integer "user_id"
   end
 
   add_index "chan_groups", ["chan_group_name"], :name => "index_chan_groups_on_chan_group_name", :unique => true
@@ -92,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20121111091837) do
     t.integer "channel_id"
     t.integer "prefix_group_id"
     t.integer "max_minutes_per_day"
+    t.integer "max_calls_per_day",   :default => 0
     t.integer "interval_mins"
     t.integer "calls_per_interval"
     t.integer "call_min_interval"
@@ -102,6 +105,8 @@ ActiveRecord::Schema.define(:version => 20121111091837) do
   create_table "channels", :force => true do |t|
     t.integer  "sip_id"
     t.integer  "status"
+    t.datetime "timeout_expire"
+    t.string   "timeout_reason"
     t.integer  "chan_group_id"
     t.integer  "location_id"
     t.date     "init_date"
@@ -111,13 +116,23 @@ ActiveRecord::Schema.define(:version => 20121111091837) do
     t.time     "stop_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",          :limit => 100
-    t.string   "imei",          :limit => 20,  :default => "", :null => false
+    t.string   "name",            :limit => 100
+    t.string   "imei",            :limit => 20,  :default => "", :null => false
+    t.integer  "friend_group_id"
   end
+
+  add_index "channels", ["friend_group_id"], :name => "index_channels_on_friend_group_id"
 
   create_table "codecs", :force => true do |t|
     t.string "codec_name",  :limit => 40
     t.string "description", :limit => 100
+  end
+
+  create_table "friend_groups", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "ivr", :force => true do |t|
@@ -267,6 +282,7 @@ ActiveRecord::Schema.define(:version => 20121111091837) do
     t.integer  "invitation_limit",                      :default => 3,               :null => false
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.boolean  "can_add_friendgroups"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

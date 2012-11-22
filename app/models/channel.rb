@@ -5,6 +5,7 @@ class Channel < ActiveRecord::Base
   belongs_to :location
   belongs_to :sip
   belongs_to :chan_group
+  belongs_to :friend_group
   has_many :chan_prefix_groups, dependent: :destroy
   has_many :prefix_groups, through: :chan_prefix_groups
   has_many :cdrs

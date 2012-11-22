@@ -36,6 +36,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    case params[:enable_can_add_friendgroups]
+    when "true"
+      @user.update_attribute(:can_add_friendgroups, true)
+    when "false"
+      @user.update_attribute(:can_add_friendgroups, false)
+    end
+
+    redirect_to users_path
+  end
+
   private
   def find_user
     @user = User.find(params[:id])
