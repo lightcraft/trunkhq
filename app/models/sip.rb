@@ -22,8 +22,9 @@ class Sip < ActiveRecord::Base
   # Создать свой софт фон (DIALER) для прозвонки своих модемов
   # insert sip(name,secret,type,accountcode,context) values ('login','pass','friend',user_id,'internal')
 
-  attr_accessible :name, :secret, :context
-  validates_numericality_of :name
+  attr_accessible :name, :secret, :context, :host, :accountcode, :type, :user_id
+
+  validates_numericality_of :name, :if => Proc.new { |sip| !sip.type.eql?('peer')}
   #validate :secret, :present => true, :if => { |sip| sip.context.eql?('internal')}
   self.inheritance_column = "inheritance_type"
 

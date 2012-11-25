@@ -33,9 +33,11 @@ class Provider < User
   # we need add sip gateway when created provider
   def auto_subscribe
     self.add_role :provider
+
     Sip.create(name: self.name,
                host: self.provider_ip_address,
                accountcode: self.id,
+               user_id: self.id,
                type: 'peer',
                context: 'default')
   end
