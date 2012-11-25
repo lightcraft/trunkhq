@@ -56,7 +56,7 @@ class Channel < ActiveRecord::Base
     if self.status.eql?(5)
       addtional << self.timeout_reason
     end
-    Channel::STATUS[self.status] + addtional
+    Channel::STATUS[self.status].to_s + addtional.to_s
   end
 
   #  #$diff = $row2['sip.regseconds'] - time();
@@ -80,8 +80,10 @@ class Channel < ActiveRecord::Base
     self.prefix_groups.includes(:chan_prefix_groups).where('chan_prefix_groups.enabled = ?', true)
   end
 
-  def state_on
-    self.update_attribute(:status, 1) unless self.status.eql?(1)
+  def state_toggle
+    self.status.eql?(1) ?
+        self.update_attribute(:status, 2) :
+        self.update_attribute(:status, 1)
   end
 
   def sys_info

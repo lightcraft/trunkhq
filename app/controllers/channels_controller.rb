@@ -88,7 +88,7 @@ class ChannelsController < ApplicationController
   end
 
   def power
-    @channel.state_on
+    @channel.state_toggle
     respond_with(@channel) do |format|
       format.html {}
       format.js {}

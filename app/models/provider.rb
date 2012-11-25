@@ -19,7 +19,7 @@ class Provider < User
 
   def operator_limits
     self.user_prefix_groups.includes(:prefix_group).collect { |user_prefix_group|
-      "#{user_prefix_group.prefix_group.group_name} (#{user_prefix_group.allowed_minutes}/#{user_prefix_group.rate})"
+      "#{user_prefix_group.prefix_group.group_name} (#{user_prefix_group.allowed_minutes}/#{user_prefix_group.rate})" if user_prefix_group.prefix_group
     }.join(', ')
   end
 
