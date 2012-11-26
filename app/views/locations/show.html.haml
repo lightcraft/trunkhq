@@ -9,7 +9,7 @@
   .span1 State
   .span1 Reg status
   .span2 Duration today
-  .span2 Live time
+  -#.span2 Live time
   .span3
 - @channels.each do |channel|
   = render :partial => 'channels/channel', :locals => {:channel => channel, :location => @location}

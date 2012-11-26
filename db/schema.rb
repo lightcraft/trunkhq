@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122191642) do
+ActiveRecord::Schema.define(:version => 20121126222135) do
 
   create_table "active_calls", :force => true do |t|
     t.string   "uniqueid",            :limit => 32
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20121122191642) do
     t.string   "name",            :limit => 100
     t.string   "imei",            :limit => 20,  :default => "", :null => false
     t.integer  "friend_group_id"
+    t.string   "gsm_number"
   end
 
   add_index "channels", ["friend_group_id"], :name => "index_channels_on_friend_group_id"

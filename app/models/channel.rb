@@ -14,7 +14,7 @@ class Channel < ActiveRecord::Base
   validates :chan_group_id, presence: true
   validates :location_id, presence: true
 
-  attr_accessible :chan_group_id, :location_id, :start_date, :start_time, :stop_date, :stop_time, :imei
+  attr_accessible :chan_group_id, :location_id, :start_date, :start_time, :stop_date, :stop_time, :imei, :gsm_number
   accepts_nested_attributes_for :chan_prefix_groups
   accepts_nested_attributes_for :sip
   attr_accessible :sip_attributes
@@ -26,12 +26,16 @@ class Channel < ActiveRecord::Base
   scope :alarm, where(status: 4)
 
   after_destroy { |record| Sip.destroy_all "sip.id = #{record.sip_id}" }
-  delegate :name, :to => :sip
+#  delegate :name, :to => :sip
   delegate :secret, :to => :sip
 
   before_save { |record|
     self.init_date = Date.today if record.start_date_changed?
-    self.status = 1 if record.new_record?
+    self.status = 2 if record.new_record?
+  }
+
+  after_create { |record|
+    self.update_attribute(:name, sprintf("%03d%03d", record.location.user_id, record.id))
   }
 
   def start_date_str
@@ -51,12 +55,27 @@ class Channel < ActiveRecord::Base
     addtional = ''
     if self.status.eql?(1) && self.active_call
       sec = (self.active_call.start_time - Time.now).to_i
-      addtional = " Incall #{self.active_call.dst}/#{sec} s"
+      min = (sec/60).round
+      sec = sec - min * 60
+      addtional = " Incall #{self.active_call.dst}/#{min} min #{sec} s"
     end
-    if self.status.eql?(5)
-      addtional << self.timeout_reason
+    if self.status.eql?(1) && self.timeout_expire && self.active_call.blank?
+      if Time.now < self.timeout_expire
+        addtional << self.timeout_reason
+      end
     end
     Channel::STATUS[self.status].to_s + addtional.to_s
+  end
+
+  def state_css
+    case self.status
+      when 1
+        'badge-success'
+      when 2
+        'badge-important'
+      when 4, 5
+        'badge-warning'
+    end
   end
 
   #  #$diff = $row2['sip.regseconds'] - time();
@@ -122,12 +141,15 @@ class Channel < ActiveRecord::Base
   end
 
   def duration_today
-    self.cdrs.today.sum('billsec/60')
+    # вывести минуты и секунды
+    sec = self.cdrs.today.sum('billsec').to_i # -> sec
   end
+
   # {prefix_group_id -> bill_time}
   #{nil=>0, 1=>0, 2=>307}
   #
   def today_bill_time
-    self.cdrs.group(:prefix_group_id).today.sum('billsec/60')
+    self.cdrs.group(:prefix_group_id).today.sum('billsec')
   end
+
 end
