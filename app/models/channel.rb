@@ -121,6 +121,9 @@ class Channel < ActiveRecord::Base
     self.chan_prefix_groups.build(groups)
   end
 
+  def duration_today
+    self.cdrs.today.sum('billsec/60')
+  end
   # {prefix_group_id -> bill_time}
   #{nil=>0, 1=>0, 2=>307}
   #
