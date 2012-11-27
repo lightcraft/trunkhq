@@ -13,11 +13,12 @@
         %span.pull-right= convert_seconds_to_time(bill_time[prefix_group.id]) || 0
   .span1
     / State
-    %span.badge{:class => channel.state_css}= word_wrap(channel.state, 15)
+    %span= word_wrap(channel.state, 15)
   .span1
     /Reg status
     &nbsp;
-    = channel.online_status
+    %span.badge{:class => channel.state_css}
+      = channel.online_status
   .span2
     / Duration today
     = convert_seconds_to_time(channel.duration_today)

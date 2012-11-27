@@ -68,14 +68,9 @@ class Channel < ActiveRecord::Base
   end
 
   def state_css
-    case self.status
-      when 1
-        'badge-success'
-      when 2
+    (self.sip.regseconds - Time.now.to_i) > 0 ?
+        'badge-success' :
         'badge-important'
-      when 4, 5
-        'badge-warning'
-    end
   end
 
   #  #$diff = $row2['sip.regseconds'] - time();
