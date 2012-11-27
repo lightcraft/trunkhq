@@ -2,6 +2,17 @@
 
 - if @location_for_destroy
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger')
+- if info = asr_acd(location_id)
+  .row
+    .span1
+      Calls:
+      = info[:calls]
+   .span1
+      ASR:
+      = info[:asr]
+    .span1
+       ACD:
+       = info[:acd]
 
 .row.head
   .span1 Channel

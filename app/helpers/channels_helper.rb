@@ -14,4 +14,9 @@ module ChannelsHelper
   def new_dom_id(obj)
     dom_id(obj, :new)
   end
+
+  def asr_acd(location_id)
+    Cdr.asr_acd(location_id)
+  end
+
 end
