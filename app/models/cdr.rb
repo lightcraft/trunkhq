@@ -17,8 +17,9 @@ class Cdr < ActiveRecord::Base
     row = self.connection.execute("SELECT location_id, count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
-from cdr
-   where location_id = #{location_id} GROUP BY location_id").first
+FROM cdr
+WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0
+GROUP BY location_id").first
     return nil unless row
     {
         location_id: row[0],
