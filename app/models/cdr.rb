@@ -1,3 +1,45 @@
+# == Schema Information
+#
+# Table name: cdr
+#
+#  calldate        :datetime         not null
+#  clid            :string(80)       default(""), not null
+#  src             :string(80)       default(""), not null
+#  dst             :string(80)       default(""), not null
+#  dcontext        :string(80)       default(""), not null
+#  channel         :string(80)       default(""), not null
+#  dstchannel      :string(80)       default(""), not null
+#  lastapp         :string(80)       default(""), not null
+#  lastdata        :string(80)       default(""), not null
+#  duration        :integer          default(0), not null
+#  billsec         :integer          default(0), not null
+#  disposition     :string(45)       default(""), not null
+#  amaflags        :integer          default(0), not null
+#  accountcode     :string(20)       default(""), not null
+#  userfield       :string(255)      default(""), not null
+#  hangupcause     :string(50)       not null
+#  peerip          :string(50)       not null
+#  recvip          :string(50)       not null
+#  fromuri         :string(50)       not null
+#  uri             :string(50)       not null
+#  useragent       :string(50)       not null
+#  codec1          :string(50)       not null
+#  codec2          :string(50)       not null
+#  llp             :string(50)       not null
+#  rlp             :string(50)       not null
+#  ljitt           :string(50)       not null
+#  rjitt           :string(50)       not null
+#  uniqueid        :string(32)       default(""), not null
+#  txjitter        :decimal(10, 5)
+#  rxjitter        :decimal(10, 5)
+#  rxploss         :decimal(10, 5)
+#  txploss         :decimal(10, 5)
+#  channel_id      :integer
+#  user_id         :integer
+#  prefix_group_id :integer
+#  location_id     :integer
+#
+
 class Cdr < ActiveRecord::Base
   self.table_name = 'cdr'
   default_scope order(:calldate)

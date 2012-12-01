@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: chan_prefix_groups
+#
+#  id                  :integer          not null, primary key
+#  channel_id          :integer
+#  prefix_group_id     :integer
+#  max_minutes_per_day :integer
+#  max_calls_per_day   :integer          default(0)
+#  interval_mins       :integer
+#  calls_per_interval  :integer
+#  call_min_interval   :integer
+#  strict              :boolean
+#  enabled             :boolean
+#
+
 class ChanPrefixGroup < ActiveRecord::Base
   belongs_to :channel
   belongs_to :prefix_group

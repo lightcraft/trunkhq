@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: chan_groups
+#
+#  id                  :integer          not null, primary key
+#  chan_group_name     :string(50)
+#  max_channels_cnt    :integer
+#  max_channels_online :integer
+#  user_id             :integer
+#
+
 class ChanGroup < ActiveRecord::Base
   has_many :channels
 

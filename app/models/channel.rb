@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: channels
+#
+#  id              :integer          not null, primary key
+#  sip_id          :integer
+#  status          :integer
+#  timeout_expire  :datetime
+#  timeout_reason  :string(255)
+#  chan_group_id   :integer
+#  location_id     :integer
+#  init_date       :date
+#  start_date      :date
+#  stop_date       :date
+#  start_time      :time
+#  stop_time       :time
+#  created_at      :datetime
+#  updated_at      :datetime
+#  name            :string(100)
+#  imei            :string(20)
+#  gsm_number      :string(60)
+#  friend_group_id :integer
+#
+
 class Channel < ActiveRecord::Base
   self.table_name = 'channels'
   STATUS = {1 => 'ON', 2 => 'OFF', 3 => 'Paused', 4 => 'Alarm', 5 => 'Timeout', nil => 'not registred'}

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: user_prefix_groups
+#
+#  id              :integer          not null, primary key
+#  user_id         :integer
+#  prefix_group_id :integer
+#  allowed_minutes :integer
+#  init_date       :date
+#  rate            :string(255)
+#  init_charge     :integer
+#
+
 class UserPrefixGroup < ActiveRecord::Base
   # поставщики услуг
   #belongs_to :provider, :foreign_key => 'user_id'#, :class_name => "User", :foreign_key => "user_id"
