@@ -17,6 +17,9 @@
         %td= provider.provider_ip_address
         %td{:title => '(min/rate)'}= provider.operator_limits
         %td.btn-group
+          = link_to report_path(provider), :class => 'btn btn-mini' do
+            %i.icon-align-right
+            Report
           = link_to  edit_provider_path(provider), :remote => true, :class => 'btn btn-mini' do
             %i.icon-wrench
             Edit

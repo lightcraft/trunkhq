@@ -18,7 +18,12 @@ class HomeController < ApplicationController
       @prefix_rates.merge!({prefix.id => prefix.def_rate})
     end
 
-    @groups_bill = current_user.cdrs.where('calldate > ? AND calldate < ?', @from, @to).group(:prefix_group_id).sum('billsec/60')
+   # switch user if have access and provider ID present
+    @user = (current_user.has_admin? && !params[:id].blank?) ?
+      Provider.find_by_id(params[:id]) :
+      current_user
+
+    @groups_bill = @user.report(@from, @to)
   end
 
   def sys_log
