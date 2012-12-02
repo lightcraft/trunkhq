@@ -18,16 +18,16 @@ class UserPrefixGroup < ActiveRecord::Base
 
  # belongs_to :prefix_group
   belongs_to :prefix_groups_for_provider
-  attr_accessible :user_id, :prefix_group_id, :allowed_minutes, :init_charge, :start_date, :rate, :name, :provider, :enabled
+  attr_accessible :user_id, :prefix_groups_for_provider_id, :allowed_minutes, :init_charge, :start_date, :rate, :name, :provider, :enabled
 
-  validates :prefix_group_id, :presence => false
+  validates :prefix_groups_for_provider_id, :presence => false
   validates_numericality_of :allowed_minutes, :greater_than_or_equal_to => 0, :allow_blank => false
   validates_numericality_of :rate, :greater_than_or_equal_to => 0, :allow_blank => false
-  validates_uniqueness_of :user_id, :scope => :prefix_group_id
+  validates_uniqueness_of :user_id, :scope => :prefix_groups_for_provider_id
 
   attr_accessor :name
 
-  delegate :group_name, :to => :prefix_group
+  delegate :group_name, :to => :prefix_groups_for_provider
   alias :name :group_name
 
 end
