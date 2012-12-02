@@ -45,6 +45,7 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -s #{shared_path}/uploads #{release_path}/public"
     run "ln -s #{shared_path}/audio #{release_path}/public"
+    run "ln -s #{shared_path}/monitor #{release_path}/public"
   end
 
   namespace :assets do
