@@ -6,10 +6,10 @@
 #  user_id         :integer
 #  prefix_group_id :integer
 #  allowed_minutes :integer
-#  init_date       :date
+#  start_date       :date
 #  rate            :string(255)
 #  init_charge     :integer
-#
+#  enabled         :boolean
 
 class UserPrefixGroup < ActiveRecord::Base
   # поставщики услуг
@@ -18,7 +18,7 @@ class UserPrefixGroup < ActiveRecord::Base
 
   belongs_to :prefix_group
 
-  attr_accessible :user_id, :prefix_group_id, :allowed_minutes, :init_charge, :init_date, :rate, :name, :provider
+  attr_accessible :user_id, :prefix_group_id, :allowed_minutes, :init_charge, :start_date, :rate, :name, :provider, :enabled
 
   validates :prefix_group_id, :presence => false
   validates_numericality_of :allowed_minutes, :greater_than_or_equal_to => 0, :allow_blank => false

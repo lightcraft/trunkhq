@@ -19,8 +19,9 @@
         .row.head
           .span2 Allowed Minutes
           .span2 Init Charge
-          .span2 Init Date
+          .span2 Start Date
           .span2 Rate cent/min
+          .span2 Enabled
         - logger.debug(@provider.user_prefix_groups)
         = f.fields_for :user_prefix_groups do |user_form|
           .tab-pane{id: dom_id(user_form.object)+"#{user_form.object.prefix_group_id}", :class => "#{'active' if @provider.user_prefix_groups.index(user_form.object).eql?(0)}"}
@@ -31,11 +32,13 @@
               .span2
                 = user_form.text_field(:init_charge, :type => "number", :pattern => "[0-9]+", :size => "5", :maxlength => "4", :class => 'input-mini')
               .span2
-                = user_form.text_field :init_date,
-                  :title => 'Init date',
+                = user_form.text_field :start_date,
+                  :title => 'Start date',
                   :class => 'datepicker input-mini'
               .span2
                 = user_form.text_field(:rate, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
+              .span2
+                = user_form..collection_radio_buttons :enabled, [[true, 'Yes'] ,[false, 'No']], :first, :last
 
       %ul.nav.nav-tabs.operators
         - @provider.user_prefix_groups.each do |operator|

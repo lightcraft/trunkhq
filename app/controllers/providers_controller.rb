@@ -35,9 +35,10 @@ class ProvidersController < ApplicationController
     groups = @prefix_groups.collect { |group| {
         name: group.group_name,
         prefix_group_id: group.id,
-        init_date: Date.today.to_s(:date),
+        start_date: Date.today.to_s(:date),
         rate: 0,
-        allowed_minutes: 0
+        allowed_minutes: 0,
+        enabled: true
     } }
     @provider.user_prefix_groups.build(groups)
 
