@@ -13,33 +13,34 @@
       .span2= f.text_field :name, :title =>'Name', :placeholder => 'Name'
       .span2= f.text_field :email, :title => 'Email', :placeholder => 'user@email.com'
       .span2= f.text_field :provider_ip_address, :title => 'IP', :placeholder => 'provider IP address'
+
     - prefix_group_ids = @provider.user_prefix_groups.map(&:prefix_groups_for_provider_id)
     .tabbable.tabs-below
       .tab-content
         .row.head
-          .span2 Allowed Minutes
-          .span2 Init Charge
-          .span2 Start Date
-          .span2 Rate cent/min
-          .span2 Enabled
-        - logger.debug(@provider.user_prefix_groups)
+          .span1 Allowed Minutes
+          .span1 Init Charge
+          .span1 Start Date
+          .span1 Rate cent/min
+          .span1 Enabled
+
         = f.fields_for :user_prefix_groups do |user_form|
           .tab-pane{id: dom_id(user_form.object)+"#{user_form.object.prefix_groups_for_provider_id}", :class => "#{'active' if @provider.user_prefix_groups.index(user_form.object).eql?(0)}"}
             .row
               = user_form.hidden_field :prefix_groups_for_provider_id
-              .span2
-                = user_form.text_field(:allowed_minutes, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-small')
-              .span2
+              .span1
+                = user_form.text_field(:allowed_minutes, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
+              .span1
                 = user_form.text_field(:init_charge, :type => "number", :pattern => "[0-9]+", :size => "5", :maxlength => "4", :class => 'input-mini')
-              .span2
+              .span1
                 = user_form.text_field :start_date,
                   :title => 'Start date',
                   :class => 'datepicker input-mini'
-              .span2
+              .span1
                 = user_form.text_field(:rate, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
-              .span2
-                = user_form.collection_radio_buttons :enabled, [[true, 'Yes'] ,[false, 'No']], :first, :last
-
+              .span1.inline
+                = user_form.collection_radio_buttons(:enabled, [['1', 'Yes'], ['0', 'No']], :first, :last, {:checked => user_form.object.enabled}, {:class => 'line'})
+                - logger.debug(user_form.object.enabled)
       %ul.nav.nav-tabs.operators
         - @provider.user_prefix_groups.each do |operator|
           %li
@@ -49,3 +50,26 @@
     .row
       = f.button :submit, :class => 'btn-primary'
       = link_to t('.cancel', :default => t("helpers.links.cancel")), providers_path, :class => 'btn'
+:css
+  .tabs-below .span2 {
+    margin-left: 5px;
+    max-width: 170px;
+  }
+  .inline span {
+    display: block;
+  }
+  .inline {
+    width: 75px;
+  }
+  .inline label{
+    width: 40px;
+    float: right;
+  }
+  .inline input[type=radio] {
+  float: left;
+  display: inline-block;
+  }
+-#  body .modal .modal-body input[type=text] {
+-#  width: auto;
+-#  max-width: 110px;
+-#  }

@@ -43,8 +43,8 @@ class Provider < User
   rolify
   has_and_belongs_to_many :roles, :join_table => :users_roles, :foreign_key => 'user_id'
 
-  #has_many :user_prefix_groups, :foreign_key => :user_id, dependent: :destroy
-  #has_many :prefix_groups, through: :user_prefix_groups
+  has_many :user_prefix_groups, :foreign_key => :user_id#, dependent: :destroy
+  has_many :prefix_groups_for_providers, through: :user_prefix_groups
 
   #accepts_nested_attributes_for :user_prefix_groups
   #attr_accessible :user_prefix_groups_attributes
@@ -57,8 +57,8 @@ class Provider < User
   after_update :update_sip_settings
 
   def operator_limits
-    self.user_prefix_groups.includes(:prefix_group).collect { |user_prefix_group|
-      "#{user_prefix_group.prefix_group.group_name} (#{user_prefix_group.allowed_minutes}/#{user_prefix_group.rate})" if user_prefix_group.prefix_group
+    self.user_prefix_groups.includes(:prefix_groups_for_provider).collect { |user_prefix_group|
+      "#{user_prefix_group.prefix_groups_for_provider.group_name} (#{user_prefix_group.allowed_minutes}/#{user_prefix_group.rate})" if user_prefix_group.prefix_groups_for_provider
     }.join(', ')
   end
 
