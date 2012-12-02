@@ -51,7 +51,7 @@ class Cdr < ActiveRecord::Base
 
   def self.lact_call_ident(channel)
     row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
-    row.blank? ? '' row.uniqueid
+    row.blank? ? '' : row.uniqueid
   end
 
   def self.channel_stats(channel)
