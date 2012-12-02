@@ -1,6 +1,6 @@
 class CreatePrefixGroupsForProviders < ActiveRecord::Migration
   def change
-    unless ActiveRecord::Base.connection.table_exists? 'prefix_groups_for_provider'
+    unless ActiveRecord::Base.connection.table_exists? 'prefix_groups_for_providers'
       create_table :prefix_groups_for_providers do |t|
         t.string :group_name
         t.decimal :def_rate
