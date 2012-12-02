@@ -6,9 +6,7 @@ class Ability
     Rails.logger.debug("USER CANCAN #{user.inspect}")
     if user.has_role? :admin
       can :manage, :all
-    end
-
-    if user.has_role? :user
+    elsif user.has_role? :user
       can :switch, User
 
       can :read, User, :id => user.id
@@ -16,7 +14,9 @@ class Ability
 
       can :update, :all, :user_id => user.id
       can :read, Sip, :user_id => user.id
-      can :read, PrefixGroup
+      can :read, PrefixGroup, :user_id => user.id
+      can :read, Prefix, :user_id => user.id
+      can :read, PrefixGroupsForProvider, :user_id => user.id
       #can :create, Channel
       #
       #can [:update, :destroy, :power, :sys_info], Channel do |channel|

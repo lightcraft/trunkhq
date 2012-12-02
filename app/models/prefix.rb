@@ -9,6 +9,7 @@
 
 class Prefix < ActiveRecord::Base
   belongs_to :prefix_group
-  attr_accessible :prefix_group, :prefix
+  belongs_to :prefix_groups_for_provider
+  attr_accessible :prefix_group, :prefix_groups_for_provider, :prefix
 
 end

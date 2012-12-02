@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126222135) do
+ActiveRecord::Schema.define(:version => 20121202154751) do
 
   create_table "active_calls", :force => true do |t|
     t.string   "uniqueid",            :limit => 32
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20121126222135) do
     t.integer  "channel_id"
     t.integer  "user_id"
     t.integer  "prefix_group_id"
+    t.integer  "location_id"
   end
 
   add_index "cdr", ["accountcode"], :name => "accountcode"
@@ -163,6 +164,16 @@ ActiveRecord::Schema.define(:version => 20121126222135) do
     t.decimal "def_init_charge",     :precision => 10, :scale => 4
     t.integer "def_minutes_per_day"
     t.string  "color",                                              :default => "", :null => false
+  end
+
+  create_table "prefix_groups_for_provider", :force => true do |t|
+    t.string   "group_name"
+    t.decimal  "def_rate",            :precision => 10, :scale => 0
+    t.decimal  "def_init_charge",     :precision => 10, :scale => 0
+    t.integer  "def_minutes_per_day"
+    t.string   "color"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
   end
 
   create_table "prefixes", :force => true do |t|

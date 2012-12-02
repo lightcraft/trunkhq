@@ -1,6 +1,6 @@
 Trunkhq::Application.routes.draw do
 
-  root :to => 'home#index'
+    root :to => 'home#index'
   match 'location/:id' => 'locations#show'
 
   match '/sys_log' => 'home#sys_log'
@@ -12,6 +12,7 @@ Trunkhq::Application.routes.draw do
 
   resources :ivrs
   resources :black_lists
+  resources :prefix_groups_for_providers
   resources :prefix_groups
   resources :chan_groups
 

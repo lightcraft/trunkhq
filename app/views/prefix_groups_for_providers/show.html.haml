@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Group name:
+  = @prefix_group.group_name
+%p
+  %b Def rate:
+  = @prefix_group.def_rate
+%p
+  %b Def init charge:
+  = @prefix_group.def_init_charge
+%p
+  %b Def minutes per day:
+  = @prefix_group.def_minutes_per_day
+%p
+  %b Color:
+  = @prefix_group.color
+
+= link_to 'Edit', edit_prefix_groups_for_provider_path(@prefix_group)
+\|
+= link_to 'Back', prefix_groups_for_providers_path

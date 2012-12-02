@@ -1,0 +1,58 @@
+%h1 Provider Prefix Groups
+
+%table.table.table-bordered
+  %tr
+    %th #
+    %th Group name
+    %th Init change
+    %th Rate
+    %th Minutes per day
+    %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Prefix Group', new_prefix_groups_for_provider_path, :remote => true, :class => 'btn btn-success')
+
+  - @prefix_groups.each do |prefix_group|
+    = content_tag_for(:tr, prefix_group) do
+      %td= prefix_group.id
+      %td{:title => prefix_group.prefixes_list.join(',')}= prefix_group.group_name
+      %td= prefix_group.def_init_charge
+      %td= prefix_group.def_rate
+      %td= prefix_group.def_minutes_per_day
+      %td
+        .btn-group
+          = link_to  edit_prefix_groups_for_provider_path(prefix_group), :remote => true, :class => 'btn btn-mini' do
+            %i.icon-wrench
+            Edit
+          = link_to prefix_group, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini' do
+            %i.icon-trash
+            Destroy
+%footer
+  = paginate @prefix_groups
+
+#edit
+
+-#
+-#
+-#%table
+-#  %tr
+-#    %th Group name
+-#    %th Def rate
+-#    %th Def init charge
+-#    %th Def minutes per day
+-#    %th Color
+-#    %th
+-#    %th
+-#    %th
+-#
+-#  - @prefix_group.each do |prefix_groups_for_provider|
+-#    %tr
+-#      %td= prefix_groups_for_provider.group_name
+-#      %td= prefix_groups_for_provider.def_rate
+-#      %td= prefix_groups_for_provider.def_init_charge
+-#      %td= prefix_groups_for_provider.def_minutes_per_day
+-#      %td= prefix_groups_for_provider.color
+-#      %td= link_to 'Show', prefix_groups_for_provider
+-#      %td= link_to 'Edit', edit_prefix_groups_for_provider_path(prefix_groups_for_provider)
+-#      %td= link_to 'Destroy', prefix_groups_for_provider, method: :delete, data: { confirm: 'Are you sure?' }
+-#
+-#%br
+-#
+-#= link_to 'New Prefix groups for provider', new_prefix_groups_for_provider_path

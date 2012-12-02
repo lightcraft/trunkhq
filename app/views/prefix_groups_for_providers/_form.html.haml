@@ -1,0 +1,20 @@
+= simple_form_for(@prefix_group, :html => {:remote => true, :class => "modal #{'hide'  if request.xhr?}"} ) do |f|
+  .modal-header
+    %button{ :type => "button", :class => "close",  :'data-dismiss' => "modal"} ×
+    %h3.row
+      .span2
+        = "#{ f.object.new_record? ? 'New' : 'Edit'}"
+        Provider Prefix group
+  .modal-body
+    = f.error_notification
+    .form-inputs
+    = f.input :group_name
+    = f.input :color, :label => 'Color', :input_html => {:class => 'colorpicker'}
+    = f.input :def_init_charge
+    = f.input :def_rate
+    = f.input :def_minutes_per_day
+  .modal-footer
+    = link_to('Close', '#', :class => 'btn', :'data-dismiss' => 'modal')
+    = f.button :submit, :class => 'btn btn-primary'
+    - if f.object.persisted?
+      = link_to('Desttroy', @prefix_group , :class => 'btn btn-danger', :confirm => 'Are You sure? to destroy this Group?', :method => :delete)
