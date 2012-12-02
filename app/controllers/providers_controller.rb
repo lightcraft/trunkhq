@@ -34,7 +34,7 @@ class ProvidersController < ApplicationController
     @prefix_groups = PrefixGroup.order(:group_name).all
     groups = @prefix_groups.collect { |group| {
         name: group.group_name,
-        prefix_group_id: group.id,
+        prefix_groups_for_provider_id: group.id,
         start_date: Date.today.to_s(:date),
         rate: 0,
         allowed_minutes: 0,

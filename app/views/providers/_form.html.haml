@@ -26,7 +26,7 @@
         = f.fields_for :user_prefix_groups do |user_form|
           .tab-pane{id: dom_id(user_form.object)+"#{user_form.object.prefix_group_id}", :class => "#{'active' if @provider.user_prefix_groups.index(user_form.object).eql?(0)}"}
             .row
-              = user_form.hidden_field :prefix_group_id
+              = user_form.hidden_field :prefix_groups_for_provider_id
               .span2
                 = user_form.text_field(:allowed_minutes, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-small')
               .span2
