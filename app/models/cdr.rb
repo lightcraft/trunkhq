@@ -47,7 +47,12 @@ class Cdr < ActiveRecord::Base
   belongs_to :user
   belongs_to :prefix_group
 
-  scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days ) }
+  scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days) }
+
+  def self.lact_call_ident(channel)
+    row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
+    row.blank? ? '' row.uniqueid
+  end
 
   def self.channel_stats(channel)
     #TODO add conditions

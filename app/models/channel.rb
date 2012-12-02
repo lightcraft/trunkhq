@@ -108,8 +108,7 @@ class Channel < ActiveRecord::Base
 
   # Play path from public directory
   def audio_path
-    #TODO change path after Yura send information
-    "/audio/success.wav"
+    '/monior/'+Cdr.lact_call_ident(self)
   end
 
   # returned

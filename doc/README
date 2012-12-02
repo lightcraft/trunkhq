@@ -1,10 +1,39 @@
-//= require jquery
-//= require jquery_ujs
-//= require bootstrap
-//= require ./bootstrap-datepicker
-//= require ./bootstrap-colorpicker
-//= require ./chanel
-//= require ./home
-//= require ./locations
-//= require ./underscore
-//= require_self
+
+  сделай этот селект  - и отобрази DST  и Duration  
+   SELECT dst, time_to_sec(timediff(now(),start_time)) as duration, provider_account_id FROM active_calls WHERE channel_id = {$id}
+
+=======================================
+ всё  - локейшины привязаны  к CDR   ( cdr.location_id )
+ Юра ещё хотел видеть статистики на входе  - от провайдеров
+
+   вот примерно как их выбирать  (cdr.user_id  -  это и есть провайдер  )
+=======================================
+ select
+    count(*) as call_count
+    round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
+    sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
+
+ from CDR
+   group by user_id
+
+=======================================
+Ещё он позвонил и сказал что для терминаторов (на модемах) префиксы группы формирутся  по другому  (не так как для поставщика трафика)
+ для поставщика  префиксы группируются в одни группы, для терминатора по другому    - в них все префиксы распределены в разные группы коточе для терминаторов и поставщиков
+
+предлагаю следующее:
+ - для поставшиков дополнительно добавить ещё одну таблицу с группами :
+    CREATE TABLE provider_prefix_groups (
+      ID int autoincrement,
+      provider_prefix_group_name varchar(100),
+      color varchar(255) )
+ - в таблицу к префиксам( prefixes ) добавить ещё один fireign key на эту таблицу -  prefixes.provider_prefix_group_id
+  (так что префикс будет  ссылатся на две таблицы  с группами - одну для поставщиков, вторую для каналов )
+ - в таблице user_prefix_groups   поменять foreign key   prefix_group_id  на provider_prefix_group_id
+
+эти все изменения в базе  я смогу сделать сам (если ты одобриш)
+ в интерфейсе тебе нада только будет поменять процедуру назначения префикс групп для поставщика (с другой таблицы брать группы)
+
+ потом как ты смотриш на то чтобы я добавил foreign keys в базу (запрещающие удалять главную запись если есть подчинённые )
+  - это бизнес логика базы поможет сохранять целосность данных
+=======================================
+
