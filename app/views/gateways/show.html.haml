@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Provider:
+  = @gateway.provider.name
+%p
+  %b Name:
+  = @gateway.name
+%p
+  %b Allow:
+  = @gateway.allow
+%p
+  %b Host:
+  = @gateway.host
+%p
+  %b Type:
+  = @gateway.type
+%p
+  %b Context:
+  = @gateway.context
+
+= link_to 'Edit', edit_gateway_path(@gateway)
+\|
+= link_to 'Back', gateways_path

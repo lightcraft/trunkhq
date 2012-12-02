@@ -1,0 +1,12 @@
+= simple_form_for(@gateway) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.association :provider, :collection => @providers
+    = f.input :name
+    = f.input :allow
+    = f.input :host
+
+    /= f.input :context
+
+  .form-actions
+    = f.button :submit

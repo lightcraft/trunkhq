@@ -1,5 +1,7 @@
 Trunkhq::Application.routes.draw do
 
+  resources :gateways
+
   resources :prefixes
 
     root :to => 'home#index'

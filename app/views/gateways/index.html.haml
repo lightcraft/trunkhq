@@ -1,0 +1,33 @@
+%h1 Listing gateways
+
+%table
+  %tr
+    %th Provider
+    %th Name
+    %th Allow
+    %th Host
+    %th Type
+    %th Context
+    %th
+    / %th
+    %th
+
+  - @gateways.each do |gateway|
+    %tr
+      %td
+        = gateway.provider ? gateway.provider.name : '-'
+      %td= gateway.name
+      %td= gateway.allow
+      %td= gateway.host
+      %td= gateway.type
+      %td= gateway.context
+      /%td= link_to 'Show', gateway
+      %td= link_to 'Edit', edit_gateway_path(gateway)
+      %td= link_to 'Destroy', gateway, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Gateway', new_gateway_path
+
+%footer
+  = paginate @gateways

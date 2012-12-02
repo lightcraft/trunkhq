@@ -77,14 +77,17 @@ class Sip < ActiveRecord::Base
   # insert sip(name,secret,type,accountcode,context) values ('login','pass','friend',user_id,'internal')
 
   attr_accessible :name, :secret, :context, :host, :accountcode, :type, :user_id
+  belongs_to :provider,  :foreign_key => :accountcode
+  attr_accessible :allow, :context, :host, :name, :type
 
   validates_numericality_of :name, :if => Proc.new { |sip| !sip.type.eql?('peer')}
   #validate :secret, :present => true, :if => { |sip| sip.context.eql?('internal')}
   self.inheritance_column = "inheritance_type"
 
   before_validation(:on => :create) do
+    logger.debug("CALIDARE SIP")
     self.context = 'external' if self.context.blank? # по умолчанию елси не установлен считаем что это внешний сип канал
-    self.accountcode = self.user_id
+    self.accountcode ||= self.user_id
     self.callerid ||= self.name
     self.defaultuser ||= ''
     self.fullcontact ||= ''

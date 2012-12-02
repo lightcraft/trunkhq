@@ -12,8 +12,6 @@
     .row
       .span2= f.text_field :name, :title =>'Name', :placeholder => 'Name'
       .span2= f.text_field :email, :title => 'Email', :placeholder => 'user@email.com'
-      .span2= f.text_field :provider_ip_address, :title => 'IP', :placeholder => 'provider IP address'
-
     - prefix_group_ids = @provider.user_prefix_groups.map(&:prefix_groups_for_provider_id)
     .tabbable.tabs-below
       .tab-content
