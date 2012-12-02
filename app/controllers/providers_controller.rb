@@ -31,7 +31,7 @@ class ProvidersController < ApplicationController
   # GET /providers/new.json
   def new
     @provider = Provider.new
-    @prefix_groups = PrefixGroup.order(:group_name).all
+    @prefix_groups = PrefixGroupsForProvider.order(:group_name).all
     groups = @prefix_groups.collect { |group| {
         name: group.group_name,
         prefix_groups_for_provider_id: group.id,
