@@ -1,5 +1,7 @@
 Trunkhq::Application.routes.draw do
 
+  resources :prefixes
+
     root :to => 'home#index'
   match 'location/:id' => 'locations#show'
 

@@ -13,7 +13,7 @@
     = f.error_notification
     = f.fields_for :sip do |sip_form|
       .row
-        .span2= f.input :gsm_number, :type => "number", :placeholder => 'Phone number', :label => 'Phone number', :input_html => {  :class => 'input-small'}
+        .span2= f.input :gsm_number, :type => "number", :placeholder => 'Phone number', :label => 'Phone №', :input_html => {  :class => 'input-small'}
         .span2= sip_form.input :secret, :placeholder => 'Password', :label => 'Password',  :input_html => {  :class => 'input-small'}
         -#.span2= f.association :chan_group, :include_blank => false #, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID', :label => 'Group ID'
         .span2

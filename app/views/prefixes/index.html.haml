@@ -1,0 +1,30 @@
+%h1 Prefixes
+
+%table.table.table-bordered
+  %tr
+    %th Prefix group
+    %th Prefix groups for provider
+    %th Prefix
+    %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Prefix', new_prefix_path, :remote => true, :class => 'btn btn-success')
+
+  - @prefixes.each do |prefix|
+    = content_tag_for(:tr, prefix) do
+      %td
+        - if prefix.prefix_group
+          = prefix.prefix_group.group_name
+      %td
+        - if prefix.prefix_groups_for_provider
+          = prefix.prefix_groups_for_provider.group_name
+      %td= prefix.prefix
+      %td
+        .btn-group
+          = link_to  edit_prefix_path(prefix), :remote => true, :class => 'btn btn-mini' do
+            %i.icon-wrench
+            Edit
+          = link_to prefix, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini' do
+            %i.icon-trash
+            Destroy
+%footer
+  = paginate @prefixes
+
+#edit

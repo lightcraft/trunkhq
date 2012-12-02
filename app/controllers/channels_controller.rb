@@ -57,7 +57,6 @@ class ChannelsController < ApplicationController
     @channel.sip.user = current_user
     @channel.sip.allow = 'gsm;ulaw;alaw'
     @channel.sip.name = @channel.gsm_number
-    @channel.valid?
 
     respond_to do |format|
       if @channel.save

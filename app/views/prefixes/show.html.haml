@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Prefix group:
+  = @prefix.prefix_group
+%p
+  %b Prefix groups for provider:
+  = @prefix.prefix_groups_for_provider
+%p
+  %b Prefix:
+  = @prefix.prefix
+
+= link_to 'Edit', edit_prefix_path(@prefix)
+\|
+= link_to 'Back', prefixes_path

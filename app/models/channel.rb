@@ -56,6 +56,7 @@ class Channel < ActiveRecord::Base
   before_save { |record|
     self.init_date = Date.today if record.start_date_changed?
     self.status = 2 if record.new_record?
+    self.sip.update_attribute(:name, self.name)
   }
 
   after_create { |record|

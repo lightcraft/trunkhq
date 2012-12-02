@@ -1,0 +1,5 @@
+$('#edit').html('#{j(render( :partial => 'form'))}');
+$('##{edit_dom_id(@prefix)}').modal('show');
+$('.colorpicker').colorpicker().on('changeColor', function (ev) {
+$(this).attr('style', 'background-color: ' + ev.color.toHex());
+});

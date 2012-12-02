@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202154751) do
+ActiveRecord::Schema.define(:version => 20121202180724) do
 
   create_table "active_calls", :force => true do |t|
     t.string   "uniqueid",            :limit => 32
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(:version => 20121202154751) do
     t.string  "color",                                              :default => "", :null => false
   end
 
-  create_table "prefix_groups_for_provider", :force => true do |t|
+  create_table "prefix_groups_for_providers", :force => true do |t|
     t.string   "group_name"
     t.decimal  "def_rate",            :precision => 10, :scale => 0
     t.decimal  "def_init_charge",     :precision => 10, :scale => 0
@@ -178,7 +178,8 @@ ActiveRecord::Schema.define(:version => 20121202154751) do
 
   create_table "prefixes", :force => true do |t|
     t.integer "prefix_group_id"
-    t.string  "prefix",          :limit => 200
+    t.string  "prefix",                        :limit => 200
+    t.integer "prefix_groups_for_provider_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -267,8 +268,6 @@ ActiveRecord::Schema.define(:version => 20121202154751) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                  :limit => 15
-    t.string   "password",               :limit => 15
     t.string   "company",                :limit => 100, :default => "Private"
     t.string   "company_logo",           :limit => 100, :default => "/img/bird.gif"
     t.string   "application_name",       :limit => 100, :default => "Telefony"
@@ -299,6 +298,7 @@ ActiveRecord::Schema.define(:version => 20121202154751) do
     t.string   "invited_by_type"
     t.boolean  "can_add_friendgroups"
     t.string   "provider_ip_address"
+    t.string   "wmz"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
