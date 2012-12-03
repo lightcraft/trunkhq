@@ -35,3 +35,87 @@
 
  потом как ты смотриш на то чтобы я добавил foreign keys в базу (запрещающие удалять главную запись если есть подчинённые )
   - это бизнес логика базы поможет сохранять целосность данных
+==============================================================
+
+
+ <table class="styled" id=channels>
+       <tr><th>ID#</th><th>Группа_Локация</th><th>Имя канала<br>Пароль</th><th>Кодеки</th><th>Админ.статус</th><th>Линия</th><th>прочее</th> <th>Модем принимает префиксы</th></tr>
+      <?php
+       $res = mysql_query("SELECT active_calls.uniqueid,init_date,stop_date,start_date,channels.start_time,stop_time,sip.id as sip_id,channels.id as chan_id ,
+                             fullcontact,useragent, chan_group_name,regseconds,channels.id,
+                             sip.name as sip_name,status,secret,allow,lastms,ipaddr,
+                             locations.name as channel_location_name,locations.id as channel_location_id,
+                             chan_group_id , IFNULL(context,'default') as context,
+                             concat(users.id,':',users.name)  as channel_user_name,
+                             users.id as channel_user_id,
+                             timeout_reason,
+                             TIME_TO_SEC(timediff(timeout_expire , now())) as timeout ,
+                             (case when (curdate() between date(channels.start_date) and date(channels.stop_date )) THEN '' ELSE 'OUT-DATE' END) as out_date,
+                             (case when (curtime() between channels.start_time and channels.stop_time) THEN '' ELSE 'OUT-TIME' END) as out_time
+              FROM sip LEFT JOIN users ON users.id = sip.accountcode,
+                  channels
+                  LEFT JOIN locations ON  channels.location_id = locations.id
+                  LEFT JOIN chan_groups ON channels.chan_group_id = chan_groups.id
+                  LEFT JOIN active_calls ON channels.id = active_calls.channel_id
+
+               WHERE sip.id = channels.sip_id
+                 group by sip.id
+               ");
+   if ( ! $res ) { die(mysql_error() ) ;  }
+       while( $row = mysql_fetch_assoc($res) ) {
+         $id = $row['chan_id'];
+         $sip_id = $row['sip_id'];
+         $diff = $row['regseconds'] - time();
+         $chan_timeout = $row['timeout'];
+         $duration_min = floor($row3['duration']/60);
+         $duration_sec = $row3['duration']%60;
+         $duration = $duration_min . ':' . $duration_sec;
+         if ( $diff > 0 ) {
+           $res3 = mysql_query("SELECT dst, time_to_sec(timediff(now(),start_time)) as duration, provider_account_id
+                               FROM active_calls WHERE channel_id = {$id}");
+           $row3 = mysql_fetch_assoc($res3);
+           if ( mysql_affected_rows() > 0 ) {
+              $direction = ( $row3['provider_account_id'] < 0 ) ? "<span style='color:yellow'> SOFTPHONE-CALL</span>" : "";
+              $direction = ( $row3['provider_account_id'] > 0 ) ? "<span style='color:blue'>   OUTBOUND-CALL</span>" : $direction;
+              $direction = ( $row3['provider_account_id'] = 0 ) ? "<span style='color:brown'>  INBOUND-CALL</span>" : $direction;
+              $INFO = " {$direction}:{$row3['dst']}, {$duration}";
+              $title = 'Модем в состоянии активного звонка';
+           }else{
+              if ( $chan_timeout > 0 ) {
+                $INFO = "ON-TIMEOUT (".round($chan_timeout)."s)";
+                $bgcolor = '#FCB514';
+                $title = $row['timeout_reason'];
+              }else {
+                $INFO = 'FREE';
+                $bgcolor = 'green';
+                $title = 'Канал свободен и доступен';
+              }
+          }
+           if ($row['ipaddr']) {
+             $IP_INFO = $row['ipaddr'];
+             $bgcolor = '#0AC92B';
+           }else{
+           	  $IP_INFO = "<span style='color:red;'> ALARM(МОДЕМ Отвалился!) </span>";
+              $bgcolor = '#8B8989';
+              $title = 'Модем перестал подавать признаки жизни - через некоторое время он будет признан как OFFLINE';
+           }
+
+           $chan_stat = "<span style='color:white;background-color:{$bgcolor};' title='{$title}'> &nbsp;&nbsp; ONLINE:  [ {$INFO} ]&nbsp;&nbsp;</span>  <br>ttl:{$diff},Задержка: {$row['lastms']}ms<br> {$row['fullcontact']} <br> {$row['useragent']}<br> IP:${IP_INFO}";
+
+         }else{
+           $chan_stat = '<span style="color:red" title="Модем не зарегистрирован в всистеме"> OFFLINE </span>';
+         }
+
+ 	      $CHANNEL_STATUS = array(1 => 'ON', 2 => 'OFF', 3 => 'ALARM', 4 => 'Alarm', null => 'not registered');
+         $adm_stat = $CHANNEL_STATUS[$row['status']];
+         if ( $row['out_date'] || $row['out_time'] ) {
+             $working_time = "<img src='img/budilnik.png' title='Нерабочее время или день!'> <br> {$row['out_date']} {$row['out_time']}";
+          }
+
+ echo " <tr valign=top id={$id} title='$title' >";
+ echo "    <td align=center><span class=gsm_line><br> {$id} <br> {$working_time} </span></td>";
+....
+
+....
+ echo "    <td>{$adm_stat}</td>;"
+ echo "    <td>{$chan_stat}</td>";

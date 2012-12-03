@@ -78,15 +78,30 @@ class Channel < ActiveRecord::Base
     # -> active_calls.channel_id
     # active_calls.start_time  - current_time  -> длительность звонка
     addtional = ''
-    if self.status.eql?(1) && self.active_call
-      sec = (self.active_call.start_time - Time.now).to_i
-      min = (sec/60).round
-      sec = sec - min * 60
-      addtional = " Incall #{self.active_call.dst}/#{min} min #{sec} s"
-    end
-    if self.status.eql?(1) && self.timeout_expire && self.active_call.blank?
-      if Time.now < self.timeout_expire
-        addtional << self.timeout_reason
+
+    if online?
+      if self.active_call
+        sec = (self.active_call.start_time - Time.now).to_i
+        min = (sec/60).round
+        sec = sec - min * 60
+        # модем в состоянии звонка
+        direction = self.active_call.provider_account_id < 0 ? "<span style='color:yellow'> SOFTPHONE-CALL</span>" : ""
+        direction = self.active_call.provider_account_id > 0 ? "<span style='color:blue'> OUTBOUND-CALL</span>" : direction
+        direction = self.active_call.provider_account_id = 0 ? "<span style='color:brown'> INBOUND-CALL</span>" : direction
+
+        addtional = " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
+      elsif self.timeout_expire && self.active_call.blank?
+        time_diff = self.timeout_expire - Time.now
+
+        if time_diff > 0
+          min = (time_diff/60).round
+          sec = time_diff - min * 60
+          addtional < self.timeout_reason + "#{min}:#{sec}s"
+        else
+          addtional < "<span title='Chanel free'>Free</span>"
+        end
+      else
+        addtional < '<span style="color:red" title="Модем не зарегистрирован в всистеме"> OFFLINE </span>'
       end
     end
     Channel::STATUS[self.status].to_s + addtional.to_s
@@ -98,22 +113,26 @@ class Channel < ActiveRecord::Base
         'badge-important'
   end
 
-  #  #$diff = $row2['sip.regseconds'] - time();
-  #$diff > 0  - ONLINE
-  #$diff < 0  - OFFLINE
+#  #$diff = $row2['sip.regseconds'] - time();
+#$diff > 0  - ONLINE
+#$diff < 0  - OFFLINE
   def online_status
-    (self.sip.regseconds - Time.now.to_i) > 0 ?
+    online? ?
         'Online' :
         'Offline'
   end
 
-  # Play path from public directory
+  def online?
+    (self.sip.regseconds - Time.now.to_i) > 0
+  end
+
+# Play path from public directory
   def audio_path
     '/monior/'+Cdr.lact_call_ident(self)+'-out.wav'
   end
 
-  # returned
-  # [{prefix_group_id => prefix_group_name}]
+# returned
+# [{prefix_group_id => prefix_group_name}]
   def operator_groups
     self.prefix_groups.includes(:chan_prefix_groups).where('chan_prefix_groups.enabled = ?', true)
   end
@@ -164,9 +183,9 @@ class Channel < ActiveRecord::Base
     sec = self.cdrs.today.sum('billsec').to_i # -> sec
   end
 
-  # {prefix_group_id -> bill_time}
-  #{nil=>0, 1=>0, 2=>307}
-  #
+# {prefix_group_id -> bill_time}
+#{nil=>0, 1=>0, 2=>307}
+#
   def today_bill_time
     self.cdrs.group(:prefix_group_id).today.sum('billsec')
   end
