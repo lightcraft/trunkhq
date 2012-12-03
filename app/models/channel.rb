@@ -85,9 +85,9 @@ class Channel < ActiveRecord::Base
         min = (sec/60).round
         sec = sec - min * 60
         # модем в состоянии звонка
-        direction = self.active_call.provider_account_id < 0 ? "<span style='color:yellow'> SOFTPHONE-CALL</span>" : ""
-        direction = self.active_call.provider_account_id > 0 ? "<span style='color:blue'> OUTBOUND-CALL</span>" : direction
-        direction = self.active_call.provider_account_id = 0 ? "<span style='color:brown'> INBOUND-CALL</span>" : direction
+        direction = self.active_call.provider_account_id < 0 ? "<span style='color:yellow'>SOFTPHONE-CALL</span>" : ""
+        direction = self.active_call.provider_account_id > 0 ? "<span style='color:blue'>OUTBOUND-CALL</span>" : direction
+        direction = self.active_call.provider_account_id = 0 ? "<span style='color:brown'>INBOUND-CALL</span>" : direction
 
         addtional = " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
       elsif self.timeout_expire && self.active_call.blank?
@@ -101,7 +101,7 @@ class Channel < ActiveRecord::Base
           addtional < "<span title='Chanel free'>Free</span>"
         end
       else
-        addtional < '<span style="color:red" title="Модем не зарегистрирован в всистеме"> OFFLINE </span>'
+        addtional < '<span style="color:red" title="Modem is not registered">OFFLINE</span>'
       end
     end
     Channel::STATUS[self.status].to_s + addtional.to_s
