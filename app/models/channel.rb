@@ -24,7 +24,7 @@
 
 class Channel < ActiveRecord::Base
   self.table_name = 'channels'
-  STATUS = {1 => 'ON', 2 => 'OFF', 3 => 'Paused', 4 => 'Alarm', 5 => 'Timeout', nil => 'not registred'}
+  STATUS = {1 => 'ON', 2 => 'OFF', 3 => 'ALARM', 4 => 'Alarm', 5 => 'Timeout', nil => 'not registred'}
 
   belongs_to :location
   belongs_to :sip
