@@ -86,9 +86,9 @@ class Channel < ActiveRecord::Base
         min = (sec/60).round
         sec = sec - min * 60
         # модем в состоянии звонка
-        direction = self.active_call.provider_account_id < 0 ? "<span style='color:yellow'>SOFTPHONE-CALL</span>" : ""
-        direction = self.active_call.provider_account_id > 0 ? "<span style='color:blue'>OUTBOUND-CALL</span>" : direction
-        direction = self.active_call.provider_account_id == 0 ? "<span style='color:brown'>INBOUND-CALL</span>" : direction
+        direction = self.active_call.provider_account_id < 0 ? " <span style='color:yellow'>SOFTPHONE-CALL</span>" : ""
+        direction = self.active_call.provider_account_id > 0 ? " <span style='color:blue'>OUTBOUND-CALL</span>" : direction
+        direction = self.active_call.provider_account_id == 0 ? " <span style='color:brown'>INBOUND-CALL</span>" : direction
 
         addtional << " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
       elsif self.active_call(true).blank?
@@ -97,15 +97,15 @@ class Channel < ActiveRecord::Base
         if time_diff > 0
           min = (time_diff/60).round
           sec = time_diff - min * 60
-          reson =  self.timeout_reason + "#{min}:#{sec}s"
+          addtional <<   " <span title='#{self.timeout_reason} #{min}:#{sec}s>?</span>"
         else
-          addtional << "<span title='Chanel free'>Free</span>"
+          addtional << " <span title='Chanel free'>Free</span>"
         end
       end
     else
-      addtional << '<span style="color:red" title="Modem is not registered">OFFLINE</span>'
+      addtional << ' <span style="color:red" title="Modem is not registered">OFFLINE</span>'
     end
-    "<span title='#{reson}'>#{Channel::STATUS[self.status]}</span>".to_s + addtional.to_s
+    Channel::STATUS[self.status].to_s + addtional.to_s
   end
 
   def state_css
