@@ -15,7 +15,7 @@ class HomeController < ApplicationController
         Provider.find_by_id(params[:id]) :
         current_user
 
-    group_price = @user.has_provider? ? PrefixGroup : PrefixGroupsForProvider
+    group_price = @user.has_provider? ? PrefixGroupsForProvider : PrefixGroup
 
     @prefix_groups = {}
     @prefix_rates = {}
