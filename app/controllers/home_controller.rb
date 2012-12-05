@@ -25,6 +25,9 @@ class HomeController < ApplicationController
       @prefix_rates.merge!({prefix.id => prefix.def_rate})
     end
 
+    logger.info("@prefix_groups #{@prefix_groups.inspect}")
+    logger.info("@prefix_rates #{@prefix_rates.inspect}")
+
     @groups_bill = @user.report(@from, @to)
   end
 
