@@ -13,7 +13,7 @@
         %span.pull-right= convert_seconds_to_time(bill_time[prefix_group.id]) || 0
   .span1
     / State
-    %span= word_wrap(channel.state, 15)
+    %span= raw channel.state
   .span1
     /Reg status
     &nbsp;

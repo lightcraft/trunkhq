@@ -78,6 +78,7 @@ class Channel < ActiveRecord::Base
     # -> active_calls.channel_id
     # active_calls.start_time  - current_time  -> длительность звонка
     addtional = ''
+    reson = ''
 
     if online?
       if self.active_call
@@ -96,7 +97,7 @@ class Channel < ActiveRecord::Base
         if time_diff > 0
           min = (time_diff/60).round
           sec = time_diff - min * 60
-          addtional << self.timeout_reason + "#{min}:#{sec}s"
+          reson =  self.timeout_reason + "#{min}:#{sec}s"
         else
           addtional << "<span title='Chanel free'>Free</span>"
         end
@@ -104,7 +105,7 @@ class Channel < ActiveRecord::Base
     else
       addtional << '<span style="color:red" title="Modem is not registered">OFFLINE</span>'
     end
-    Channel::STATUS[self.status].to_s + addtional.to_s
+    "<span title='#{reson}'>#{Channel::STATUS[self.status]}</span>".to_s + addtional.to_s
   end
 
   def state_css
