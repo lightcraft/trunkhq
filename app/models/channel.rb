@@ -82,7 +82,7 @@ class Channel < ActiveRecord::Base
     self.reload
     if online?
       if self.active_call(true)
-        sec = (self.active_call.start_time - Time.current).to_i
+        sec = (Time.current - self.active_call.start_time).to_i
         min = (sec/60).round
         sec = sec - min * 60
         # модем в состоянии звонка
