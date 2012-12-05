@@ -71,8 +71,8 @@ GROUP BY location_id").first
     {
         location_id: row[0],
         calls: row[1],
-        asr: row[2],
-        acd: row[3]
+        asr: row[2].to_i,
+        acd: row[3].to_i
     }
   end
 
