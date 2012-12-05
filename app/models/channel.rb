@@ -78,7 +78,7 @@ class Channel < ActiveRecord::Base
     # -> active_calls.channel_id
     # active_calls.start_time  - current_time  -> длительность звонка
     addtional = ''
-    reson = ''
+
     self.reload
     if online?
       if self.active_call(true)
@@ -93,11 +93,11 @@ class Channel < ActiveRecord::Base
         addtional << " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
       elsif self.active_call(true).blank?
         time_diff = (self.timeout_expire - Time.now).to_i
-
+        addtional << "<span title='time_diff #{time_diff}  expire_time #{self.timeout_expire } Time.now #{Time.now}' > t </span>"
         if time_diff > 0
           min = (time_diff/60).round
           sec = time_diff - min * 60
-          addtional <<   " <span title='#{self.timeout_reason} #{min}:#{sec}s>?</span>"
+          addtional << " <span title='#{self.timeout_reason} #{min}:#{sec}' >?</span>"
         else
           addtional << " <span title='Chanel free'>Free</span>"
         end
