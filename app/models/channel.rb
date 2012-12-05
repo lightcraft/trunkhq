@@ -79,9 +79,9 @@ class Channel < ActiveRecord::Base
     # active_calls.start_time  - current_time  -> длительность звонка
     addtional = ''
     reson = ''
-
+    self.reload
     if online?
-      if self.active_call
+      if self.active_call(true)
         sec = (self.active_call.start_time - Time.now).to_i
         min = (sec/60).round
         sec = sec - min * 60
@@ -91,7 +91,7 @@ class Channel < ActiveRecord::Base
         direction = self.active_call.provider_account_id == 0 ? "<span style='color:brown'>INBOUND-CALL</span>" : direction
 
         addtional << " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
-      elsif self.active_call.blank?
+      elsif self.active_call(true).blank?
         time_diff = (self.timeout_expire - Time.now).to_i
 
         if time_diff > 0
