@@ -1,4 +1,4 @@
-%em= Time.now.to_s(:short)
+%em= Time.current.to_s(:short)
 
 - if @location_for_destroy
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger')

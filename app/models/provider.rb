@@ -62,7 +62,7 @@ class Provider < User
     }.join(', ')
   end
 
-  def report(from = Time.now, to = Time.now)
+  def report(from = Time.current, to = Time.current)
     logger.info("-->  Provider Report")
     Cdr.where(:accountcode => self.id).where('calldate > ? AND calldate < ?', from, to).group(:prefix_group_id).sum('billsec/60')
   end

@@ -82,7 +82,7 @@ class Channel < ActiveRecord::Base
     self.reload
     if online?
       if self.active_call(true)
-        sec = (self.active_call.start_time - Time.now).to_i
+        sec = (self.active_call.start_time - Time.current).to_i
         min = (sec/60).round
         sec = sec - min * 60
         # модем в состоянии звонка
@@ -92,8 +92,8 @@ class Channel < ActiveRecord::Base
 
         addtional << " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
       elsif self.active_call(true).blank?
-        time_diff = (self.timeout_expire - Time.now).to_i
-        addtional << "<span title='time_diff #{time_diff}  expire_time #{self.timeout_expire } Time.now #{Time.now}' > t </span>"
+        time_diff = (self.timeout_expire - Time.current).to_i
+       # addtional << "<span title='time_diff #{time_diff}  expire_time #{self.timeout_expire } Time.current #{Time.current}' > t </span>"
         if time_diff > 0
           min = (time_diff/60).round
           sec = time_diff - min * 60
@@ -109,7 +109,7 @@ class Channel < ActiveRecord::Base
   end
 
   def state_css
-    (self.sip.regseconds - Time.now.to_i) > 0 ?
+    (self.sip.regseconds - Time.current.to_i) > 0 ?
         'badge-success' :
         'badge-important'
   end
@@ -124,7 +124,7 @@ class Channel < ActiveRecord::Base
   end
 
   def online?
-    (self.sip.regseconds - Time.now.to_i) > 0
+    (self.sip.regseconds - Time.current.to_i) > 0
   end
 
 # Play path from public directory

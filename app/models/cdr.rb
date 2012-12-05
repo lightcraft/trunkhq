@@ -56,7 +56,7 @@ class Cdr < ActiveRecord::Base
 
   def self.channel_stats(channel)
     #TODO add conditions
-    self.where('calldate > ?', Time.now - 1.month).where('calldate < ?', Time.current).where(['channel_id = ?', channel.id]).sum(:duration)
+    self.where('calldate > ?', Time.current - 1.month).where('calldate < ?', Time.current).where(['channel_id = ?', channel.id]).sum(:duration)
   end
 
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}

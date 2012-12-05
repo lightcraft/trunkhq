@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
     self.has_role?(:provider)
   end
 
-  def report(from = Time.now, to = Time.now)
+  def report(from = Time.current, to = Time.current)
     logger.info("-->  User Report")
     Cdr.where(:location_id => self.location_ids).where('calldate > ? AND calldate < ?', from, to).group(:prefix_group_id).sum('billsec/60')
   end
