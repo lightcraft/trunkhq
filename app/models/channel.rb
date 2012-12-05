@@ -132,7 +132,7 @@ class Channel < ActiveRecord::Base
 
 # Play path from public directory
   def audio_path
-    '/monior/'+Cdr.lact_call_ident(self)+'-out.wav'
+    '/monior/'+Cdr.lact_call_ident(self)+'.ogg'
   end
 
 # returned
