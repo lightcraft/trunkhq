@@ -6,7 +6,9 @@
     = f.input :allow
     = f.input :host
 
-    /= f.input :context
-
-  .form-actions
-    = f.button :submit
+  .row
+    .span3= f.button :submit, 'Save', :class => 'btn btn-info'
+    - unless @gateway.new_record?
+      .span3= link_to 'Destroy', @gateway, :confirm => 'Are you sure? !!!!', method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger'
+    - else
+      .span3= link_to 'Back', gateways_path, :class => 'btn btn-inverse'

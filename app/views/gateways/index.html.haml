@@ -1,6 +1,6 @@
-%h1 Listing gateways
-
-%table
+%header
+  %h2 Gateways
+%table.table.table-bordered
   %tr
     %th Provider
     %th Name
@@ -8,9 +8,7 @@
     %th Host
     %th Type
     %th Context
-    %th
-    / %th
-    %th
+    %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Gateway', new_gateway_path, :class => 'btn btn-success')
 
   - @gateways.each do |gateway|
     %tr
@@ -21,13 +19,13 @@
       %td= gateway.host
       %td= gateway.type
       %td= gateway.context
-      /%td= link_to 'Show', gateway
-      %td= link_to 'Edit', edit_gateway_path(gateway)
-      %td= link_to 'Destroy', gateway, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Gateway', new_gateway_path
+      %td
+        = link_to  edit_gateway_path(gateway), :class => 'btn btn-mini' do
+          %i.icon-wrench
+          Edit
+        = link_to gateway, :confirm => 'Are you sure? !!!!', method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini' do
+          %i.icon-trash
+          Destroy
 
 %footer
   = paginate @gateways
