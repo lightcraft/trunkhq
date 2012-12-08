@@ -1,4 +1,4 @@
-= form_for Cdr.new, :url => '/report' do |f|
+= form_for Cdr.new, :url => "/report/#{params[:id]}" do |f|
   .row
     .span1
       %label From
