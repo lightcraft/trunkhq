@@ -1,0 +1,41 @@
+%h1 Cdrs             
+%table.table.table-bordered.table-hover
+  %tr
+    %td Calldate
+    %td Dst
+    %td Billsec
+    %td Channel
+    %td User
+    %td Prefix group
+    %td Location
+
+  - @cdrs.each do |cdr|
+    %tr
+      %td
+        &nbsp;
+        = cdr.calldate
+      %td
+        &nbsp;
+        = cdr.dcontext
+      %td
+        &nbsp;
+        = cdr.billsec
+      %td
+        &nbsp;
+        = cdr.channel && cdr.channel.name
+        = cdr.channel && cdr.channel.timeout_reason
+      %td
+        &nbsp;
+        = cdr.user.inspect
+        = cdr.user &&cdr.user.name
+      %td
+        &nbsp;
+        = cdr.prefix_group && cdr.prefix_group.group_name
+      %td
+        &nbsp;
+        = cdr.location && cdr.location.name
+
+%footer
+  = paginate @cdrs
+
+

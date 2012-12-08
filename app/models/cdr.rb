@@ -42,11 +42,13 @@
 
 class Cdr < ActiveRecord::Base
   self.table_name = 'cdr'
-  default_scope order(:calldate)
+ # default_scope order(:calldate)
   belongs_to :channel
+  belongs_to :location
   belongs_to :user
   belongs_to :prefix_group
- belongs_to :prefix
+  belongs_to :prefix
+  belongs_to :provider, :foreign_key => :accountcode
 
   scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days) }
 

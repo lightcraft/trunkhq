@@ -1,5 +1,7 @@
 Trunkhq::Application.routes.draw do
 
+  get "cdr/index"
+
   resources :gateways
 
   resources :prefixes
