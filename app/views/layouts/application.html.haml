@@ -27,3 +27,8 @@
               = yield
           %footer
 
+-# fixes android dropdown menu
+:javascript
+  $('a.dropdown-toggle, .dropdown-menu, .dropdown-menu a, .dropdown-menu .dropdown-submenu a').on('touchstart.dropdown.data-api', function (e) {
+    e.stopPropagation();
+  });
