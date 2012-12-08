@@ -46,6 +46,7 @@ class Cdr < ActiveRecord::Base
   belongs_to :channel
   belongs_to :user
   belongs_to :prefix_group
+ belongs_to :prefix
 
   scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days) }
 

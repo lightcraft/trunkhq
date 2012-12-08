@@ -61,10 +61,26 @@ class Provider < User
       "#{user_prefix_group.prefix_groups_for_provider.group_name} (#{user_prefix_group.allowed_minutes}/#{user_prefix_group.rate})" if user_prefix_group.prefix_groups_for_provider
     }.join(', ')
   end
+=begin
+  твой селект будет выглядеть так (обрати внимание как  отображается время  -  104 секунды это  "1:44"  тоесть 1 минута и 44 секунды:
+      также отображена имя группы провайдера
 
+  SELECT sum(billsec),concat(floor(SUM(billsec/60)),':',(SUM(billsec))%60) AS sum_billsec_60,
+      prefix_groups_for_provider_id AS prefix_groups_for_provider_id,
+   prefix_groups_for_providers.group_name AS  provider_prefix_group_name
+
+  FROM `cdr`, prefixes , prefix_groups_for_providers
+  WHERE
+  cdr.prefix_id = prefixes.id AND
+  prefixes.prefix_groups_for_provider_id = prefix_groups_for_providers.id AND
+  `cdr`.`accountcode` = 44 AND
+           (calldate > '2012-11-30 19:43:18' AND
+           calldate < '2012-12-05 19:43:18')
+GROUP BY prefixes.prefix_groups_for_provider_id ORDER BY calldate
+=end
   def report(from = Time.current, to = Time.current)
     logger.info("-->  Provider Report")
-    Cdr.where(:accountcode => self.id).where('calldate > ? AND calldate < ?', from, to).group(:prefix_group_id).sum('billsec/60')
+    Cdr.where(:accountcode => self.id).joins(:prefix => :prefix_groups_for_provider).where('calldate > ? AND calldate < ?', from, to).group('prefixes.prefix_groups_for_provider_id').sum('billsec/60')
   end
 
   private
