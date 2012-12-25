@@ -22,13 +22,14 @@
   .span1 Price(cent)
   .span1 Payment
 - total = 0
-- @groups_bill.each do |group, min|
-  - total = total.to_i + min.to_i * @prefix_rates[group].to_i
-  .row.calculator{:class => "group_#{group}"}
-    .span1= @prefix_groups[group]
-    .minutes.span1= min.to_i
-    .span1= text_field_tag 'group', @prefix_rates[group], :class => 'price input-mini', :'data-minutes' => min, :disabled => true
+- @prefix_groups.each do |group_id, name|
+  - total = total.to_i + @groups_bill[group_id].to_i * @prefix_rates[group_id].to_i
+  .row.calculator{:class => "group_#{group_id}"}
+    .span1= @prefix_groups[group_id]
+    .minutes.span1= @groups_bill[group_id].to_i
+    .span1= text_field_tag 'group', @prefix_rates[group_id], :class => 'price input-mini', :'data-minutes' => @groups_bill[group_id].to_i, :disabled => true
     .result.span1
+
 
 %hr/
 .row

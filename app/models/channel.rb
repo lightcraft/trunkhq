@@ -92,7 +92,7 @@ class Channel < ActiveRecord::Base
 
         addtional << " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
       elsif self.active_call(true).blank?
-        time_diff = (self.timeout_expire - Time.current).to_i
+        time_diff = self.timeout_expire ? (self.timeout_expire - Time.current).to_i : 0
        # addtional << "<span title='time_diff #{time_diff}  expire_time #{self.timeout_expire } Time.current #{Time.current}' > t </span>"
         if time_diff > 0
           min = (time_diff/60).round
