@@ -93,7 +93,7 @@ class Channel < ActiveRecord::Base
         addtional << " #{direction} #{self.active_call.dst}/ #{min}:#{sec}s"
       elsif self.active_call(true).blank?
         time_diff = self.timeout_expire ? (self.timeout_expire - Time.current).to_i : 0
-       # addtional << "<span title='time_diff #{time_diff}  expire_time #{self.timeout_expire } Time.current #{Time.current}' > t </span>"
+        # addtional << "<span title='time_diff #{time_diff}  expire_time #{self.timeout_expire } Time.current #{Time.current}' > t </span>"
         if time_diff > 0
           min = (time_diff/60).round
           sec = time_diff - min * 60
@@ -146,6 +146,10 @@ class Channel < ActiveRecord::Base
 
   def sys_info
     {useragent: self.sip.useragent, regseconds: self.sip.regseconds, fullcontact: self.sip.fullcontact}
+  end
+
+  def reset_state
+    self.update_column(:status, 5) # set status 5 and should be called DB trigger that reset start date and etc..
   end
 
   def system_status

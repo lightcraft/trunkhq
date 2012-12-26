@@ -35,6 +35,7 @@ Trunkhq::Application.routes.draw do
       member do
         get 'power'
         get 'sys_info'
+        get 'reset_state'
       end
     end
   end

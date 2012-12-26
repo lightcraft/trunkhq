@@ -1,7 +1,7 @@
 class ChannelsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_location
-  before_filter :find_channel, :only => [:show, :edit, :update, :destroy, :power, :sys_info]
+  before_filter :find_channel, :only => [:show, :edit, :update, :destroy, :power, :sys_info, :reset_state]
   before_filter :init_prefix_groups, :only => [:new, :create, :update, :edit]
   respond_to :html, :json
 
@@ -92,6 +92,14 @@ class ChannelsController < ApplicationController
     respond_with(@channel) do |format|
       format.html {}
       format.js {}
+    end
+  end
+
+  def reset_state
+    @channel.reset_state
+    respond_with(@channel) do |format|
+      format.html {}
+      format.js { render :nothing => true }
     end
   end
 

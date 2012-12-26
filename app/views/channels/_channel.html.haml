@@ -34,6 +34,9 @@
     = link_to edit_location_channel_path(location, channel), :remote => true, :class => 'btn btn-mini' do
       %i.icon-cog
       Settings
+    = link_to [:reset_state, channel.location, channel], :remote => true, :class => 'btn btn-mini' do
+      %i.icon-retweet
+      Reset
     = link_to sys_info_location_channel_path(location, channel), :remote => true, :class => 'btn btn-mini' do
       %i.icon-info-sign
       Sys Info
