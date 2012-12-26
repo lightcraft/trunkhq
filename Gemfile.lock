@@ -54,14 +54,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
-    columnize (0.3.6)
-    debugger (1.2.2)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.1.1)
-      debugger-ruby_core_source (~> 1.1.5)
-    debugger-linecache (1.1.2)
-      debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.5)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -227,7 +219,6 @@ DEPENDENCIES
   capistrano-ext
   carrierwave
   coffee-rails (~> 3.2.1)
-  debugger
   devise (>= 2.1.2)
   devise_invitable (>= 1.0.2)
   email_spec (>= 1.2.1)

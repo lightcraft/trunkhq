@@ -1,9 +1,15 @@
-%h1 Cdrs             
+%h1= link_to('Cdrs', cdr_index_path)
 %table.table.table-bordered.table-hover
   %tr
+    %td Ch #
     %td Calldate
+    %td Uniqueid
+    %td Src
     %td Dst
+    %td Duration
     %td Billsec
+    %td Disposition
+    %td Context
     %td Channel
     %td User
     %td Prefix group
@@ -13,20 +19,37 @@
     %tr
       %td
         &nbsp;
+        = link_to(cdr.channel_id, cdr_index_path(channel_id: cdr.channel_id))
+      %td
+        &nbsp;
         = cdr.calldate
       %td
         &nbsp;
-        = cdr.dcontext
+        = cdr.uniqueid
+      %td
+        &nbsp;
+        = cdr.src
+      %td
+        &nbsp;
+        = cdr.dst
+      %td
+        &nbsp;
+        = cdr.duration
       %td
         &nbsp;
         = cdr.billsec
+      %td
+        &nbsp;
+        = cdr.disposition
+      %td
+        &nbsp;
+        = cdr.dcontext
       %td
         &nbsp;
         = cdr.channel && cdr.channel.name
         = cdr.channel && cdr.channel.timeout_reason
       %td
         &nbsp;
-        = cdr.user.inspect
         = cdr.user &&cdr.user.name
       %td
         &nbsp;
@@ -37,5 +60,3 @@
 
 %footer
   = paginate @cdrs
-
-

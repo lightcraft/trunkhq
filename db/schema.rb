@@ -39,54 +39,10 @@ ActiveRecord::Schema.define(:version => 20121202180724) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "cdr", :id => false, :force => true do |t|
-    t.datetime "calldate",                                                                     :null => false
-    t.string   "clid",            :limit => 80,                                :default => "", :null => false
-    t.string   "src",             :limit => 80,                                :default => "", :null => false
-    t.string   "dst",             :limit => 80,                                :default => "", :null => false
-    t.string   "dcontext",        :limit => 80,                                :default => "", :null => false
-    t.string   "channel",         :limit => 80,                                :default => "", :null => false
-    t.string   "dstchannel",      :limit => 80,                                :default => "", :null => false
-    t.string   "lastapp",         :limit => 80,                                :default => "", :null => false
-    t.string   "lastdata",        :limit => 80,                                :default => "", :null => false
-    t.integer  "duration",                                                     :default => 0,  :null => false
-    t.integer  "billsec",                                                      :default => 0,  :null => false
-    t.string   "disposition",     :limit => 45,                                :default => "", :null => false
-    t.integer  "amaflags",                                                     :default => 0,  :null => false
-    t.string   "accountcode",     :limit => 20,                                :default => "", :null => false
-    t.string   "userfield",                                                    :default => "", :null => false
-    t.string   "hangupcause",     :limit => 50,                                                :null => false
-    t.string   "peerip",          :limit => 50,                                                :null => false
-    t.string   "recvip",          :limit => 50,                                                :null => false
-    t.string   "fromuri",         :limit => 50,                                                :null => false
-    t.string   "uri",             :limit => 50,                                                :null => false
-    t.string   "useragent",       :limit => 50,                                                :null => false
-    t.string   "codec1",          :limit => 50,                                                :null => false
-    t.string   "codec2",          :limit => 50,                                                :null => false
-    t.string   "llp",             :limit => 50,                                                :null => false
-    t.string   "rlp",             :limit => 50,                                                :null => false
-    t.string   "ljitt",           :limit => 50,                                                :null => false
-    t.string   "rjitt",           :limit => 50,                                                :null => false
-    t.string   "uniqueid",        :limit => 32,                                :default => "", :null => false
-    t.decimal  "txjitter",                      :precision => 10, :scale => 5
-    t.decimal  "rxjitter",                      :precision => 10, :scale => 5
-    t.decimal  "rxploss",                       :precision => 10, :scale => 5
-    t.decimal  "txploss",                       :precision => 10, :scale => 5
-    t.integer  "channel_id"
-    t.integer  "user_id"
-    t.integer  "prefix_group_id"
-    t.integer  "location_id"
-  end
-
-  add_index "cdr", ["accountcode"], :name => "accountcode"
-  add_index "cdr", ["calldate"], :name => "calldate"
-  add_index "cdr", ["dst"], :name => "dst"
-
   create_table "chan_groups", :force => true do |t|
     t.string  "chan_group_name",     :limit => 50
     t.integer "max_channels_cnt"
     t.integer "max_channels_online"
-    t.integer "user_id"
   end
 
   add_index "chan_groups", ["chan_group_name"], :name => "index_chan_groups_on_chan_group_name", :unique => true
@@ -95,7 +51,6 @@ ActiveRecord::Schema.define(:version => 20121202180724) do
     t.integer "channel_id"
     t.integer "prefix_group_id"
     t.integer "max_minutes_per_day"
-    t.integer "max_calls_per_day",   :default => 0
     t.integer "interval_mins"
     t.integer "calls_per_interval"
     t.integer "call_min_interval"
@@ -106,8 +61,6 @@ ActiveRecord::Schema.define(:version => 20121202180724) do
   create_table "channels", :force => true do |t|
     t.integer  "sip_id"
     t.integer  "status"
-    t.datetime "timeout_expire"
-    t.string   "timeout_reason"
     t.integer  "chan_group_id"
     t.integer  "location_id"
     t.date     "init_date"
@@ -117,8 +70,7 @@ ActiveRecord::Schema.define(:version => 20121202180724) do
     t.time     "stop_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",            :limit => 100
-    t.string   "imei",            :limit => 20,  :default => "", :null => false
+    t.string   "imei",            :limit => 20, :default => "", :null => false
     t.integer  "friend_group_id"
     t.string   "gsm_number"
   end
@@ -178,8 +130,7 @@ ActiveRecord::Schema.define(:version => 20121202180724) do
 
   create_table "prefixes", :force => true do |t|
     t.integer "prefix_group_id"
-    t.string  "prefix",                        :limit => 200
-    t.integer "prefix_groups_for_provider_id"
+    t.string  "prefix",          :limit => 200
   end
 
   create_table "roles", :force => true do |t|
