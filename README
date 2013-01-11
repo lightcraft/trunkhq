@@ -2,12 +2,6 @@ Trunkhq
 ========================
 Used for development
 http://trello.com
-http://cacoo.com
-
-________________________
-
-License
-
 
 == System logs short links
 /full_log     %x[tail -100 /var/log/asterisk/full]
