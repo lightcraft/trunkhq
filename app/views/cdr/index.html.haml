@@ -1,4 +1,8 @@
-%h1= link_to('Cdrs', cdr_index_path)
+%h1
+  = link_to('Cdrs', cdr_index_path)
+  .btn-group.pull-right
+    #{link_to('All', cdr_filter_path(filter: 'all'), :class => 'btn btn-mini')} #{link_to('Answered', cdr_filter_path(filter: 'answered'), :class => "btn btn-mini #{session[:cdr_filter] && 'active'}")}
+
 %table.table.table-bordered.table-hover
   %tr
     %td Ch #
@@ -19,7 +23,10 @@
     %tr
       %td
         &nbsp;
-        = link_to(cdr.channel_id, cdr_index_path(channel_id: cdr.channel_id))
+        - unless cdr.channel.nil?
+          = link_to(cdr.channel.name, cdr_index_path(channel_id: cdr.channel_id))
+        - else
+          = cdr.channel_id
       %td
         &nbsp;
         = cdr.calldate

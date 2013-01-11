@@ -1,6 +1,7 @@
 Trunkhq::Application.routes.draw do
 
   get "cdr/index"
+  get "cdr/set_filter", as: :cdr_filter
 
   resources :gateways
 
