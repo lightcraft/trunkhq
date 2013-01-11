@@ -50,10 +50,10 @@
       .tab-content
         .row.head
           .span1 Enable
-          .span1 Time interval
-          .span1 Interval
           .span1 Count calls per interval
-          .span1 min/day
+          .span1 Interval
+          .span1 Time interval
+          .span1 Max min/day
           .span1 Max calls/day
         -#- @channel.chan_prefix_groups.each do |operator|
         = f.fields_for :chan_prefix_groups do |chan_form|
