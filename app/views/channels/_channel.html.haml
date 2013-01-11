@@ -2,7 +2,7 @@
   .span1
     / Channel
     &nbsp;
-    %b{rel: 'tooltip', title: "Phone: #{channel.sip.name} <br/> Imei: #{channel.imei}<br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.name, '#')
+    %b{rel: 'tooltip', title: "Phone: #{channel.gsm_number} <br/> Imei: #{channel.imei}<br/> Date: #{channel.start_date_str} - #{channel.stop_date_str}"}= link_to(channel.name, '#')
   .span1
     / Operator
     = '&nbsp;-'.html_safe if channel.operator_groups.blank?
@@ -34,7 +34,7 @@
     = link_to edit_location_channel_path(location, channel), :remote => true, :class => 'btn btn-mini' do
       %i.icon-cog
       Settings
-    = link_to [:reset_state, channel.location, channel], :remote => true, :class => 'btn btn-mini' do
+    = link_to [:reset_state, channel.location, channel], :remote => true, :class => 'btn btn-mini', :confirm => 'You are realy want RESET Channel?' do
       %i.icon-retweet
       Reset
     = link_to sys_info_location_channel_path(location, channel), :remote => true, :class => 'btn btn-mini' do
