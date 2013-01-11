@@ -185,7 +185,10 @@ class Channel < ActiveRecord::Base
 
   def duration_today
     # вывести минуты и секунды
-    sec = self.cdrs.today.sum('billsec').to_i # -> sec
+    #=> {"billsec"=>654, "rows"=>14}
+
+    #sec = self.cdrs.today.sum('billsec').to_i # -> sec
+    self.cdrs.today.select("SUM(`cdr`.`billsec`) AS billsec, COUNT(*) as rows ").first.attributes
   end
 
 # {prefix_group_id -> bill_time}

@@ -21,7 +21,9 @@
       = channel.online_status
   .span2
     / Duration today
-    = convert_seconds_to_time(channel.duration_today)
+    - duration = channel.duration_today
+    #{convert_seconds_to_time(duration['billsec'].to_i)} / #{duration['rows']} calls
+
   -#.span2
     = channel.system_status.join(' ')
   -#.span2
