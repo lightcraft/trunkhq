@@ -12,18 +12,11 @@ class CdrController < ApplicationController
     @date_filter ||= Date.today.to_s(:date)
     @cdrs = @cdrs.where('cdr.calldate > ? AND cdr.calldate < ?', Date.parse(@date_filter), Date.parse(@date_filter) + 1.day)
 
-    cdr_asr_row = @cdrs.select("count(*) as calls,
-  round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
- sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD").first
-
+    @cdr_asr = @cdrs.select("count(*) as calls,
+  round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as asr,
+ sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as acd").first
+    @billed_time = @cdrs.sum(:billsec)
     @cdrs = @cdrs.page(params[:page]).per(20)
-
-    @cdr_asr = {
-        calls: cdr_asr_row[1].to_i,
-        asr: cdr_asr_row[2].to_i,
-        acd: cdr_asr_row[3].to_i/60.0
-    }
-
   end
 
   def set_filter

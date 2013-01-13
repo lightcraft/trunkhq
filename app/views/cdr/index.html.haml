@@ -70,9 +70,10 @@
         = cdr.location && cdr.location.name
 
 .row
-  .span1 Calls: #{@cdr_asr[:calls]}
-  .span1 Asr: #{@cdr_asr[:asr]}
-  .span1 Acd: #{@cdr_asr[:acd]}
+  .span1 Calls: #{@cdr_asr.calls}
+  .span1 Time: #{convert_seconds_to_time(@billed_time)}
+  .span1 Asr: #{@cdr_asr.asr.to_i}
+  .span1 Acd: #{sprintf("%05.2f", @cdr_asr.acd.to_i/60.0)}
 
 %footer
   = paginate @cdrs
