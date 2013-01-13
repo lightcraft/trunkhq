@@ -35,7 +35,6 @@
 #  rxploss         :decimal(10, 5)
 #  txploss         :decimal(10, 5)
 #  channel_id      :integer
-#  user_id         :integer
 #  prefix_group_id :integer
 #  location_id     :integer
 #
@@ -45,7 +44,6 @@ class Cdr < ActiveRecord::Base
  # default_scope order(:calldate)
   belongs_to :channel
   belongs_to :location
-  belongs_to :user
   belongs_to :prefix_group
   belongs_to :prefix
   belongs_to :provider, :foreign_key => :accountcode

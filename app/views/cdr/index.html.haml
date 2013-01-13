@@ -1,7 +1,15 @@
-%h1
-  = link_to('Cdrs', cdr_index_path)
-  .btn-group.pull-right
-    #{link_to('All', cdr_filter_path(filter: 'all'), :class => 'btn btn-mini')} #{link_to('Answered', cdr_filter_path(filter: 'answered'), :class => "btn btn-mini #{session[:cdr_filter] && 'active'}")}
+.row
+  .span1
+    %h1
+      = link_to('Cdrs', cdr_index_path)
+  .pull-right
+    .btn-group.pull-right{:style => 'margin-top: 10px'}
+      #{link_to('All', cdr_filter_path(filter: 'all'), :class => 'btn btn-mini')} #{link_to('Answered', cdr_filter_path(filter: 'answered'), :class => "btn btn-mini #{session[:cdr_filter] && 'active'}")}
+
+    #cdr_callendar.datepicker.input-append.date{'data-date' => @date_filter, :style => ' margin-right: 130px'}
+      = text_field_tag('date_filter', @date_filter, 'size' => '16', :class => 'span2', :readonly => '')
+      %span.add-on
+        %i.icon-th
 
 %table.table.table-bordered.table-hover
   %tr
@@ -14,8 +22,7 @@
     %td Billsec
     %td Disposition
     %td Context
-    %td Channel
-    %td User
+    %td Description
     %td Prefix group
     %td Location
 
@@ -55,9 +62,6 @@
         &nbsp;
         = cdr.channel && cdr.channel.name
         = cdr.channel && cdr.channel.timeout_reason
-      %td
-        &nbsp;
-        = cdr.user &&cdr.user.name
       %td
         &nbsp;
         = cdr.prefix_group && cdr.prefix_group.group_name

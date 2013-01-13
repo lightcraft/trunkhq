@@ -22,7 +22,7 @@
   // Picker object
 
   var Datepicker = function (element, options) {
-    console.log(element);
+    //console.log(element);
     this.element = $(element);
     this.format = DPGlobal.parseFormat(options.format || this.element.data('date-format') || 'yyyy-dd-mm');
     this.picker = $(DPGlobal.template)

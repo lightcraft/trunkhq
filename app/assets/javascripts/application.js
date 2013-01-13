@@ -21,5 +21,7 @@ $(function () {
   $(window).blur(function () {
     this.isActive = false;
   });
-  $('.datepicker').datepicker({ format:'yyyy-mm-dd'});
+  $('.datepicker').datepicker({ format:'yyyy-mm-dd'}).on('changeDate', function(ev){
+    $(this).datepicker('hide');
+  });
 });

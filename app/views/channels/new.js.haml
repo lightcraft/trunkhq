@@ -3,4 +3,4 @@ $('##{new_dom_id(@channel)}').modal('show').on('shown', function () {
 $('#channel_location_id').attr('value', $('#locations li.active a').attr('href').split('_')[1]);
 });
 $('##{new_dom_id(@channel)} .operators li:eq(0) a').first().click();
-$('.datepicker').datepicker({ format:'yyyy-mm-dd'});
+$('.datepicker').datepicker({ format:'yyyy-mm-dd'}).on('changeDate', function(ev){ $(this).datepicker('hide') });

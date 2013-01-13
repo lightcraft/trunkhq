@@ -2,7 +2,7 @@ $(function () {
   var location_updater = null;
 
   $('#sys_log_tabs a[data-toggle="tab"]').on('shown', function (e) {
-    console.log(e.target) // activated tab
+    //console.log(e.target) // activated tab
     e.preventDefault();
     $(this).tab('show');
     // $($(e.target).attr('href')).load(e.target.hash.replace('#','/'));
