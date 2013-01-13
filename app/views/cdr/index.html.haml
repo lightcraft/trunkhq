@@ -48,7 +48,7 @@
         = cdr.dst
       %td
         &nbsp;
-        = cdr.duration
+        = convert_seconds_to_time(cdr.duration)
       %td
         &nbsp;
         = convert_seconds_to_time(cdr.billsec)
@@ -69,5 +69,6 @@
         &nbsp;
         = cdr.location && cdr.location.name
 
+= @cdr_asr.inspect
 %footer
   = paginate @cdrs
