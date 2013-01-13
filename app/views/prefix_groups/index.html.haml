@@ -7,6 +7,8 @@
     %th Init change
     %th Rate
     %th Minutes per day
+    %th Book Size
+    %th Age Hours
     %th= link_to(content_tag(:i, '', :class => 'icon-plus-sign icon-white') + ' New Prefix Group', new_prefix_group_path, :remote => true, :class => 'btn btn-success')
 
   - @prefix_groups.each do |prefix_group|
@@ -16,6 +18,8 @@
       %td= prefix_group.def_init_charge
       %td= prefix_group.def_rate
       %td= prefix_group.def_minutes_per_day
+      %td= prefix_group.member_book_size
+      %td= prefix_group.member_age_hours
       %td
         .btn-group
           = link_to  edit_prefix_group_path(prefix_group), :remote => true, :class => 'btn btn-mini' do
