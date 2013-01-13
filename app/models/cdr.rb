@@ -64,7 +64,7 @@ class Cdr < ActiveRecord::Base
   def self.asr_acd(location_id)
     row = self.connection.execute("SELECT location_id, count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
- sum(billsec)/sum(case when billsec > 0 then 1 else 0 end)/60 as ACD
+ sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
 FROM cdr
 WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0
 GROUP BY location_id").first
@@ -73,7 +73,7 @@ GROUP BY location_id").first
         location_id: row[0],
         calls: row[1],
         asr: row[2].to_i,
-        acd: row[3].to_i
+        acd: row[3].to_i/60.0
     }
   end
 

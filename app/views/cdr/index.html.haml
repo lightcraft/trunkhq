@@ -19,7 +19,7 @@
     %td Src
     %td Dst
     %td Duration
-    %td Billsec
+    %td Bill time
     %td Disposition
     %td Context
     %td Description
@@ -36,7 +36,7 @@
           = cdr.channel_id
       %td
         &nbsp;
-        = cdr.calldate
+        = cdr.calldate.to_formatted_s(:short)
       %td
         &nbsp;
         = cdr.uniqueid
@@ -51,7 +51,7 @@
         = cdr.duration
       %td
         &nbsp;
-        = cdr.billsec
+        = convert_seconds_to_time(cdr.billsec)
       %td
         &nbsp;
         = cdr.disposition

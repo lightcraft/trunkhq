@@ -1,5 +1,8 @@
 $(window).bind('changeDate', function(ev) {
-  window.location = '/cdr/index?date_filter='+$(ev.target).data('date');
+   if($(ev.target).attr('id') == 'cdr_callendar'){
+     //only for CDR
+     window.location = '/cdr/index?date_filter='+$(ev.target).data('date')
+   }
 });
 
 

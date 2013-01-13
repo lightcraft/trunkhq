@@ -18,6 +18,10 @@ class Location < ActiveRecord::Base
 
   validates :user, :name, :presence => true
 
+  def today_bill_time
+    self.cdrs.today.sum('billsec')
+  end
+
 end
 
 #  WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0
