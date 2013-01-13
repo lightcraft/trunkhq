@@ -10,7 +10,7 @@ class CdrController < ApplicationController
     #date conditions
     @date_filter = params[:date_filter]
     @date_filter ||= Date.today.to_s(:date)
-    @cdrs = @cdrs.where('cdr.calldate > ? AND cdr.calldate < ?', Date.parse(@date_filter) - 1.day, Date.parse(@date_filter))
+    @cdrs = @cdrs.where('cdr.calldate > ? AND cdr.calldate < ?', Date.parse(@date_filter), Date.parse(@date_filter) + 1.day)
 
     cdr_asr_row = @cdrs.select("count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,

@@ -69,6 +69,10 @@
         &nbsp;
         = cdr.location && cdr.location.name
 
-= @cdr_asr.inspect
+.row
+  .span1 Calls: #{@cdr_asr[:calls]}
+  .span1 Asr: #{@cdr_asr[:asr]}
+  .span1 Acd: #{@cdr_asr[:acd]}
+
 %footer
   = paginate @cdrs
