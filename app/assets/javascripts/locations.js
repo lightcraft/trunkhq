@@ -15,7 +15,7 @@ $(function () {
         }
         location_updater = setTimeout(function () {
           tab_updater(tab);
-        }, 20000);   // 20 second
+        }, 15000);   // 20 second
 
         $('[rel="tooltip"]').tooltip();
       });

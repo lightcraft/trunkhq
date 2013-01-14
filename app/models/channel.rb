@@ -115,7 +115,7 @@ class Channel < ActiveRecord::Base
   end
 
   def state_css
-    (self.sip.regseconds - Time.current.to_i) > 0 ?
+   self.sip && (self.sip.regseconds - Time.current.to_i) > 0 ?
         'badge-success' :
         'badge-important'
   end
@@ -130,7 +130,8 @@ class Channel < ActiveRecord::Base
   end
 
   def online?
-    (self.sip.regseconds - Time.current.to_i) > 0
+    self.sip &&
+        (self.sip.regseconds - Time.current.to_i) > 0
   end
 
 # Play path from public directory
@@ -151,7 +152,7 @@ class Channel < ActiveRecord::Base
   end
 
   def sys_info
-    {useragent: self.sip.useragent, regseconds: self.sip.regseconds, fullcontact: self.sip.fullcontact}
+    {useragent: self.sip.useragent, regseconds: (self.sip && self.sip.regseconds) || 0, fullcontact: self.sip.fullcontact}
   end
 
   def reset_state

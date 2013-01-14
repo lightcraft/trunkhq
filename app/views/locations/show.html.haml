@@ -3,20 +3,20 @@
 - if @location_for_destroy
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger pull-right')
 
-  .row
+.row
+  .span2
+    Billed time:
+    = convert_seconds_to_time(@location.today_bill_time)
+  - if info = asr_acd(@location.id)
+    .span1
+      Calls:
+      = info[:calls]
+    .span1
+      ASR:
+      = info[:asr]
     .span2
-      Billed time:
-      = convert_seconds_to_time(@location.today_bill_time)
-    - if info = asr_acd(@location.id)
-      .span1
-        Calls:
-        = info[:calls]
-      .span1
-        ASR:
-        = info[:asr]
-      .span2
-        ACD:
-        = info[:acd]
+      ACD:
+      = sprintf("%05.2f", info[:acd])
 
 .row.head
   .span1 Channel
