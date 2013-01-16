@@ -45,7 +45,7 @@
         = cdr.src
       %td
         &nbsp;
-        - if cdr.is_member
+        - if cdr.is_member.eql?(1)
           %span.label.label-success #{cdr.dst}
         - else
           = cdr.dst

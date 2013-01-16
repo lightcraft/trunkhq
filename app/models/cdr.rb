@@ -49,7 +49,7 @@ class Cdr < ActiveRecord::Base
   belongs_to :provider, :foreign_key => :accountcode
 
   scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days) }
-  scope :not_external, where("dcontext IS NOT 'external'")
+  scope :not_external, where("dcontext != 'external'")
 
   def self.lact_call_ident(channel)
     row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
@@ -63,7 +63,7 @@ class Cdr < ActiveRecord::Base
 
 
   def self.calls_today(location_id)
-    self.count(:conditions => 'location_id = #{location_id} AND datediff(curdate(),calldate) = 0')
+    self.count(:conditions => "location_id = #{location_id} AND datediff(curdate(),calldate) = 0")
   end
 
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}
@@ -72,7 +72,7 @@ class Cdr < ActiveRecord::Base
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
 FROM cdr
-WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND dcontext IS NOT 'external'
+WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND dcontext != 'external'
 GROUP BY location_id").first
     return nil unless row
     {
