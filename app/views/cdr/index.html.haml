@@ -22,7 +22,7 @@
     %td Bill time
     %td Disposition
     %td Context
-    %td Description
+    -#%td Description
     %td Prefix group
     %td Location
 
@@ -45,7 +45,10 @@
         = cdr.src
       %td
         &nbsp;
-        = cdr.dst
+        - if cdr.is_member
+          %span.label.label-success #{cdr.dst}
+        - else
+          = cdr.dst
       %td
         &nbsp;
         = convert_seconds_to_time(cdr.duration)
@@ -58,7 +61,7 @@
       %td
         &nbsp;
         = cdr.dcontext
-      %td
+      -#%td
         &nbsp;
         = cdr.channel && cdr.channel.name
         = cdr.channel && cdr.channel.timeout_reason
@@ -69,7 +72,7 @@
         &nbsp;
         = cdr.location && cdr.location.name
 
-.row
+.row.large
   .span1 Calls: #{@cdr_asr.calls}
   .span1 Time: #{convert_seconds_to_time(@billed_time)}
   .span1 Asr: #{@cdr_asr.asr.to_i}

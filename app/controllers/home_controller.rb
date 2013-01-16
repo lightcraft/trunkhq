@@ -7,7 +7,7 @@ class HomeController < ApplicationController
   end
 
   def report
-    @from = Date.parse(params[:from_date]) rescue Date.today.at_beginning_of_month()
+    @from = Date.parse(params[:from_date]) rescue Date.today
     @to = Date.parse(params[:to_date]) + 1.day rescue Date.tomorrow()
 
     # switch user if have access and provider ID present

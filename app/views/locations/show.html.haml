@@ -3,7 +3,7 @@
 - if @location_for_destroy
   = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger pull-right')
 
-.row
+.row.large
   .span2
     Billed time:
     = convert_seconds_to_time(@location.today_bill_time)

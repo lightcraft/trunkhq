@@ -41,7 +41,7 @@
 
 class Cdr < ActiveRecord::Base
   self.table_name = 'cdr'
- # default_scope order(:calldate)
+  # default_scope order(:calldate)
   belongs_to :channel
   belongs_to :location
   belongs_to :prefix_group
@@ -49,6 +49,7 @@ class Cdr < ActiveRecord::Base
   belongs_to :provider, :foreign_key => :accountcode
 
   scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days) }
+  scope :not_external, where("dcontext IS NOT 'external'")
 
   def self.lact_call_ident(channel)
     row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
@@ -60,18 +61,23 @@ class Cdr < ActiveRecord::Base
     self.where('calldate > ?', Time.current - 1.month).where('calldate < ?', Time.current).where(['channel_id = ?', channel.id]).sum(:duration)
   end
 
+
+  def self.calls_today(location_id)
+    self.count(:conditions => 'location_id = #{location_id} AND datediff(curdate(),calldate) = 0')
+  end
+
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}
   def self.asr_acd(location_id)
     row = self.connection.execute("SELECT location_id, count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
 FROM cdr
-WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0
+WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND dcontext IS NOT 'external'
 GROUP BY location_id").first
     return nil unless row
     {
         location_id: row[0],
-        calls: row[1],
+        calls: "#{row[1]}/#{Cdr.calls_today(location_id)}",
         asr: row[2].to_i,
         acd: row[3].to_i/60.0
     }

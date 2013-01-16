@@ -14,8 +14,8 @@ class CdrController < ApplicationController
 
     @cdr_asr = @cdrs.select("count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as asr,
- sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as acd").first
-    @billed_time = @cdrs.sum(:billsec)
+ sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as acd").not_external.first
+    @billed_time = @cdrs.not_external.sum(:billsec)
     @cdrs = @cdrs.page(params[:page]).per(20)
   end
 
