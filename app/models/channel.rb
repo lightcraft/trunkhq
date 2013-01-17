@@ -195,7 +195,8 @@ class Channel < ActiveRecord::Base
     #=> {"billsec"=>654, "rows"=>14}
 
     #sec = self.cdrs.today.sum('billsec').to_i # -> sec
-    self.cdrs.today.select("SUM(`cdr`.`billsec`) AS billsec, COUNT(*) as rows ").first.attributes
+    self.cdrs.today.select("SUM(`cdr`.`billsec`) AS billsec, COUNT(*) as rows ")
+    .where("cdr.uniqueid NOT IN (select uniqueid FROM cdr WHERE channel_id = #{self.id} AND datediff(curdate(),calldate) = 0 AND (cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0)").first.attributes
   end
 
 # {prefix_group_id -> bill_time}
