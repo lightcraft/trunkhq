@@ -16,7 +16,7 @@
       = info[:asr]
     .span2
       ACD:
-      = sprintf("%05.2f", info[:acd])
+      = convert_seconds_to_time(info[:acd].to_i)
 
 .row.head
   .span1 Channel

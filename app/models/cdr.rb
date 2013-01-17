@@ -68,18 +68,19 @@ class Cdr < ActiveRecord::Base
 
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}
   def self.asr_acd(location_id)
-    row = self.connection.execute("SELECT location_id, count(*) as calls,
+    row = Cdr.connection.execute("SELECT location_id, count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
 FROM cdr
 WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND dcontext != 'external'
+AND cdr.uniqueid NOT IN (select uniqueid FROM cdr WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND (cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0)
 GROUP BY location_id").first
     return nil unless row
     {
         location_id: row[0],
         calls: "#{row[1]}/#{Cdr.calls_today(location_id)}",
         asr: row[2].to_i,
-        acd: row[3].to_i/60.0
+        acd: row[3].to_i
     }
   end
 
@@ -119,3 +120,13 @@ end
 #rxploss:
 #txploss:
 #channel_id:
+
+
+
+SELECT location_id, count(*) as calls,
+  round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
+sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
+FROM cdr
+WHERE location_id = 62 AND datediff(curdate(),calldate) = 0 AND dcontext != 'external'
+ AND cdr.uniqueid NOT IN (select uniqueid FROM cdr WHERE location_id = 62 AND datediff(curdate(),calldate) = 0 AND (cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0)
+ GROUP BY location_id
