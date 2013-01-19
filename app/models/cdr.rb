@@ -72,10 +72,8 @@ class Cdr < ActiveRecord::Base
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
 FROM cdr
-WHERE location_id = #{location_id}
-  AND datediff(curdate(),calldate) = 0
-  AND dcontext != 'external'
-  AND (cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0)
+WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND dcontext != 'external'
+AND cdr.uniqueid NOT IN (select uniqueid FROM cdr WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND (cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0)
 GROUP BY location_id").first
     return nil unless row
     {
