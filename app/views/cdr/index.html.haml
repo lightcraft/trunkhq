@@ -31,7 +31,7 @@
       %td
         &nbsp;
         - unless cdr.channel.nil?
-          = link_to(cdr.channel.name, cdr_index_path(channel_id: cdr.channel_id))
+          = link_to(cdr.channel.name, cdr_index_path(channel_id: cdr.channel_id, date_filter: params[:date_filter]))
         - else
           = cdr.channel_id
       %td
