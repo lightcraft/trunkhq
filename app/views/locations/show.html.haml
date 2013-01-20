@@ -1,22 +1,19 @@
-%em= Time.current.to_s(:short)
-
-- if @location_for_destroy
-  = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger pull-right')
-
-.row.large
-  .span2
+.row.large.alert.alert-info
+  .span3
+    = Time.current.to_s(:short)
     Billed time:
     = convert_seconds_to_time(@location.today_bill_time)
   - if info = asr_acd(@location.id)
-    .span1
+    .span4
       Calls:
       = info[:calls]
-    .span1
       ASR:
       = info[:asr]
-    .span2
       ACD:
       = convert_seconds_to_time(info[:acd].to_i)
+  .span2
+    - if @location_for_destroy
+      = link_to("Remove #{@location.name}", user_location_path(@location), :method => :delete, :class => 'btn btn-danger pull-right')
 
 .row.head
   .span1 Channel

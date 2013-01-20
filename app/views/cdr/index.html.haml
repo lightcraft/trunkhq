@@ -31,7 +31,7 @@
       %td
         &nbsp;
         - unless cdr.channel.nil?
-          = link_to(cdr.channel.name, cdr_index_path(channel_id: cdr.channel_id))
+          = link_to(cdr.channel.name, cdr_index_path(channel_id: cdr.channel_id, date_filter: params[:date_filter]))
         - else
           = cdr.channel_id
       %td
@@ -55,6 +55,7 @@
       %td
         &nbsp;
         = convert_seconds_to_time(cdr.billsec)
+        = cdr.billsec
       %td
         &nbsp;
         = cdr.disposition
@@ -74,9 +75,9 @@
 
 .row.large
   .span1 Calls: #{@cdr_asr.calls}
-  .span1 Time: #{convert_seconds_to_time(@billed_time)}
+  .span1 Time: #{convert_seconds_to_time(@billed_time)} (#{@billed_time})
   .span1 Asr: #{@cdr_asr.asr.to_i}
-  .span1 Acd: #{convert_seconds_to_time(@cdr_asr.acd)}
+  .span1 Acd: #{convert_seconds_to_time(@cdr_asr.acd)} (#{@cdr_asr.acd})
 
 %footer
   = paginate @cdrs

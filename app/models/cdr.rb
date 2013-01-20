@@ -48,8 +48,10 @@ class Cdr < ActiveRecord::Base
   belongs_to :prefix
   belongs_to :provider, :foreign_key => :accountcode
 
-  scope :today, proc { where('calldate > ? AND calldate < ?', Date.today, Date.today + 1.days) }
-  scope :not_external, where("dcontext != 'external'")
+  scope :today, proc { where('cdr.calldate > ? AND cdr.calldate < ?', Date.today, Date.today + 1.days) }
+  scope :not_external, where("cdr.dcontext != 'external'")
+  scope :billed, where('cdr.billsec > 0')
+  scope :is_gsm, where('(cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) > 0')
 
   def self.lact_call_ident(channel)
     row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
@@ -63,24 +65,22 @@ class Cdr < ActiveRecord::Base
 
 
   def self.calls_today(location_id)
-    self.count(:conditions => "location_id = #{location_id} AND datediff(curdate(),calldate) = 0")
+    self.today.where(:location_id => location_id ).count()
   end
 
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}
   def self.asr_acd(location_id)
-    row = Cdr.connection.execute("SELECT location_id, count(*) as calls,
-  round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as ASR,
- sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as ACD
-FROM cdr
-WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND dcontext != 'external'
-AND cdr.uniqueid NOT IN (select uniqueid FROM cdr WHERE location_id = #{location_id} AND datediff(curdate(),calldate) = 0 AND (cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0)
-GROUP BY location_id").first
+    row = Cdr.today.is_gsm.billed.not_external.where(:location_id => location_id).select("location_id, count(*) as calls,
+  round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as asr,
+ sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as acd").group(:location_id).first
+
     return nil unless row
+    row = row.attributes
     {
-        location_id: row[0],
-        calls: "#{row[1]}/#{Cdr.calls_today(location_id)}",
-        asr: row[2].to_i,
-        acd: row[3].to_i
+        location_id: row['location_id'],
+        calls: "#{row['calls']}/#{Cdr.calls_today(location_id)}",
+        asr: row['asr'],
+        acd: row['acd']
     }
   end
 

@@ -23,6 +23,7 @@ db/*.sqlite3
 **.war
 *.rbc
 *.sassc
+*.sql
 .rspec
 .redcar/
 .sass-cache
