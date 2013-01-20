@@ -76,7 +76,7 @@ class Sip < ActiveRecord::Base
   # Создать свой софт фон (DIALER) для прозвонки своих модемов
   # insert sip(name,secret,type,accountcode,context) values ('login','pass','friend',user_id,'internal')
 
-  attr_accessible :name, :secret, :context, :host, :accountcode, :type, :user_id
+  attr_accessible :name, :secret, :context, :host, :port, :accountcode, :type, :user_id, :prefix_map_outbound, :prefix_map_inbound
   belongs_to :provider,  :foreign_key => :accountcode
   attr_accessible :allow, :context, :host, :name, :type
 

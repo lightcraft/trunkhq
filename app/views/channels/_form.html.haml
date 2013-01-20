@@ -5,7 +5,6 @@
       .span2
         = "#{ f.object.new_record? ? 'New' : 'Edit'}"
         channel
-
       .span2
         = @channel.id ? "№ #{@channel.name}" : ''
         .hidden= f.association :location, :collection => current_user.locations.all.map { |l| [l.name, l.id] }, :label =>false, :include_blank => false
@@ -14,11 +13,13 @@
     = f.fields_for :sip do |sip_form|
       .row
         .span2= f.input :gsm_number, :type => "number", :placeholder => 'Phone number', :label => 'Phone №', :input_html => {  :class => 'input-small'}
-        .span2= sip_form.input :secret, :placeholder => 'Password', :label => 'Password',  :input_html => {  :class => 'input-small'}
+        .span1= sip_form.input :secret, :placeholder => 'Password', :label => 'Password',  :input_html => {  :class => 'input-mini'}
         -#.span2= f.association :chan_group, :include_blank => false #, ChanGroup.all.map { |c| [c.chan_group_name, c.id] }, :placeholder => 'Chanel Group ID', :label => 'Group ID'
-        .span2
+        .span1
           %label Group ID
           = f.text_field(:chan_group_id, :type => "number", :pattern => "[0-9]+",  :size => "5", :maxlength => "4", :class => 'input-mini')
+        .span1= sip_form.input :prefix_map_outbound, :label => 'Prefix mapp', :input_html => { :title => 'example, to add 0011 to the 097112233, mapping will be just number: 0011 , it will make 0011097112233', :class => 'input-mini'}
+
     .row
       .span2
         %label Date From

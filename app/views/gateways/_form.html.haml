@@ -5,6 +5,8 @@
     = f.input :name
     = f.input :allow
     = f.input :host
+    = f.input :port
+    = f.input :prefix_map_inbound, :label => 'GW Prefix mapping', :hint => 'example, to remove 38 from 38097112233, mapping will be 38=;'
 
   .row
     .span3= f.button :submit, 'Save', :class => 'btn btn-info'

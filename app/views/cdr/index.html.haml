@@ -46,7 +46,9 @@
       %td
         &nbsp;
         - if cdr.is_member.eql?(1)
-          %span.label.label-success #{cdr.dst}
+          %span.badge.badge-success #{cdr.dst}
+        - elsif cdr.attributes['bad'].eql?(1)
+          %span.badge.badge-warning #{cdr.dst}
         - else
           = cdr.dst
       %td
