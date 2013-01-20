@@ -5,7 +5,7 @@ $(function () {
     var tab = el;
     var id = $(tab.target).attr('href');
     var path = id.replace(/[\_#]/gi, '/');
-    //if (window.isActive != false) { //check if window is active and update channel states
+    if (window.isActive != false) { //check if window is active and update channel states
       $(id).load(path, function () {
         // clean mouse over old tolltips
         $('.tooltip').hide();
@@ -19,9 +19,9 @@ $(function () {
 
         $('[rel="tooltip"]').tooltip();
       });
-   // } else {
-   //   $(id).html('Monitoring stopped! Please refresh page if you want see activity.');
-   // }
+    } else {
+      $(id).html('Monitoring stopped! Please refresh page if you want see activity.');
+    }
   }
 
   $('#locations a[data-toggle="tab"]').on('shown', function (e) {
