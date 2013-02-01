@@ -5,8 +5,8 @@ require 'capistrano/ext/multistage'
 set :stages, %w(staging production)
 set :default_stage, "staging"
 
-server "85.114.141.80", :web, :app, :db, primary: true
-set :port, 22180
+server "188.40.76.146", :web, :app, :db, primary: true
+set :port, 22146
 set :application, "trunkhq"
 
 set :user, "web"
@@ -20,7 +20,7 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 after 'deploy:update_code', 'deploy:migrate'
-set :keep_releases, 5
+set :keep_releases, 1
 after :deploy, "deploy:cleanup", "deploy:assets:clean", "deploy:assets:precompile"
 #
 #after "deploy:stop",    "delayed_job:stop"
