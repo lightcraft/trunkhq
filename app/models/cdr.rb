@@ -70,7 +70,7 @@ class Cdr < ActiveRecord::Base
 
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}
   def self.asr_acd(location_id)
-    row = Cdr.today.is_gsm.billed.not_external.where(:location_id => location_id).select("location_id, count(*) as calls,
+    row = Cdr.today.is_gsm.not_external.where(:location_id => location_id).select("location_id, count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as asr,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as acd").group(:location_id).first
 
