@@ -91,9 +91,11 @@ class User < ActiveRecord::Base
     self.has_role?(:provider)
   end
 
-  def report(from = Time.current, to = Time.current)
+  def report(from = Time.current, to = Time.current, location_id = nil)
     logger.info("-->  User Report")
-    Cdr.where(:location_id => self.location_ids).where('calldate > ? AND calldate < ? AND accountcode != 0', from, to).group(:prefix_group_id).sum('billsec/60')
+    scope = Cdr.where(:location_id => self.location_ids).where('calldate > ? AND calldate < ? AND accountcode != 0', from, to).group(:prefix_group_id)
+    scope = scope.where('cdr.location_id = ?', location_id) unless location_id.blank?
+    scope.sum('billsec/60')
   end
 
 end

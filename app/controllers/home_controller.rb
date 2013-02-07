@@ -28,7 +28,7 @@ class HomeController < ApplicationController
     logger.info("@prefix_groups #{@prefix_groups.inspect}")
     logger.info("@prefix_rates #{@prefix_rates.inspect}")
 
-    @groups_bill = @user.report(@from, @to)
+    @groups_bill = @user.report(@from, @to, params[:location_id])
   end
 
   def sys_log

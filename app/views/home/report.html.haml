@@ -12,6 +12,10 @@
         :placeholder => 'to date',
         :size => 10,
         :class => 'datepicker'
+    - unless @user.has_provider?
+      .span2
+        %label Location
+        = select_tag "location_id", options_from_collection_for_select(@user.locations, "id", "name", params[:location_id]), { :prompt => "Select location"}
   .row
     .span2
       = f.button 'Show', :class => 'btn btn-primary'
