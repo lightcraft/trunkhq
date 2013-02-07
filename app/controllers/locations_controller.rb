@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   def show
     @location_for_destroy = @location.channels.blank? || (@location ? @location.channels.on.blank? : false)
-    @channels = @location.channels.includes(:sip).includes(:chan_prefix_groups => :prefix_group)
+    @channels = @location.channels.includes(:sip).includes(:chan_prefix_groups => :prefix_group).order('channels.id desc')
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
