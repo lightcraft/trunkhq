@@ -80,7 +80,7 @@ GROUP BY prefixes.prefix_groups_for_provider_id ORDER BY calldate
 =end
   def report(from = Time.current, to = Time.current, location_id = nil)
     logger.info("-->  Provider Report")
-    scope = Cdr.where(:accountcode => self.id).joins(:prefix => :prefix_groups_for_provider).where('calldate > ? AND calldate < ?', from, to).group('prefixes.prefix_groups_for_provider_id')
+    scope = Cdr.where(:accountcode => self.id).joins(:prefix => :prefix_groups_for_provider).where('calldate > ? AND calldate < ?', from, to).where(is_member: [0,1]).group('prefixes.prefix_groups_for_provider_id')
     scope = scope.where('cdr.location_id = ?', location_id) unless location_id.blank?
     scope.sum('billsec/60')
   end
