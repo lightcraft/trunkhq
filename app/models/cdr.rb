@@ -65,7 +65,8 @@ class Cdr < ActiveRecord::Base
 
 
   def self.calls_today(location_id)
-    self.today.billed.where(:location_id => location_id ).count()
+    #billed.
+    self.today.where(:location_id => location_id ).count()
   end
 
   #  {:location_id=>10, :calls=>220, :asr=>#<BigDecimal:45bd3e0,'0.73E2',9(18)>, :acd=>#<BigDecimal:45bd340,'0.259E2',18(18)>}
