@@ -23,7 +23,8 @@
     / Duration today
     - duration = channel.duration_today
     #{convert_seconds_to_time(duration['billsec'])} / #{duration['rows']} calls
-
+    - duration_external = channel.duration_today_external
+    #{convert_seconds_to_time(duration_external['billsec'])} / #{duration_external['rows']} calls
   -#.span2
     = channel.system_status.join(' ')
   -#.span2

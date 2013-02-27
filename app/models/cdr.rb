@@ -50,9 +50,10 @@ class Cdr < ActiveRecord::Base
 
   scope :today, proc { where('cdr.calldate > ? AND cdr.calldate < ?', Date.today, Date.today + 1.days) }
   scope :not_external, where("cdr.dcontext != 'external'")
+  scope :external, where("cdr.dcontext == 'external'")
   scope :billed, where('cdr.billsec > 0')
   scope :is_gsm, where('(cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) > 0')
-  scope :incomming_traffic, where('is_member IN ?' [0,1])
+  scope :incomming_traffic, where('is_member IN (?)', [0,1])
   def self.lact_call_ident(channel)
     row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
     row.blank? ? '' : row.uniqueid
