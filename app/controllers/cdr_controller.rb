@@ -15,7 +15,7 @@ class CdrController < ApplicationController
     @cdr_asr = @cdrs.not_external.is_gsm.incomming_traffic.select("count(*) as calls,
   round((100 * sum(case when billsec > 0 then 1 else 0 end))/count(*)) as asr,
  sum(billsec)/sum(case when billsec > 0 then 1 else 0 end) as acd").first
-    @billed_time = @cdrs.not_external.billed.sum(:billsec)
+    @billed_time = @cdrs.not_external.is_gsm.incomming_traffic.sum(:billsec)
     @cdrs = @cdrs.select('cdr.*, (case when ((cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) = 0) then 1 else 0 end) as bad')
     @cdrs = @cdrs.page(params[:page]).per(20)
   end

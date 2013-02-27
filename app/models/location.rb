@@ -19,7 +19,7 @@ class Location < ActiveRecord::Base
   validates :user, :name, :presence => true
 
   def today_bill_time
-    self.cdrs.today.not_external.is_gsm.group(:prefix_group_id).sum('billsec')
+    self.cdrs.today.not_external.is_gsm.sum('billsec')
   end
 
 end
