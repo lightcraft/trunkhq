@@ -6,6 +6,7 @@
 
 $(function () {
   $('[rel="tooltip"]').tooltip();
+  $('input, textarea').placeholder();
 
   $('body').ajaxComplete(function () {
     $('body').attr('style', 'cursor:default');
