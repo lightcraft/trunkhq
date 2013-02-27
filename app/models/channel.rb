@@ -212,7 +212,7 @@ class Channel < ActiveRecord::Base
 #{nil=>0, 1=>0, 2=>307}
 #
   def today_bill_time
-    self.cdrs.group(:prefix_group_id).today.sum('billsec')
+    self.cdrs.today.not_external.is_gsm.group(:prefix_group_id).sum('billsec')
   end
 
 end
