@@ -92,6 +92,8 @@ class FriendGroupsController < ApplicationController
 
       if friend_group
         channels.each { |channel| channel.update_attribute(:friend_group, friend_group) }
+      else
+        channels.each { |channel| channel.update_attribute(:friend_group, nil) }
       end
     end
 
