@@ -21,7 +21,11 @@
         %td
           %span.badge{:class => channel.state_css}
             = channel.id
-        %td= channel.name
+        %td
+          = channel.name
+          %div
+            - channel.today_bill_time_all.each do |key, val|
+              = "#{key}: #{val}"
         %td
           - channel.operator_groups.each do |prefix_group|
             = div_for(prefix_group) do
