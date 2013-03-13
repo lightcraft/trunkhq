@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
     # cdr.is_member = 3 - это для звонков SoftPhone
 
     logger.info("-->  User Report")
-    scope = Cdr.where(:location_id => self.location_ids).where('calldate > ? AND calldate < ? AND accountcode != 0', from, to).where(is_member: [1,0]).group(:prefix_group_id)
+    scope = Cdr.where(:location_id => self.location_ids).where('calldate > ? AND calldate < ? AND accountcode != 0', from, to).incomming_traffic.group(:prefix_group_id)
     scope = scope.where('cdr.location_id = ?', location_id) unless location_id.blank?
     scope.sum('billsec/60')
   end

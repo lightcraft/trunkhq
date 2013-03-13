@@ -54,6 +54,9 @@ class Cdr < ActiveRecord::Base
   scope :billed, where('cdr.billsec > 0')
   scope :is_gsm, where('(cdr.llp+cdr.rlp+cdr.ljitt+cdr.txjitter+cdr.rxjitter+cdr.rxploss+cdr.txploss) > 0')
   scope :incomming_traffic, where('is_member IN (?)', [0,1])
+
+  #.today.not_external.is_gsm
+
   def self.lact_call_ident(channel)
     row = self.select('uniqueid').where(channel_id: channel.id).order('calldate desc ').first
     row.blank? ? '' : row.uniqueid

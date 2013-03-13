@@ -19,9 +19,13 @@
         %td
           = check_box_tag "channel_ids[]", channel.id, false
         %td
-          = channel.id
+          %span.badge{:class => channel.state_css}
+            = channel.id
         %td= channel.name
         %td
+          - channel.operator_groups.each do |prefix_group|
+            = div_for(prefix_group) do
+              %span.head{:style => "color: #{prefix_group.color}"}= prefix_group.group_name
         %td= link_to(channel.location.name, channels_assignment_user_friend_groups_path(location_id: channel.location) )
         %td= channel.friend_group.try(:name)
 
