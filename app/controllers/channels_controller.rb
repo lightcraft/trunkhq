@@ -78,7 +78,7 @@ class ChannelsController < ApplicationController
       if @channel.update_attributes(params[:channel])
         format.html { redirect_to user_locations_path(current_user), notice: 'Channel was successfully updated.' }
         format.json { head :no_content }
-        format.js { render :text => "window.location = '#{user_locations_path(current_user)}'", notice: 'Channel was successfully updates.' }
+        format.js { render :text => "$('##{dom_id(@channel, :edit)}').modal('hide');" }
       else
         format.html { render action: "edit" }
         format.json { render json: @channel.errors, status: :unprocessable_entity }
