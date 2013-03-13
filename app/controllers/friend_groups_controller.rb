@@ -80,7 +80,7 @@ class FriendGroupsController < ApplicationController
 
   def channels_assignment
     @channels = current_user.channels
-    @channels = @channels.where(:location_id => params[:location_id] ) if params[:location_id]
+    @channels = @channels.where(:friend_group_id => params[:friend_group_id] ) if params[:location_id]
     @friend_groups = current_user.friend_groups
   end
 
