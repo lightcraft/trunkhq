@@ -215,9 +215,10 @@ class Channel < ActiveRecord::Base
     self.cdrs.today.not_external.is_gsm.group(:prefix_group_id).sum('billsec')
   end
 
-  #{"default"=>0, "external"=>44, "perezvon"=>331}
+  # [#<Cdr dcontext: "default", billsec: 0>, #<Cdr dcontext: "external", billsec: 44>, #<Cdr dcontext: "perezvon", billsec: 331>]
+  #  first.calls - вернет колличество звонков
   def today_bill_time_all
-    self.cdrs.today.is_gsm.group(:dcontext).sum('billsec')
+    self.cdrs.today.group(:dcontext).select('sum(billsec) as billsec, dcontext, count(*) as calls')
   end
 
 end

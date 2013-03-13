@@ -23,9 +23,8 @@
             = channel.id
         %td
           = channel.name
-          %div
-            - channel.today_bill_time_all.each do |key, val|
-              = "#{key}: #{val}"
+          - channel.today_bill_time_all.each do |el|
+            %div= "#{el.dcontext}: #{convert_seconds_to_time(el.billsec)} / #{el.calls} calls"
         %td
           - channel.operator_groups.each do |prefix_group|
             = div_for(prefix_group) do
