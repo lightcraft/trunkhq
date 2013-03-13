@@ -8,16 +8,16 @@
 = form_tag assign_channels_user_friend_groups_path do
   %table.table.table-bordered
     %tr
-      %th
+      %th Friend group
       %th ID
       %th Name
       %th Operator
       %th Location
-      %th Friend group
     - @channels.each do |channel|
       = content_tag_for(:tr, channel) do
         %td
           = check_box_tag "channel_ids[]", channel.id, false
+          = channel.friend_group.try(:name)
         %td
           %span.badge{:class => channel.state_css}
             = channel.id
@@ -27,7 +27,6 @@
             = div_for(prefix_group) do
               %span.head{:style => "color: #{prefix_group.color}"}= prefix_group.group_name
         %td= link_to(channel.location.name, channels_assignment_user_friend_groups_path(location_id: channel.location) )
-        %td= channel.friend_group.try(:name)
 
   .row.input-append
     .span1= label_tag "friend_group_id", "Friend group"
