@@ -46,7 +46,7 @@
         .controls
           = f.fields_for :sip do |sip_form|
             = sip_form.check_box :context, {}, 'internal', 'external'
-    - prefix_group_ids = @channel.chan_prefix_groups.map(&:prefix_group_id)
+    - prefix_group_ids = @channel.chan_prefix_groups.map(&:prefix_group_id).sort
     .tabbable.tabs-below.operators
       .tab-content
         .row.head
