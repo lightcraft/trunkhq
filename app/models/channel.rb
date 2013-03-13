@@ -196,7 +196,7 @@ class Channel < ActiveRecord::Base
 
     #sec = self.cdrs.today.sum('billsec').to_i # -> sec
     #billed + время от перезвона is_member = 2
-    self.cdrs.today.where('cdr.is_member in (?)', [0,1,2]).select("SUM(`cdr`.`billsec`) AS billsec, COUNT(*) as rows ").first.attributes
+    self.cdrs.today.where('dcontext IN (?)', ['default','perezvon']).where('cdr.is_member IN (?)', [0,1,2]).select("SUM(`cdr`.`billsec`) AS billsec, COUNT(*) as rows ").first.attributes
   end
 
   def duration_today_external
