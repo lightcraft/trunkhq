@@ -1,8 +1,8 @@
 %h1 Channels assignment
 = form_for :friend_group, :url => channels_assignment_user_friend_groups_path, :method => :get do |f|
-  .row.input-append
+  .row
     .span1= label_tag "friend_group_id", "Friend Groups"
-    .span3= select_tag "friend_group_id", options_from_collection_for_select(current_user.friend_groups, "id", "name", params[:location_id]), { :prompt => "Select location"}
+    .span3= select_tag "friend_group_id", options_from_collection_for_select(current_user.friend_groups, "id", "name", params[:location_id]), { :prompt => "Select Group"}
     .span2= submit_tag "Show", class: "btn btn-success"
 
 = form_tag assign_channels_user_friend_groups_path do
@@ -31,7 +31,7 @@
               %span.head{:style => "color: #{prefix_group.color}"}= prefix_group.group_name
         %td= link_to(channel.location.name, channels_assignment_user_friend_groups_path(location_id: channel.location) )
 
-  .row.input-append
+  .row
     .span1= label_tag "friend_group_id", "Friend group"
     .span3= select_tag "friend_group_id", options_from_collection_for_select(@friend_groups, "id", "name"), :include_blank => true
     .span2= submit_tag "Assign", class: "btn btn-success"
