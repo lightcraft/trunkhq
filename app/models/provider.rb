@@ -43,7 +43,7 @@ class Provider < User
   rolify
   has_and_belongs_to_many :roles, :join_table => :users_roles, :foreign_key => 'user_id'
 
-  has_many :user_prefix_groups, :foreign_key => :user_id#, dependent: :destroy
+  has_many :user_prefix_groups, :foreign_key => :user_id, dependent: :destroy
   has_many :prefix_groups_for_providers, through: :user_prefix_groups
   has_many :gateways, :foreign_key => :accountcode
 
